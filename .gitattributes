@@ -1,0 +1,9 @@
+# Authored on Windows, built on Linux (Vercel). Normalise to LF in the repo so
+# the two do not fight over every line of every file.
+* text=auto eol=lf
+
+# Binary — never touch.
+*.png binary
+*.jpg binary
+*.ico binary
+*.woff2 binary
