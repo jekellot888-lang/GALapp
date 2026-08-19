@@ -32,6 +32,35 @@ generic wellness-app, and the accent carries the brand warmth on its own.
 Values live in `tokens.css` at the project root. Never inline a colour — every
 declaration references a token by name.
 
+### Dark mode
+
+Both schemes ship. Dark is not a courtesy here: a dark screen is far less
+conspicuous in a dark room, and this app gets read at night by someone who may
+not want the light noticed.
+
+**Driven by `prefers-color-scheme` only.** There is no in-app toggle and no
+stored preference. GAL keeps no accounts and writes as little to the device as it
+can; a theme setting is one more thing on a phone somebody else might pick up.
+If a toggle is ever added it belongs in a settings surface that does not exist
+yet, and it must not become a sun/moon switch in the header.
+
+Rules for the dark palette:
+
+- **Warm, never neutral, never `#000`.** Pure black makes hairlines vanish on
+  OLED, and hairlines are the one device this system separates content with.
+  Paper sits near 19% lightness with a warm tint.
+- **The accent inverts direction.** Deep madder at 42% lightness has nowhere near
+  enough contrast on a dark ground, so dark lifts it to a terracotta near 74% and
+  flips `accent-ink` to near-black. Any new accent needs the same treatment.
+- **Only colour tokens are redefined.** Type, spacing, radius and motion are
+  scheme-independent; if a value needs to change between schemes it is a colour.
+- **High contrast is written per scheme.** Darkening `ink-2` helps on bone paper
+  and ruins it on a dark ground, so the two directions are opposite. Never write
+  one `prefers-contrast` block and assume it covers both.
+- **Shadows barely read on dark.** The nav leans on its rule; the lift shadow
+  deepens rather than spreading.
+- The AA floor applies to both schemes, measured separately.
+
 ## Typography
 
 - **Display:** Fraunces, weight 600, `font-style: normal`. Self-hosted via

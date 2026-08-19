@@ -1,6 +1,6 @@
 /* Hallmark · genre: editorial · theme: custom (tuned) · design-system: design.md
  * vibe: warm bone paper, deep madder, quiet
- * paper  oklch(96.8% 0.009 75)   band: light
+ * paper  oklch(96.8% 0.009 75)   band: light   (dark band: oklch(19% 0.012 40))
  * accent oklch(42% 0.13 22)      hue: warm
  * display: Fraunces (roman)      body: system stack
  * Portable token layer. Nothing in this project inlines a colour.
@@ -24,6 +24,10 @@
   --color-accent-deep: oklch(33% 0.11 20);
   --color-accent-ink: oklch(98% 0.006 75);
   --color-focus: oklch(42% 0.13 22);
+
+  --shadow-nav: 0 -1px 0 var(--color-rule);
+  --shadow-lift: 0 1px 2px oklch(24% 0.021 32 / 0.06),
+                 0 8px 24px oklch(24% 0.021 32 / 0.08);
 
   /* ── Type ──────────────────────────────────────────────────────────────── */
   --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
@@ -70,9 +74,39 @@
   --dur-press: 120ms;
   --dur-short: 190ms;
   --dur-enter: 220ms;
+}
 
-  /* ── Elevation — two fixed layers only ─────────────────────────────────── */
-  --shadow-nav: 0 -1px 0 var(--color-rule);
-  --shadow-lift: 0 1px 2px oklch(24% 0.021 32 / 0.06),
-                 0 8px 24px oklch(24% 0.021 32 / 0.08);
+/* ── Dark ─────────────────────────────────────────────────────────────────
+   Only the colour tokens are redefined; type, space, radius and motion are
+   scheme-independent by design.
+
+   Warm dark, not neutral and never pure black. Same reasoning as the light
+   mode: the surface should read as a material, and a warm ground keeps Fraunces
+   from going cold and clinical. #000 on OLED also makes hairlines disappear,
+   which would break the one device this system separates content with.
+
+   The accent inverts direction. Deep madder at 42% lightness has nowhere near
+   enough contrast against a dark ground, so dark mode lifts it to a terracotta
+   and flips accent-ink to near-black. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-paper: oklch(19% 0.012 40);
+    --color-paper-2: oklch(23.5% 0.014 40);
+    --color-paper-3: oklch(28% 0.016 42);
+
+    --color-ink: oklch(93.5% 0.008 75);
+    --color-ink-2: oklch(73% 0.014 68);
+
+    --color-rule: oklch(33% 0.014 45);
+    --color-rule-strong: oklch(47% 0.018 48);
+
+    --color-accent: oklch(74% 0.132 38);
+    --color-accent-deep: oklch(64% 0.125 34);
+    --color-accent-ink: oklch(17% 0.02 35);
+    --color-focus: oklch(78% 0.13 40);
+
+    /* Shadows barely read on a dark ground, so the nav leans on its rule and
+       the lift shadow deepens rather than spreading. */
+    --shadow-lift: 0 1px 2px oklch(0% 0 0 / 0.4), 0 8px 24px oklch(0% 0 0 / 0.34);
+  }
 }

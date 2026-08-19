@@ -50,7 +50,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#7A2E22",
+  /* The status bar follows the paper, not the accent — the installed app should
+     read as one continuous surface rather than a coloured bar above a page. */
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f8f4ee" },
+    { media: "(prefers-color-scheme: dark)", color: "#241f1c" },
+  ],
   width: "device-width",
   initialScale: 1,
   // Stops iOS zooming the page when she taps an input.

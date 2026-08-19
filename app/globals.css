@@ -4,7 +4,9 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { color-scheme: light; }
+/* Tells the browser to theme its own chrome — form controls, scrollbars, and the
+   iOS switch that lib/haptics.ts borrows for its Taptic tick. */
+:root { color-scheme: light dark; }
 
 html, body { overscroll-behavior-y: none; }
 html { scroll-behavior: smooth; }
@@ -81,12 +83,21 @@ p { text-wrap: pretty; }
   .rise { animation: none; }
 }
 
+/* High contrast has to be written per scheme. Darkening ink-2 helps on bone
+   paper and destroys it on a dark ground, so the two directions are opposite. */
 @media (prefers-contrast: more) {
   :root {
     --color-ink-2: oklch(34% 0.022 32);
     --color-rule: oklch(62% 0.02 55);
   }
   :focus-visible { outline-width: 3px; }
+}
+
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+  :root {
+    --color-ink-2: oklch(86% 0.012 70);
+    --color-rule: oklch(52% 0.018 48);
+  }
 }
 
 :focus-visible {
