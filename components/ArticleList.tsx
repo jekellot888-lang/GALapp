@@ -35,8 +35,10 @@ export default function ArticleList({
         </div>
       ) : (
         <ul className="space-y-3">
+          {/* Only the first few stagger. Past that the cascade is just a wait on
+              a list she opens several times a day. */}
           {items.map((a, i) => (
-            <li key={a.slug} className="rise" style={{ animationDelay: `${i * 45}ms` }}>
+            <li key={a.slug} className="rise" style={{ animationDelay: `${Math.min(i, 5) * 30}ms` }}>
               <Link
                 href={`/read/${a.slug}`}
                 className="tap tap-lift block rounded-card bg-white p-4 shadow-card active:shadow-lift"

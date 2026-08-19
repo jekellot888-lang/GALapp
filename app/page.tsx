@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useAppState, today, type Mood } from "@/lib/state";
 import { useShake } from "@/lib/useShake";
@@ -35,21 +35,35 @@ export default function Home() {
 
   const daily = useMemo(() => affirmationForDay(t), [t]);
   const [affirmation, setAffirmation] = useState(daily);
-  const [pulse, setPulse] = useState(false);
+  const [swapping, setSwapping] = useState(false);
+  const swapTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const reroll = () => {
-    setAffirmation((cur) => randomAffirmation(cur));
-    setPulse(true);
+  /**
+   * Fade the old line out, swap the text at the bottom of the fade, let the new
+   * one come back. Shake can fire again mid-swap, so the pending timer is always
+   * cleared first — the opacity transition retargets from wherever it is rather
+   * than restarting, which is why this is a transition and not a keyframe.
+   */
+  const reroll = useCallback(() => {
+    /* A swap already mid-fade wins. Without this, taps arriving faster than the
+       fade-out restart it every time and the line never swaps back in — it just
+       stays invisible for as long as she keeps tapping. Shake is rate-limited
+       upstream; the button is not. */
+    if (swapTimer.current) return;
+    setSwapping(true);
     feedback(14);
-  };
+    swapTimer.current = setTimeout(() => {
+      setAffirmation((cur) => randomAffirmation(cur));
+      setSwapping(false);
+      swapTimer.current = null;
+    }, 110);
+  }, []);
+
+  useEffect(() => () => {
+    if (swapTimer.current) clearTimeout(swapTimer.current);
+  }, []);
 
   const { status, enable } = useShake(reroll);
-
-  useEffect(() => {
-    if (!pulse) return;
-    const id = setTimeout(() => setPulse(false), 440);
-    return () => clearTimeout(id);
-  }, [pulse]);
 
   const mood = state.moods[t];
   const done = state.goals[t] ?? [];
@@ -116,15 +130,17 @@ export default function Home() {
           Radial highlight over a wine base, not a 45° two-tone fade, plus a
           grain overlay so the fill has some tooth. White here measures 11:1. */}
       <section
-        className={`grain relative mb-7 overflow-hidden rounded-card bg-mulled p-5 text-white shadow-lift ${
-          pulse ? "gal-pulse" : ""
-        }`}
+        className="grain relative mb-7 overflow-hidden rounded-card bg-mulled p-5 text-white shadow-lift"
         style={{
           backgroundImage:
             "radial-gradient(120% 100% at 12% 0%, #8C2F4A 0%, #6D1F3A 46%, #4E1528 100%)",
         }}
       >
-        <p className="font-display text-[1.4rem] font-medium leading-[1.35] tracking-[-0.01em]">
+        <p
+          data-swapping={swapping}
+          aria-live="polite"
+          className="aff font-display text-[1.4rem] font-medium leading-[1.35] tracking-[-0.01em]"
+        >
           {affirmation}
         </p>
         <div className="mt-4 flex items-center justify-between gap-3">

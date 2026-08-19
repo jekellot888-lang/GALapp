@@ -15,7 +15,7 @@ export default function BottomNav() {
   return (
     <nav
       aria-label="Sections"
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/85 backdrop-blur-xl pb-[env(safe-area-inset-bottom)]"
+      className="chrome fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] backdrop-blur-xl backdrop-saturate-150 pb-[env(safe-area-inset-bottom)]"
     >
       <ul className="mx-auto flex max-w-md">
         {TABS.map((t) => {
