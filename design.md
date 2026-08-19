@@ -1,4 +1,4 @@
-# Design — GAL
+# Design — GALL
 
 A locked design system for this app. Every page reads this file before emitting
 code. Do not regenerate per page — extend or amend this file when the system
@@ -8,7 +8,7 @@ Pages that drift from this file are the defect. Amend here first, then build.
 
 ## Genre
 
-**Editorial.** GAL is a reading app before it is anything else — 34 guides, a
+**Editorial.** GALL is a reading app before it is anything else — 34 guides, a
 reader, an index per section. Editorial's governing rule, *hairlines not card
 borders*, is the direct cure for what this app looked like before: every screen
 was the same white rounded rectangle floating on pink, so nothing had hierarchy
@@ -39,7 +39,7 @@ conspicuous in a dark room, and this app gets read at night by someone who may
 not want the light noticed.
 
 **Driven by `prefers-color-scheme` only.** There is no in-app toggle and no
-stored preference. GAL keeps no accounts and writes as little to the device as it
+stored preference. GALL keeps no accounts and writes as little to the device as it
 can; a theme setting is one more thing on a phone somebody else might pick up.
 If a toggle is ever added it belongs in a settings surface that does not exist
 yet, and it must not become a sun/moon switch in the header.

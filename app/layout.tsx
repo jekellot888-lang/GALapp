@@ -24,13 +24,13 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3240"
   ),
-  title: "GAL",
+  title: "GALL",
   description: "A daily companion — mind, body, money, and knowing where to turn.",
   manifest: "/manifest.webmanifest",
-  applicationName: "GAL",
+  applicationName: "GALL",
   appleWebApp: {
     capable: true,
-    title: "GAL",
+    title: "GALL",
     statusBarStyle: "default",
   },
   formatDetection: { telephone: false },
@@ -39,11 +39,11 @@ export const metadata: Metadata = {
     apple: "/icons/apple-touch-icon.png",
   },
   openGraph: {
-    title: "GAL",
+    title: "GALL",
     description: "A daily companion — mind, body, money, and knowing where to turn.",
-    siteName: "GAL",
+    siteName: "GALL",
     type: "website",
-    images: [{ url: "/icons/icon-512.png", width: 512, height: 512, alt: "GAL" }],
+    images: [{ url: "/icons/icon-512.png", width: 512, height: 512, alt: "GALL" }],
   },
   /* This app is used privately. Keep it out of search results. */
   robots: { index: false, follow: false },

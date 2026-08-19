@@ -1,10 +1,10 @@
-# GAL — Claude Design brief
+# GALL — Claude Design brief
 
 Paste everything below the line into Claude Design.
 
 ---
 
-Design the screens for **GAL**, an installable web app used daily by young women
+Design the screens for **GALL**, an installable web app used daily by young women
 in Uganda. It carries four things: mind, body, money, and knowing where to turn
 when something has gone wrong. No accounts, no sign-in, nothing leaves the phone.
 

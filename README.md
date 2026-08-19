@@ -1,4 +1,4 @@
-# GAL
+# GALL
 
 A daily companion — mind, body, money, and knowing where to turn.
 Installable web app. No accounts. Nothing leaves the device.
@@ -15,7 +15,7 @@ npm run dev          # http://localhost:3000
 ```bash
 git init
 git add -A
-git commit -m "GAL v1"
+git commit -m "GALL v1"
 git branch -M main
 git remote add origin git@github.com:YOUR_ORG/gal.git
 git push -u origin main

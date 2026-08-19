@@ -9,9 +9,9 @@
 export default function HapticSwitch() {
   return (
     <div aria-hidden="true" className="pointer-events-none fixed -left-[9999px] top-0 h-px w-px overflow-hidden">
-      <label id="gal-haptic-label" htmlFor="gal-haptic">
+      <label id="gall-haptic-label" htmlFor="gall-haptic">
         {/* @ts-expect-error — `switch` is a Safari-only attribute, not in React's types */}
-        <input id="gal-haptic" type="checkbox" switch="" tabIndex={-1} />
+        <input id="gall-haptic" type="checkbox" switch="" tabIndex={-1} />
       </label>
     </div>
   );

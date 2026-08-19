@@ -28,9 +28,9 @@ export function buzz(pattern: number | number[] = 12): boolean {
 /** Toggles a hidden iOS switch to borrow its Taptic tick. No-op elsewhere. */
 export function iosTick() {
   if (typeof document === "undefined") return;
-  const el = document.getElementById("gal-haptic") as HTMLInputElement | null;
+  const el = document.getElementById("gall-haptic") as HTMLInputElement | null;
   if (!el) return;
-  const label = document.getElementById("gal-haptic-label") as HTMLLabelElement | null;
+  const label = document.getElementById("gall-haptic-label") as HTMLLabelElement | null;
   label?.click();
 }
 
