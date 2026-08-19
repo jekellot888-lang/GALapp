@@ -3,6 +3,10 @@
 A daily companion — mind, body, money, and knowing where to turn.
 Installable web app. No accounts. Nothing leaves the device.
 
+> **The name is an acronym, not the word "gal".** It is spelled GAL, three
+> letters, and it is not to be "corrected" to GALL or expanded on a guess.
+> The expansion is not recorded here yet — fill it in rather than inferring it.
+
 ---
 
 ## Ship it (do this first, before writing any features)
