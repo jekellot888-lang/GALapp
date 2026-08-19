@@ -10,7 +10,7 @@ import { useCallback, useEffect, useState } from "react";
  * Install first, then use. See components/InstallSheet.tsx for the user-facing copy.
  */
 
-const KEY = "gall.v1";
+const KEY = "gal.v1";
 
 export type Mood = "good" | "okay" | "low" | "tough";
 

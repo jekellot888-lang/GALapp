@@ -8,7 +8,7 @@ export default function NotFound() {
       </h1>
       <p className="mt-2xs max-w-[38ch] text-md leading-relaxed text-ink-2">
         The link may be old, or the page may have moved. Nothing has gone wrong with
-        your account — GALL doesn&rsquo;t have accounts.
+        your account — GAL doesn&rsquo;t have accounts.
       </p>
 
       <div className="index mt-xl rule-top">

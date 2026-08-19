@@ -83,7 +83,7 @@ export default function Support() {
       )}
 
       <p className="mt-lg text-xs text-ink-2">
-        GALL does not record who you call, and nothing you do here is sent anywhere.
+        GAL does not record who you call, and nothing you do here is sent anywhere.
       </p>
     </main>
   );

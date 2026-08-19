@@ -1,7 +1,7 @@
 /**
  * ⚠⚠ NOTHING IN THIS FILE SHIPS UNVERIFIED. ⚠⚠
  *
- * This is the single highest-liability surface in GALL. A wrong or dead number
+ * This is the single highest-liability surface in GAL. A wrong or dead number
  * here is worse than no number at all: someone in trouble dials it, nothing
  * happens, and they stop trying.
  *

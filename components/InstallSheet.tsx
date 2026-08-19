@@ -26,12 +26,12 @@ export default function InstallSheet() {
   return (
     <aside className="rise rule-top rule-bottom mb-lg py-md">
       <p className="font-display text-lg font-semibold tracking-heading">
-        Add GALL to your home screen
+        Add GAL to your home screen
       </p>
       <ol className="mt-2xs space-y-3xs text-sm leading-relaxed text-ink-2">
         <li>1. Tap the Share button at the bottom of Safari</li>
         <li>2. Scroll down and tap &ldquo;Add to Home Screen&rdquo;</li>
-        <li>3. Tap Add, then open GALL from your home screen</li>
+        <li>3. Tap Add, then open GAL from your home screen</li>
       </ol>
       <p className="mt-2xs text-xs text-ink-2">
         Do this first — your streak and check-ins are saved separately once installed.
