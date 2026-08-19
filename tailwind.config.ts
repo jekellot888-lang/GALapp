@@ -1,44 +1,63 @@
 import type { Config } from "tailwindcss";
 
 /**
- * One accent (wine) with two deeper partners used only inside the affirmation
- * gradient. The old berry/violet pair was a saturated magenta-to-purple fade —
- * it read as generic, and white text on it measured 4.37:1, under AA.
- *
- * Every text colour below is contrast-checked against the two surfaces it
- * actually sits on: blush (#FDF2F6) and white.
+ * Every value here points at a token in tokens.css. Nothing is defined twice,
+ * and nothing in a component may inline a colour — see design.md.
  */
 const config: Config = {
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./content/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        wine:   "#6D1F3A",
-        /** Affirmation gradient partners. White on either clears 9:1. */
-        plum:   "#5A1930",
-        mulled: "#7E2A4E",
-        blush:  "#FDF2F6",
-        ink:    "#2A1520",
-        /** Was #8A7480 — 3.93:1 on blush, under AA. Now 4.97 / 5.43. */
-        muted:  "#79646F",
-        line:   "#F0DDE6",
+        paper: "var(--color-paper)",
+        "paper-2": "var(--color-paper-2)",
+        "paper-3": "var(--color-paper-3)",
+        ink: "var(--color-ink)",
+        "ink-2": "var(--color-ink-2)",
+        rule: "var(--color-rule)",
+        "rule-strong": "var(--color-rule-strong)",
+        accent: "var(--color-accent)",
+        "accent-deep": "var(--color-accent-deep)",
+        "accent-ink": "var(--color-accent-ink)",
       },
       fontFamily: {
-        /* Body stays on the system stack: SF Pro on iPhone is the point of a
-           PWA that wants to feel native, and it costs nothing to load. */
-        sans: ["-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
-        display: ["var(--font-display)", "Georgia", "serif"],
+        display: "var(--font-display)",
+        sans: "var(--font-body)",
       },
-      /* Varied, not uniform: containers soften, inner controls stay tighter. */
-      borderRadius: { card: "20px", inner: "14px", pill: "999px" },
+      fontSize: {
+        xs: "var(--text-xs)",
+        sm: "var(--text-sm)",
+        base: "var(--text-base)",
+        md: "var(--text-md)",
+        lg: "var(--text-lg)",
+        xl: "var(--text-xl)",
+        "2xl": "var(--text-2xl)",
+        "display-s": "var(--text-display-s)",
+        display: "var(--text-display)",
+      },
+      letterSpacing: {
+        display: "var(--track-display)",
+        heading: "var(--track-heading)",
+        label: "var(--track-label)",
+      },
+      spacing: {
+        "3xs": "var(--space-3xs)",
+        "2xs": "var(--space-2xs)",
+        xs: "var(--space-xs)",
+        sm: "var(--space-sm)",
+        md: "var(--space-md)",
+        lg: "var(--space-lg)",
+        xl: "var(--space-xl)",
+        "2xl": "var(--space-2xl)",
+      },
+      borderRadius: {
+        inner: "var(--radius-inner)",
+        card: "var(--radius-card)",
+        pill: "var(--radius-pill)",
+      },
       boxShadow: {
-        card:  "0 1px 2px rgba(109,31,58,0.04), 0 3px 14px rgba(109,31,58,0.06)",
-        lift:  "0 2px 4px rgba(109,31,58,0.06), 0 10px 30px rgba(109,31,58,0.10)",
-        inset: "inset 0 1px 0 rgba(255,255,255,0.14)",
-      },
-      transitionTimingFunction: {
-        /* Slight overshoot on press-release, so taps feel physical. */
-        press: "cubic-bezier(0.34, 1.56, 0.64, 1)",
+        nav: "var(--shadow-nav)",
+        lift: "var(--shadow-lift)",
       },
     },
   },

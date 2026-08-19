@@ -24,19 +24,21 @@ export default function InstallSheet() {
   if (!show) return null;
 
   return (
-    <aside className="rise mb-5 rounded-card border border-wine/20 bg-white p-4 shadow-card">
-      <p className="font-display text-lg font-semibold">Add GAL to your home screen</p>
-      <ol className="mt-2 space-y-1 text-sm leading-relaxed text-muted">
+    <aside className="rise rule-top rule-bottom mb-lg py-md">
+      <p className="font-display text-lg font-semibold tracking-heading">
+        Add GAL to your home screen
+      </p>
+      <ol className="mt-2xs space-y-3xs text-sm leading-relaxed text-ink-2">
         <li>1. Tap the Share button at the bottom of Safari</li>
         <li>2. Scroll down and tap &ldquo;Add to Home Screen&rdquo;</li>
         <li>3. Tap Add, then open GAL from your home screen</li>
       </ol>
-      <p className="mt-2 text-xs text-muted">
+      <p className="mt-2xs text-xs text-ink-2">
         Do this first — your streak and check-ins are saved separately once installed.
       </p>
       <button
         onClick={() => update({ installDismissed: true })}
-        className="tap -ml-1 mt-3 min-h-11 rounded-pill px-3 text-sm font-semibold text-wine active:bg-blush"
+        className="tap mt-sm min-h-11 rounded-pill border border-rule px-md text-sm text-ink-2 active:bg-paper-2"
       >
         Got it
       </button>

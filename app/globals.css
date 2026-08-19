@@ -1,14 +1,10 @@
+@import "../tokens.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: light;
-  /* Standard curves. Built-in CSS easings are too weak to read as deliberate. */
-  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
-  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
-}
+:root { color-scheme: light; }
 
 html, body { overscroll-behavior-y: none; }
 html { scroll-behavior: smooth; }
@@ -23,103 +19,91 @@ body {
 /* Content is still selectable where it should be. */
 article, p.selectable { -webkit-user-select: text; user-select: text; }
 
-/* Headings shouldn't strand a single word on the last line. */
 h1, h2, h3 { text-wrap: balance; }
 p { text-wrap: pretty; }
 
-/* Counters that tick upward shouldn't shift width as digits change. */
 .tnum { font-variant-numeric: tabular-nums; }
 
-/* ---- Press feedback -------------------------------------------------------
+/* ── The separating device ───────────────────────────────────────────────────
+   Hairlines and space, not floating boxes. This one rule is most of the
+   difference between the old app and this one. */
+.rule-top { border-top: var(--rule-hair) solid var(--color-rule); }
+.rule-bottom { border-bottom: var(--rule-hair) solid var(--color-rule); }
+
+/* An index: entries divided by hairlines, nothing boxed. */
+.index > * + * { border-top: var(--rule-hair) solid var(--color-rule); }
+
+/* ── Press feedback ──────────────────────────────────────────────────────────
    iOS Safari has no navigator.vibrate, so a tap that doesn't visibly respond
-   isn't confirmed at all. Feedback fires on pointer-down (:active), not on
-   release. 120ms sits in the 100–160ms press band; slower reads as lag. */
+   isn't confirmed at all. Fires on pointer-down, not release. */
 .tap {
-  transition: transform 120ms var(--ease-out), background-color 120ms var(--ease-out),
-              box-shadow 120ms var(--ease-out), border-color 120ms var(--ease-out);
+  transition: transform var(--dur-press) var(--ease-out),
+              background-color var(--dur-press) var(--ease-out),
+              color var(--dur-press) var(--ease-out),
+              border-color var(--dur-press) var(--ease-out);
 }
-.tap:active { transform: scale(0.975); }
+.tap:active { transform: scale(0.985); }
 
-/* Touch fires a false hover on tap, so gate lift behind a real pointer. */
+/* Touch fires a false hover on tap, so gate it behind a real pointer. */
 @media (hover: hover) and (pointer: fine) {
-  .tap-lift:hover { transform: translateY(-1px); }
+  .tap-tint:hover { background-color: var(--color-paper-2); }
 }
 
-/* ---- Affirmation crossfade ------------------------------------------------
-   The text used to teleport while the card pulsed. Transition-based, not
-   keyframes: shake can fire again before the last swap settles, and a
-   transition retargets from its current value where a keyframe restarts. */
+/* ── Affirmation crossfade ───────────────────────────────────────────────────
+   Transition, not keyframes: shake can fire again before the last swap settles,
+   and a transition retargets from its current value where a keyframe restarts. */
 .aff {
-  transition: opacity 190ms var(--ease-out), transform 190ms var(--ease-out);
+  transition: opacity var(--dur-short) var(--ease-out),
+              transform var(--dur-short) var(--ease-out);
 }
 .aff[data-swapping="true"] {
   opacity: 0;
   transform: translateY(-4px);
-  /* Leaving is the deliberate half; arriving should feel immediate. */
   transition-duration: 110ms;
 }
 
-/* ---- Entry ----------------------------------------------------------------
-   Article lists are revisited constantly, so this stays near-imperceptible:
-   short, small travel, and only the first few items stagger. */
+/* ── Entry ───────────────────────────────────────────────────────────────────
+   Index pages are revisited constantly, so this stays near-imperceptible. */
 @keyframes gal-rise {
   from { opacity: 0; transform: translateY(4px); }
   to   { opacity: 1; transform: none; }
 }
-.rise { animation: gal-rise 220ms var(--ease-out) both; }
+.rise { animation: gal-rise var(--dur-enter) var(--ease-out) both; }
 
-/* ---- Accessibility --------------------------------------------------------
-   Reduced motion means gentler, not zero. Opacity still carries meaning, so
-   it stays; travel and press-scale go. */
+/* ── Accessibility ───────────────────────────────────────────────────────────
+   Reduced motion is gentler, not zero. Opacity carries meaning and stays. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-
-  .tap { transition: background-color 120ms ease, border-color 120ms ease; }
-  .tap:active { transform: none; background-color: rgba(109, 31, 58, 0.06); }
-  .tap-lift:hover { transform: none; }
-
+  .tap { transition: background-color var(--dur-press) ease, color var(--dur-press) ease; }
+  .tap:active { transform: none; background-color: var(--color-paper-2); }
   .aff { transition: opacity 150ms ease; }
   .aff[data-swapping="true"] { transform: none; }
-
   .rise { animation: none; }
 }
 
-/* Frosted chrome becomes solid rather than translucent. */
-@media (prefers-reduced-transparency: reduce) {
-  .chrome {
-    background-color: #fff;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-  }
-}
-
 @media (prefers-contrast: more) {
-  .chrome { background-color: #fff; border-top-color: #2A1520; }
+  :root {
+    --color-ink-2: oklch(34% 0.022 32);
+    --color-rule: oklch(62% 0.02 55);
+  }
   :focus-visible { outline-width: 3px; }
 }
 
-:focus-visible { outline: 2px solid #6D1F3A; outline-offset: 2px; border-radius: 4px; }
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
 
 /* Keyboard users get a way past the nav. Invisible until focused. */
 .skip {
-  position: absolute; left: 0.75rem; top: 0.75rem; z-index: 60;
-  background: #6D1F3A; color: #fff; padding: 0.75rem 1.15rem;
-  border-radius: 999px; font-size: 0.875rem; font-weight: 600;
+  position: absolute; left: var(--space-xs); top: var(--space-xs); z-index: 60;
+  background: var(--color-accent); color: var(--color-accent-ink);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm); font-weight: 600;
   /* transform, not top — top triggers layout on every frame. */
   transform: translateY(-200%);
   transition: transform 180ms var(--ease-out);
 }
 .skip:focus { transform: none; }
-
-/* ---- Surface texture ------------------------------------------------------
-   A flat fill reads as unfinished. Fixed noise tile at low opacity over the
-   gradient card only. Inline SVG: no request, works offline. */
-.grain::after {
-  content: "";
-  position: absolute; inset: 0;
-  pointer-events: none;
-  border-radius: inherit;
-  opacity: 0.16;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>");
-}

@@ -4,39 +4,39 @@ import { useState } from "react";
 import Link from "next/link";
 import { TOPICS, bySection, type Section } from "@/content/articles";
 
+/**
+ * An index, not a deck of cards. Entries are divided by hairlines and sit
+ * directly on the paper. The old version wrapped every entry in a white
+ * rounded box with a shadow, which is why five different screens looked like
+ * one screen.
+ */
 export default function ArticleList({
   section,
   title,
   intro,
-  eyebrow,
 }: {
   section: Section;
   title: string;
   intro: string;
-  eyebrow: string;
 }) {
   const [topic, setTopic] = useState<string | null>(null);
   const all = bySection(section);
-  const topics = TOPICS[section];
 
   // Only offer a pill that actually has something behind it.
-  const live = topics.filter((t) => all.some((a) => a.topic === t));
+  const live = TOPICS[section].filter((t) => all.some((a) => a.topic === t));
   const items = topic ? all.filter((a) => a.topic === topic) : all;
 
   return (
     <main>
-      <header className="grain relative mb-6 overflow-hidden rounded-card bg-mulled p-5 text-white shadow-lift">
-        <p className="text-[0.7rem] font-medium uppercase tracking-[0.16em] text-white/80">
-          {eyebrow}
-        </p>
-        <h1 className="mt-1.5 font-display text-[1.75rem] font-semibold leading-[1.15] tracking-[-0.02em]">
+      <header className="mb-lg">
+        <h1 className="font-display text-display font-semibold leading-[1.05] tracking-display">
           {title}
         </h1>
-        <p className="mt-1.5 text-sm leading-relaxed text-white/90">{intro}</p>
+        <p className="mt-2xs max-w-[38ch] text-md leading-relaxed text-ink-2">{intro}</p>
       </header>
 
       {live.length > 0 && (
-        <div className="-mx-5 mb-5 flex gap-2 overflow-x-auto px-5 pb-1">
+        <div className="-mx-5 mb-md flex gap-2xs overflow-x-auto px-5 pb-3xs">
           <Pill on={topic === null} onClick={() => setTopic(null)}>
             All
           </Pill>
@@ -49,33 +49,27 @@ export default function ArticleList({
       )}
 
       {items.length === 0 ? (
-        <div className="rounded-card border border-line bg-white p-6 text-center shadow-card">
-          <p className="font-display text-lg font-semibold">Nothing here yet</p>
-          <p className="mx-auto mt-1.5 max-w-[34ch] text-sm text-muted">
-            New reads land here as they are written.
-          </p>
-        </div>
+        <p className="rule-top py-lg text-ink-2">
+          Nothing here yet. New reads land here as they are written.
+        </p>
       ) : (
-        <ul className="space-y-3">
-          {/* Only the first few stagger. Past that the cascade is just a wait on
-              a list she opens several times a day. */}
+        <ul className="index rule-top">
           {items.map((a, i) => (
             <li key={a.slug} className="rise" style={{ animationDelay: `${Math.min(i, 5) * 30}ms` }}>
               <Link
                 href={`/read/${a.slug}`}
-                className="tap tap-lift block rounded-card bg-white p-4 shadow-card active:shadow-lift"
+                className="tap tap-tint -mx-5 block px-5 py-md active:bg-paper-2"
               >
-                {a.topic && (
-                  <span className="text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-muted">
-                    {a.topic}
-                  </span>
-                )}
-                <p className="mt-1 font-display text-[1.0625rem] font-semibold leading-snug">
+                <h2 className="font-display text-lg font-semibold leading-[1.25] tracking-heading">
                   {a.title}
+                </h2>
+                <p className="mt-3xs max-w-[46ch] text-sm leading-relaxed text-ink-2">
+                  {a.blurb}
                 </p>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted">{a.blurb}</p>
-                <p className="tnum mt-2.5 text-[0.7rem] font-medium uppercase tracking-[0.14em] text-wine">
-                  {a.minutes} min read{a.level ? ` · ${a.level}` : ""}
+                <p className="tnum mt-2xs text-xs text-ink-2">
+                  {a.minutes} min
+                  {a.topic ? ` · ${a.topic}` : ""}
+                  {a.level ? ` · ${a.level}` : ""}
                 </p>
               </Link>
             </li>
@@ -99,10 +93,10 @@ function Pill({
     <button
       onClick={onClick}
       aria-pressed={on}
-      className={`tap min-h-11 shrink-0 whitespace-nowrap rounded-pill border px-4 text-sm font-semibold ${
+      className={`tap min-h-11 shrink-0 whitespace-nowrap rounded-pill border px-md text-sm ${
         on
-          ? "border-wine bg-wine text-white"
-          : "border-line bg-white text-muted active:bg-blush"
+          ? "border-accent bg-accent font-semibold text-accent-ink"
+          : "border-rule text-ink-2 active:bg-paper-2"
       }`}
     >
       {children}

@@ -10,12 +10,17 @@ const TABS = [
   { href: "/support", label: "Support" },
 ];
 
+/**
+ * Solid paper with a hairline top rule. The old version was frosted glass —
+ * banned outright in this genre, and it made the labels fight whatever text
+ * happened to scroll underneath.
+ */
 export default function BottomNav() {
   const path = usePathname();
   return (
     <nav
       aria-label="Sections"
-      className="chrome fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] backdrop-blur-xl backdrop-saturate-150 pb-[env(safe-area-inset-bottom)]"
+      className="chrome fixed inset-x-0 bottom-0 z-40 rule-top bg-paper pb-[env(safe-area-inset-bottom)]"
     >
       <ul className="mx-auto flex max-w-md">
         {TABS.map((t) => {
@@ -25,16 +30,15 @@ export default function BottomNav() {
               <Link
                 href={t.href}
                 aria-current={on ? "page" : undefined}
-                className={`tap relative flex min-h-14 flex-col items-center justify-center gap-1.5 text-xs ${
-                  on ? "font-semibold text-wine" : "text-muted active:text-ink"
+                className={`tap relative flex min-h-14 items-center justify-center text-sm ${
+                  on ? "font-semibold text-accent" : "text-ink-2"
                 }`}
               >
-                {/* Active marker sits above the label as a short bar rather than
-                    a 1.5px dot — visible at a glance on a phone. */}
+                {/* A drawn rule above the label, not a floating dot. */}
                 <span
                   aria-hidden
-                  className={`tap absolute top-1.5 h-[3px] rounded-pill bg-wine ${
-                    on ? "w-6 opacity-100" : "w-0 opacity-0"
+                  className={`tap absolute inset-x-0 top-0 mx-auto h-[2px] bg-accent ${
+                    on ? "w-8 opacity-100" : "w-0 opacity-0"
                   }`}
                 />
                 {t.label}

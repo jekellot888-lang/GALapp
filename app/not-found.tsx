@@ -2,30 +2,29 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <main className="pt-10">
-      <p className="text-[0.7rem] font-medium uppercase tracking-[0.16em] text-muted">
-        Page not found
-      </p>
-      <h1 className="mt-2 font-display text-[2rem] font-semibold leading-[1.1] tracking-[-0.02em]">
+    <main className="pt-xl">
+      <h1 className="font-display text-display font-semibold leading-[1.05] tracking-display">
         This one isn&rsquo;t here
       </h1>
-      <p className="mt-2 max-w-[38ch] leading-relaxed text-muted">
+      <p className="mt-2xs max-w-[38ch] text-md leading-relaxed text-ink-2">
         The link may be old, or the page may have moved. Nothing has gone wrong with
         your account — GAL doesn&rsquo;t have accounts.
       </p>
 
-      <div className="mt-7 space-y-3">
-        <Link
-          href="/"
-          className="tap block rounded-card bg-wine p-4 text-center font-semibold text-white shadow-lift"
-        >
-          Back to home
+      <div className="index mt-xl rule-top">
+        <Link href="/" className="tap tap-tint -mx-5 block px-5 py-md active:bg-paper-2">
+          <span className="block font-display text-lg font-semibold tracking-heading">
+            Home
+          </span>
+          <span className="mt-3xs block text-sm text-ink-2">Back to the start.</span>
         </Link>
-        <Link
-          href="/support"
-          className="tap block rounded-card border border-line bg-white p-4 text-center font-semibold text-wine shadow-card active:bg-blush"
-        >
-          Find support
+        <Link href="/support" className="tap tap-tint -mx-5 block px-5 py-md active:bg-paper-2">
+          <span className="block font-display text-lg font-semibold tracking-heading">
+            Support
+          </span>
+          <span className="mt-3xs block text-sm text-ink-2">
+            Confidential help, any time.
+          </span>
         </Link>
       </div>
     </main>

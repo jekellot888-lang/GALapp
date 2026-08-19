@@ -14,7 +14,7 @@ import HapticSwitch from "@/components/HapticSwitch";
 const display = Fraunces({
   subsets: ["latin"],
   axes: ["SOFT", "WONK", "opsz"],
-  variable: "--font-display",
+  variable: "--font-fraunces",
   display: "swap",
 });
 
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#6D1F3A",
+  themeColor: "#7A2E22",
   width: "device-width",
   initialScale: 1,
   // Stops iOS zooming the page when she taps an input.
@@ -62,7 +62,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={display.variable}>
-      <body className="bg-blush text-ink font-sans antialiased">
+      <body className="bg-paper text-ink font-sans antialiased">
         <a href="#main" className="skip">
           Skip to content
         </a>

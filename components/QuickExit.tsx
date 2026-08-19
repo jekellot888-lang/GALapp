@@ -5,6 +5,8 @@ import { useEffect } from "react";
  * Someone reading about abuse may be doing it on a phone another person can pick
  * up. Quick exit replaces the current history entry so Back does not return here,
  * then leaves for a neutral site.
+ *
+ * design.md: this must stay reachable and must not be styled into invisibility.
  */
 const NEUTRAL = "https://www.google.com";
 
@@ -33,7 +35,7 @@ export default function QuickExit() {
   return (
     <button
       onClick={bail}
-      className="tap mb-4 min-h-11 w-full rounded-pill border border-line bg-white text-sm font-semibold text-muted shadow-card active:bg-blush active:text-ink"
+      className="tap mb-md min-h-11 w-full rounded-pill border border-rule-strong text-sm font-semibold text-ink active:bg-paper-2"
     >
       Quick exit
     </button>

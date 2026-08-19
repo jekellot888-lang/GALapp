@@ -8,11 +8,12 @@ import { feedback } from "@/lib/haptics";
 import { affirmationForDay, randomAffirmation } from "@/lib/affirmations";
 import InstallSheet from "@/components/InstallSheet";
 
-const MOODS: { id: Mood; face: string; label: string }[] = [
-  { id: "good", face: "🙂", label: "Good" },
-  { id: "okay", face: "😐", label: "Okay" },
-  { id: "low", face: "🙁", label: "Low" },
-  { id: "tough", face: "😣", label: "Tough" },
+/** Words, not faces. Emoji as a UI control is the loudest AI tell there is. */
+const MOODS: { id: Mood; label: string }[] = [
+  { id: "good", label: "Good" },
+  { id: "okay", label: "Okay" },
+  { id: "low", label: "Low" },
+  { id: "tough", label: "Tough" },
 ];
 
 const GOALS = [
@@ -40,15 +41,12 @@ export default function Home() {
 
   /**
    * Fade the old line out, swap the text at the bottom of the fade, let the new
-   * one come back. Shake can fire again mid-swap, so the pending timer is always
-   * cleared first — the opacity transition retargets from wherever it is rather
-   * than restarting, which is why this is a transition and not a keyframe.
+   * one come back. A transition, not a keyframe: shake can fire again before the
+   * last swap settles, and a transition retargets from its current value.
    */
   const reroll = useCallback(() => {
     /* A swap already mid-fade wins. Without this, taps arriving faster than the
-       fade-out restart it every time and the line never swaps back in — it just
-       stays invisible for as long as she keeps tapping. Shake is rate-limited
-       upstream; the button is not. */
+       fade-out restart it every time and the line never swaps back in. */
     if (swapTimer.current) return;
     setSwapping(true);
     feedback(14);
@@ -70,26 +68,56 @@ export default function Home() {
 
   return (
     <main>
-      <header className="mb-7 flex items-start justify-between gap-3">
-        <div>
-          <p className="text-sm text-muted">{greeting()},</p>
-          <h1 className="font-display text-[2rem] font-semibold leading-[1.1] tracking-[-0.02em]">
-            {state.name ?? "you"} <span aria-hidden>✨</span>
-          </h1>
-        </div>
+      <header className="mb-lg">
+        <p className="text-sm text-ink-2">{greeting()},</p>
+        <h1 className="font-display text-display font-semibold leading-[1.05] tracking-display">
+          {state.name ?? "you"}
+        </h1>
         {ready && state.streak > 0 && (
-          <span className="tnum shrink-0 rounded-pill bg-white px-3 py-1.5 text-sm font-semibold text-wine shadow-card">
-            {state.streak} day{state.streak === 1 ? "" : "s"}
-          </span>
+          <p className="tnum mt-3xs text-sm text-ink-2">
+            {state.streak} day{state.streak === 1 ? "" : "s"} in a row
+          </p>
         )}
       </header>
 
       <InstallSheet />
 
+      {/* The affirmation is the one set-piece this page is allowed. It earns it
+          by being type, not a gradient box with a quote in it. */}
+      <section className="rule-top rule-bottom mb-lg py-lg">
+        <p
+          data-swapping={swapping}
+          aria-live="polite"
+          className="aff font-display text-2xl font-semibold leading-[1.25] tracking-heading"
+        >
+          {affirmation}
+        </p>
+        <div className="mt-md flex items-center justify-between gap-sm">
+          <span className="text-xs text-ink-2">Today&rsquo;s line</span>
+          {status === "needs-permission" ? (
+            <button
+              onClick={enable}
+              className="tap min-h-11 shrink-0 rounded-pill border border-rule px-md text-sm text-ink-2 active:bg-paper-2"
+            >
+              Turn on shake
+            </button>
+          ) : (
+            <button
+              onClick={reroll}
+              className="tap min-h-11 shrink-0 rounded-pill border border-rule px-md text-sm text-ink-2 active:bg-paper-2"
+            >
+              {status === "listening" ? "Shake, or tap" : "New one"}
+            </button>
+          )}
+        </div>
+      </section>
+
       {/* Mood */}
-      <section className="mb-5 rounded-card bg-white p-4 shadow-card">
-        <h2 className="mb-3 text-base font-semibold">How are you feeling today?</h2>
-        <div className="grid grid-cols-4 gap-2">
+      <section className="mb-lg">
+        <h2 className="font-display text-lg font-semibold tracking-heading">
+          How are you today?
+        </h2>
+        <div className="mt-sm grid grid-cols-4 gap-2xs">
           {MOODS.map((m) => {
             const on = mood === m.id;
             return (
@@ -100,18 +128,13 @@ export default function Home() {
                   feedback(10);
                 }}
                 aria-pressed={on}
-                className={`tap flex flex-col items-center gap-1 rounded-inner border py-3 ${
+                className={`tap min-h-11 rounded-inner border text-sm ${
                   on
-                    ? "border-wine bg-blush shadow-[inset_0_0_0_1px_rgba(109,31,58,0.45)]"
-                    : "border-line bg-white"
+                    ? "border-accent bg-accent font-semibold text-accent-ink"
+                    : "border-rule text-ink-2 active:bg-paper-2"
                 }`}
               >
-                <span className="text-2xl" aria-hidden>
-                  {m.face}
-                </span>
-                <span className={`text-xs ${on ? "font-semibold text-wine" : "text-muted"}`}>
-                  {m.label}
-                </span>
+                {m.label}
               </button>
             );
           })}
@@ -119,84 +142,47 @@ export default function Home() {
         {mood === "tough" && (
           <Link
             href="/support"
-            className="tap rise mt-3 block rounded-inner bg-wine px-4 py-3 text-center text-sm font-semibold text-white shadow-lift"
+            className="tap rise mt-sm block rounded-inner bg-accent px-md py-xs text-center text-sm font-semibold text-accent-ink"
           >
             Talk to someone now
           </Link>
         )}
       </section>
 
-      {/* Affirmation — the signature. Shake to change it.
-          Radial highlight over a wine base, not a 45° two-tone fade, plus a
-          grain overlay so the fill has some tooth. White here measures 11:1. */}
-      <section
-        className="grain relative mb-7 overflow-hidden rounded-card bg-mulled p-5 text-white shadow-lift"
-        style={{
-          backgroundImage:
-            "radial-gradient(120% 100% at 12% 0%, #8C2F4A 0%, #6D1F3A 46%, #4E1528 100%)",
-        }}
-      >
-        <p
-          data-swapping={swapping}
-          aria-live="polite"
-          className="aff font-display text-[1.4rem] font-medium leading-[1.35] tracking-[-0.01em]"
-        >
-          {affirmation}
-        </p>
-        <div className="mt-4 flex items-center justify-between gap-3">
-          <span className="text-[0.7rem] font-medium uppercase tracking-[0.16em] text-white/80">
-            Daily affirmation
-          </span>
-          {status === "needs-permission" ? (
-            <button
-              onClick={enable}
-              className="tap min-h-11 shrink-0 rounded-pill bg-white/20 px-4 text-xs font-semibold shadow-inset active:bg-white/30"
-            >
-              Turn on shake
-            </button>
-          ) : (
-            <button
-              onClick={reroll}
-              className="tap min-h-11 shrink-0 rounded-pill bg-white/20 px-4 text-xs font-semibold shadow-inset active:bg-white/30"
-            >
-              {status === "listening" ? "Shake, or tap" : "New one"}
-            </button>
-          )}
-        </div>
-      </section>
-
       {/* Goals */}
-      <section className="mb-7">
-        <div className="mb-3 flex items-baseline justify-between">
-          <h2 className="font-display text-lg font-semibold tracking-[-0.01em]">
+      <section className="mb-lg">
+        <div className="flex items-baseline justify-between">
+          <h2 className="font-display text-lg font-semibold tracking-heading">
             Today&rsquo;s goals
           </h2>
-          <span className="tnum text-sm font-semibold text-wine">
+          <span className="tnum text-sm text-ink-2">
             {done.length}/{GOALS.length}
           </span>
         </div>
-        <ul className="overflow-hidden rounded-card bg-white shadow-card">
-          {GOALS.map((g, i) => {
+        <ul className="index mt-sm rule-top">
+          {GOALS.map((g) => {
             const on = done.includes(g.id);
             return (
-              <li key={g.id} className={i > 0 ? "border-t border-line" : ""}>
+              <li key={g.id}>
                 <button
                   onClick={() => {
                     toggleGoal(g.id);
                     feedback(10);
                   }}
                   aria-pressed={on}
-                  className="tap flex w-full items-center gap-3 px-4 py-3.5 text-left active:bg-blush"
+                  className="tap tap-tint -mx-5 flex w-[calc(100%+2.5rem)] items-center gap-xs px-5 py-xs text-left active:bg-paper-2"
                 >
                   <span
-                    className={`tap grid h-6 w-6 shrink-0 place-items-center rounded-full border text-xs ${
-                      on ? "scale-105 border-wine bg-wine text-white" : "border-line"
+                    className={`tap grid h-5 w-5 shrink-0 place-items-center rounded-full border text-xs ${
+                      on
+                        ? "border-accent bg-accent text-accent-ink"
+                        : "border-rule-strong"
                     }`}
                     aria-hidden
                   >
                     {on ? "✓" : ""}
                   </span>
-                  <span className={on ? "text-muted line-through" : ""}>{g.label}</span>
+                  <span className={on ? "text-ink-2 line-through" : ""}>{g.label}</span>
                 </button>
               </li>
             );
@@ -206,16 +192,13 @@ export default function Home() {
 
       <Link
         href="/support"
-        className="tap tap-lift flex items-center justify-between gap-3 rounded-card border border-line bg-white p-4 shadow-card active:shadow-lift"
+        className="tap tap-tint rule-top -mx-5 block px-5 py-md active:bg-paper-2"
       >
-        <span>
-          <span className="block font-semibold">Need someone to talk to?</span>
-          <span className="mt-0.5 block text-sm text-muted">
-            Confidential support, any time.
-          </span>
+        <span className="block font-display text-lg font-semibold tracking-heading">
+          Need someone to talk to?
         </span>
-        <span aria-hidden className="text-lg text-wine">
-          →
+        <span className="mt-3xs block text-sm text-ink-2">
+          Confidential support, any time.
         </span>
       </Link>
     </main>

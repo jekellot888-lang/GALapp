@@ -17,42 +17,47 @@ export default function Read({ params }: { params: { slug: string } }) {
   const a = bySlug(params.slug);
   if (!a) notFound();
 
+  const back = SECTION_LABEL[a.section] ?? "Back";
+
   return (
     <main>
       {a.sensitive && <QuickExit />}
 
       <Link
         href={`/${a.section}`}
-        className="tap -ml-1 inline-flex min-h-11 items-center gap-1.5 pl-1 pr-2 text-sm font-semibold text-wine"
+        className="tap -ml-1 inline-flex min-h-11 items-center gap-2xs pl-1 pr-2xs text-sm text-ink-2"
       >
-        <span aria-hidden>←</span> {SECTION_LABEL[a.section] ?? "Back"}
+        <span aria-hidden>←</span> {back}
       </Link>
 
-      <article className="mt-3">
-        <h1 className="font-display text-[1.85rem] font-semibold leading-[1.15] tracking-[-0.02em]">
+      <article className="mt-2xs">
+        <h1 className="font-display text-display-s font-semibold leading-[1.1] tracking-display">
           {a.title}
         </h1>
-        <p className="tnum mt-2.5 text-[0.7rem] font-medium uppercase tracking-[0.14em] text-muted">
-          {a.minutes} min read{a.level ? ` · ${a.level}` : ""}
+        {/* The one label that survives: it carries real information. */}
+        <p className="tnum mt-2xs text-xs text-ink-2">
+          {a.minutes} min{a.level ? ` · ${a.level}` : ""}
         </p>
 
         {a.body.length === 0 ? (
           /* Deliberately honest — no filler. See the header of content/articles.ts. */
-          <div className="mt-6 rounded-card border border-line bg-white p-5 shadow-card">
-            <p className="font-display text-lg font-semibold">Still being written</p>
-            <p className="mt-1.5 text-sm leading-relaxed text-muted">
+          <div className="rule-top mt-md pt-md">
+            <p className="font-display text-lg font-semibold tracking-heading">
+              Still being written
+            </p>
+            <p className="mt-2xs max-w-[46ch] text-sm leading-relaxed text-ink-2">
               We would rather leave this blank than fill it with something we have not
               checked. It will be here once it has been written and read through.
             </p>
             <Link
               href={`/${a.section}`}
-              className="tap mt-4 inline-flex min-h-11 items-center rounded-pill border border-line px-5 text-sm font-semibold text-wine active:bg-blush"
+              className="tap mt-md inline-flex min-h-11 items-center rounded-pill border border-rule px-md text-sm text-ink-2 active:bg-paper-2"
             >
-              Back to {SECTION_LABEL[a.section] ?? "the list"}
+              Back to {back}
             </Link>
           </div>
         ) : (
-          <div className="mt-6 space-y-4 text-[1.0625rem] leading-[1.72]">
+          <div className="mt-md max-w-[68ch] space-y-sm text-md leading-[1.72]">
             {a.body.map((p, i) => (
               <p key={i} className="selectable">
                 {p}
@@ -64,7 +69,7 @@ export default function Read({ params }: { params: { slug: string } }) {
         {a.sensitive && (
           <Link
             href="/support"
-            className="tap mt-9 block rounded-card bg-wine p-4 text-center font-semibold text-white shadow-lift"
+            className="tap mt-2xl block rounded-inner bg-accent px-md py-xs text-center font-semibold text-accent-ink"
           >
             Talk to someone
           </Link>

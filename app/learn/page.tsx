@@ -3,8 +3,7 @@ export default function Page() {
   return (
     <ArticleList
       section="learn"
-      eyebrow="Short courses"
-      title="Bite-sized learning"
+      title="Learn"
       intro="One sitting each. Start anywhere — nothing here is in order."
     />
   );

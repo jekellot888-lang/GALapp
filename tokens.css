@@ -1,0 +1,78 @@
+/* Hallmark · genre: editorial · theme: custom (tuned) · design-system: design.md
+ * vibe: warm bone paper, deep madder, quiet
+ * paper  oklch(96.8% 0.009 75)   band: light
+ * accent oklch(42% 0.13 22)      hue: warm
+ * display: Fraunces (roman)      body: system stack
+ * Portable token layer. Nothing in this project inlines a colour.
+ */
+
+:root {
+  /* ── Colour ─────────────────────────────────────────────────────────────
+     Neither paper nor ink is pure — both are tinted toward the accent so the
+     screen reads as a warm surface rather than a browser default. */
+  --color-paper: oklch(96.8% 0.009 75);
+  --color-paper-2: oklch(93.4% 0.013 70);
+  --color-paper-3: oklch(89.5% 0.016 66);
+
+  --color-ink: oklch(24% 0.021 32);
+  --color-ink-2: oklch(46% 0.022 32);
+
+  --color-rule: oklch(85% 0.014 62);
+  --color-rule-strong: oklch(74% 0.018 55);
+
+  --color-accent: oklch(42% 0.13 22);
+  --color-accent-deep: oklch(33% 0.11 20);
+  --color-accent-ink: oklch(98% 0.006 75);
+  --color-focus: oklch(42% 0.13 22);
+
+  /* ── Type ──────────────────────────────────────────────────────────────── */
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-md: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 1.875rem;
+  --text-display-s: 2.25rem;
+  --text-display: 2.75rem;
+
+  /* Tracking is size-specific. One value for all sizes is wrong somewhere. */
+  --track-display: -0.022em;
+  --track-heading: -0.012em;
+  --track-body: 0em;
+  --track-label: 0.14em;
+
+  /* ── Space — 4pt scale ─────────────────────────────────────────────────── */
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs: 0.75rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4.5rem;
+
+  /* ── Line ──────────────────────────────────────────────────────────────── */
+  --rule-hair: 1px;
+
+  /* ── Radius — varied, not uniform ──────────────────────────────────────── */
+  --radius-inner: 10px;
+  --radius-card: 14px;
+  --radius-pill: 999px;
+
+  /* ── Motion ────────────────────────────────────────────────────────────── */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --dur-press: 120ms;
+  --dur-short: 190ms;
+  --dur-enter: 220ms;
+
+  /* ── Elevation — two fixed layers only ─────────────────────────────────── */
+  --shadow-nav: 0 -1px 0 var(--color-rule);
+  --shadow-lift: 0 1px 2px oklch(24% 0.021 32 / 0.06),
+                 0 8px 24px oklch(24% 0.021 32 / 0.08);
+}
