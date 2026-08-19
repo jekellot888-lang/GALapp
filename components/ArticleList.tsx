@@ -1,37 +1,59 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
-import { bySection, type Section } from "@/content/articles";
+import { TOPICS, bySection, type Section } from "@/content/articles";
 
 export default function ArticleList({
   section,
   title,
   intro,
+  eyebrow,
 }: {
   section: Section;
   title: string;
   intro: string;
+  eyebrow: string;
 }) {
-  const items = bySection(section);
+  const [topic, setTopic] = useState<string | null>(null);
+  const all = bySection(section);
+  const topics = TOPICS[section];
+
+  // Only offer a pill that actually has something behind it.
+  const live = topics.filter((t) => all.some((a) => a.topic === t));
+  const items = topic ? all.filter((a) => a.topic === topic) : all;
+
   return (
     <main>
-      <h1 className="font-display text-[2rem] font-semibold leading-[1.1] tracking-[-0.02em]">
-        {title}
-      </h1>
-      <p className="mb-7 mt-1.5 text-muted">{intro}</p>
+      <header className="grain relative mb-6 overflow-hidden rounded-card bg-mulled p-5 text-white shadow-lift">
+        <p className="text-[0.7rem] font-medium uppercase tracking-[0.16em] text-white/80">
+          {eyebrow}
+        </p>
+        <h1 className="mt-1.5 font-display text-[1.75rem] font-semibold leading-[1.15] tracking-[-0.02em]">
+          {title}
+        </h1>
+        <p className="mt-1.5 text-sm leading-relaxed text-white/90">{intro}</p>
+      </header>
+
+      {live.length > 0 && (
+        <div className="-mx-5 mb-5 flex gap-2 overflow-x-auto px-5 pb-1">
+          <Pill on={topic === null} onClick={() => setTopic(null)}>
+            All
+          </Pill>
+          {live.map((t) => (
+            <Pill key={t} on={topic === t} onClick={() => setTopic(t)}>
+              {t}
+            </Pill>
+          ))}
+        </div>
+      )}
 
       {items.length === 0 ? (
-        /* Composed empty state rather than one grey line. */
         <div className="rounded-card border border-line bg-white p-6 text-center shadow-card">
           <p className="font-display text-lg font-semibold">Nothing here yet</p>
           <p className="mx-auto mt-1.5 max-w-[34ch] text-sm text-muted">
-            New reads land here as they are written. In the meantime, Health has the
-            most to read.
+            New reads land here as they are written.
           </p>
-          <Link
-            href="/health"
-            className="tap mt-4 inline-flex min-h-11 items-center rounded-pill bg-wine px-5 text-sm font-semibold text-white"
-          >
-            Go to Health
-          </Link>
         </div>
       ) : (
         <ul className="space-y-3">
@@ -43,7 +65,12 @@ export default function ArticleList({
                 href={`/read/${a.slug}`}
                 className="tap tap-lift block rounded-card bg-white p-4 shadow-card active:shadow-lift"
               >
-                <p className="font-display text-[1.0625rem] font-semibold leading-snug">
+                {a.topic && (
+                  <span className="text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-muted">
+                    {a.topic}
+                  </span>
+                )}
+                <p className="mt-1 font-display text-[1.0625rem] font-semibold leading-snug">
                   {a.title}
                 </p>
                 <p className="mt-1.5 text-sm leading-relaxed text-muted">{a.blurb}</p>
@@ -56,5 +83,29 @@ export default function ArticleList({
         </ul>
       )}
     </main>
+  );
+}
+
+function Pill({
+  on,
+  onClick,
+  children,
+}: {
+  on: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      aria-pressed={on}
+      className={`tap min-h-11 shrink-0 whitespace-nowrap rounded-pill border px-4 text-sm font-semibold ${
+        on
+          ? "border-wine bg-wine text-white"
+          : "border-line bg-white text-muted active:bg-blush"
+      }`}
+    >
+      {children}
+    </button>
   );
 }
