@@ -6,10 +6,16 @@
  * specific, unsentimental, names the thing directly ("He Beat You. Here's What
  * to Do." — not "Coping With Difficult Situations"). Keep it when writing more.
  *
- * `body` is empty on every entry and the reader says so honestly rather than
- * showing filler. Bodies need a person, not a compiler. `verified` tracks
- * whether a human has read the finished body for accuracy and tone — it is not
- * about the title existing.
+ * Six bodies were imported on 2026-08-20 from the Elle.dc.html design canvas
+ * (Claude Design project "Mobile app design improvement"), which carried real
+ * written copy rather than placeholder text: patterns-that-harm-you,
+ * recognizing-burnout, breathing-for-calm, better-sleep,
+ * financial-independence-rights and start-a-small-business.
+ *
+ * The rest are still empty, and the reader says so honestly rather than showing
+ * filler. `verified` stays false on all of them, imported or not: it tracks
+ * whether a person has read the finished body for accuracy and tone, and
+ * copying text across is not that.
  *
  * Minutes are carried over from the source. They describe the intended body,
  * so re-check them once bodies are written.
@@ -53,7 +59,12 @@ export const ARTICLES: Article[] = [
     topic: "Mind",
     sensitive: true,
     verified: false,
-    body: [],
+    body: [
+      "Harm is rarely one dramatic event. It is usually a pattern: something small, then an apology, then something smaller, then silence.",
+      "Watch for the shape of it. Do you change your behaviour to keep someone calm? Do you check their mood before you speak? Do you explain away things you would not accept for a friend?",
+      "Control counts. Money, phone, movement, friendships — when these are managed by someone else, that is abuse even when nobody has been hit.",
+      "None of this is caused by what you wore, said, cooked, or failed to do. Responsibility sits with the person doing the harm.",
+    ],
   },
   {
     slug: "understanding-depression",
@@ -87,7 +98,12 @@ export const ARTICLES: Article[] = [
     minutes: 5,
     topic: "Mind",
     verified: false,
-    body: [],
+    body: [
+      "Burnout does not feel like tiredness. It feels like not caring about things you used to care about.",
+      "The early signals are physical: shallow sleep, a short temper, a headache that lives behind one eye.",
+      "Subtract before you add. One thing off the list this week beats one more coping technique.",
+      "Tell one person. Carrying it privately is what turns a hard month into a hard year.",
+    ],
   },
   {
     slug: "breathing-for-calm",
@@ -97,7 +113,12 @@ export const ARTICLES: Article[] = [
     minutes: 4,
     topic: "Mind",
     verified: false,
-    body: [],
+    body: [
+      "Breathing is the fastest lever you have. It works in a matatu, in a queue, in a locked bathroom.",
+      "Four in, six out. Longer out than in is what tells your body the threat has passed. Do it six times.",
+      "Box breathing: in for four, hold for four, out for four, hold for four. Useful when your thoughts are racing.",
+      "Hand on the ribs. Feel the ribs widen sideways rather than the shoulders lifting. That is the breath doing the work.",
+    ],
   },
   {
     slug: "self-care-rituals",
@@ -117,7 +138,12 @@ export const ARTICLES: Article[] = [
     minutes: 4,
     topic: "Sleep",
     verified: false,
-    body: [],
+    body: [
+      "Rest is not a reward for finishing everything. It is the thing that makes tomorrow possible.",
+      "Same wake time every day, including Sunday. The body sets its clock by when light arrives, not by when you fall asleep.",
+      "Phone out of reach, not out of use. Distance is easier to keep than willpower.",
+      "If you are awake for more than twenty minutes, get up, sit in low light, and come back. Bed should mean sleep, not waiting.",
+    ],
   },
   {
     slug: "sleep-for-grades",
@@ -205,7 +231,12 @@ export const ARTICLES: Article[] = [
     minutes: 5,
     topic: "Earning",
     verified: false,
-    body: [],
+    body: [
+      "Most businesses that last did not start with capital. They started with a skill, a phone, and somebody willing to pay for it once.",
+      "Write down three things people already ask you for. That is your list. Pick the one that costs the least to try this week.",
+      "Price it so that the money covers your time, your materials, and a little more. Undercharging is the most common way a good idea quietly dies.",
+      "Keep the business money separate from the house money from the very first sale, even if it is only two envelopes.",
+    ],
   },
   {
     slug: "turning-a-skill-into-income",
@@ -257,7 +288,12 @@ export const ARTICLES: Article[] = [
     topic: "Saving",
     sensitive: true,
     verified: false,
-    body: [],
+    body: [
+      "Money is not just about buying things. It is about having options — the ability to say no, to leave, to start again.",
+      "Under Ugandan law, a woman may own property in her own name, open an account without a husband's signature, and keep her earnings as her own. These are not favours. They are rights.",
+      "Start with one account only you can see. A mobile money line registered to your own SIM counts. Keep the PIN out of shared notebooks and off shared phones.",
+      "If someone controls your money — takes your earnings, gives you an allowance, demands receipts for everything — that is a recognised form of abuse, and there are people who will treat it as one.",
+    ],
   },
 
   // ── Learn ─────────────────────────────────────────────────────────────────

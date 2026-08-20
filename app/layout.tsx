@@ -1,20 +1,30 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces } from "next/font/google";
+import { Cormorant_Garamond, Manrope } from "next/font/google";
 import "./globals.css";
 import BottomNav from "@/components/BottomNav";
 import SWRegister from "@/components/SWRegister";
 import HapticSwitch from "@/components/HapticSwitch";
 
 /**
- * Headings only. Self-hosted by next/font, so it works offline and the service
- * worker's cache-first rule picks it up on first load — no third-party request,
- * nothing leaves the device. SOFT/WONK round the terminals off so it reads warm
- * rather than institutional.
+ * Brand faces from the Elle guide: Cormorant Garamond for display, Manrope for
+ * body. Both self-hosted by next/font, so they work offline and the service
+ * worker caches them — no third-party request, nothing leaves the device.
+ *
+ * Manrope replaces the system stack. That was the right call while GAL had no
+ * brand; it is the wrong call now that it does. Two subset faces is real weight
+ * on roaming data, so keep the weight list tight.
  */
-const display = Fraunces({
+const display = Cormorant_Garamond({
   subsets: ["latin"],
-  axes: ["SOFT", "WONK", "opsz"],
-  variable: "--font-fraunces",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-cormorant",
+  display: "swap",
+});
+
+const body = Manrope({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-manrope",
   display: "swap",
 });
 
@@ -53,8 +63,8 @@ export const viewport: Viewport = {
   /* The status bar follows the paper, not the accent — the installed app should
      read as one continuous surface rather than a coloured bar above a page. */
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f8f4ee" },
-    { media: "(prefers-color-scheme: dark)", color: "#241f1c" },
+    { media: "(prefers-color-scheme: light)", color: "#FFF8F5" },
+    { media: "(prefers-color-scheme: dark)", color: "#1B0F13" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -66,7 +76,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={display.variable}>
+    <html lang="en" className={`${display.variable} ${body.variable}`}>
       <body className="bg-paper text-ink font-sans antialiased">
         <a href="#main" className="skip">
           Skip to content

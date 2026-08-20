@@ -119,7 +119,7 @@ export const RESOURCES: Resource[] = [
     hours: "",
     cost: "Toll-free",
     verified: false,
-    flag: "Hours contradict in the source (24/7 vs Mon–Fri 8:30am–5pm). Confirm before listing.",
+    flag: "Hours contradicted in the Base44 screenshots (24/7 vs Mon–Fri 8:30am–5pm). The Elle.dc.html design canvas gives Mon–Fri 8:30am–5pm, which is a second vote for the narrower hours but still not a confirmation. Confirm by calling outside those hours.",
   },
   {
     id: "butabika-crisis",
@@ -138,7 +138,7 @@ export const RESOURCES: Resource[] = [
     hours: "Mon–Fri, 9am–5pm",
     cost: "Toll-free",
     verified: false,
-    flag: "Source gave two different numbers (0800000051 / 08000051). Establish which is real before filling this in.",
+    flag: "THREE different numbers across sources now: 0800000051 and 08000051 from the Base44 screenshots, and 0800 100 051 from the Elle.dc.html design canvas. Three variants for one service means this is the least trustworthy entry here, not the most. Do not pick the most plausible-looking one — call them.",
   },
   {
     id: "justice-centres",

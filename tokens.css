@@ -1,37 +1,48 @@
-/* Hallmark · genre: editorial · theme: custom (tuned) · design-system: design.md
- * vibe: warm bone paper, deep madder, quiet
- * paper  oklch(96.8% 0.009 75)   band: light   (dark band: oklch(19% 0.012 40))
- * accent oklch(42% 0.13 22)      hue: warm
- * display: Fraunces (roman)      body: system stack
- * Portable token layer. Nothing in this project inlines a colour.
+/* Elle brand tokens · source: Elle.dc.html, Claude Design project
+ * "Mobile app design improvement" (imported 2026-08-20), which in turn derives
+ * from uploads/Elle Brand guide final (1).pdf.
+ *
+ * This replaces the tuned palette invented in the editorial pass. That was a
+ * good-faith stand-in built before a brand existed; a real brand guide outranks
+ * it. Token NAMES are unchanged so the components keep working — only the
+ * values and the two faces moved.
+ *
+ * Display: Cormorant Garamond (roman). Body: Manrope.
+ * Ground #FFF8F5 · ink #2A1218 · accent #7A1F3D wine · second voice #B76E79 rose.
  */
 
 :root {
-  /* ── Colour ─────────────────────────────────────────────────────────────
-     Neither paper nor ink is pure — both are tinted toward the accent so the
-     screen reads as a warm surface rather than a browser default. */
-  --color-paper: oklch(96.8% 0.009 75);
-  --color-paper-2: oklch(93.4% 0.013 70);
-  --color-paper-3: oklch(89.5% 0.016 66);
+  /* ── Colour ─────────────────────────────────────────────────────────────── */
+  --color-paper: #FFF8F5;
+  --color-paper-2: #FDF1EE;
+  --color-paper-3: #F7EAE6;
 
-  --color-ink: oklch(24% 0.021 32);
-  --color-ink-2: oklch(46% 0.022 32);
+  --color-ink: #2A1218;
+  /* neutral-700. neutral-600 (#8A6A6E) sits under AA on this ground for body
+     copy, so secondary text takes the deeper step. */
+  --color-ink-2: #6E4A52;
 
-  --color-rule: oklch(85% 0.014 62);
-  --color-rule-strong: oklch(74% 0.018 55);
+  --color-rule: #EFDCD7;
+  --color-rule-strong: #D6B2AF;
 
-  --color-accent: oklch(42% 0.13 22);
-  --color-accent-deep: oklch(33% 0.11 20);
-  --color-accent-ink: oklch(98% 0.006 75);
-  --color-focus: oklch(42% 0.13 22);
+  --color-accent: #7A1F3D;
+  --color-accent-deep: #561020;
+  --color-accent-ink: #FFF8F5;
+  --color-focus: #7A1F3D;
+
+  /* The rose is a genuine second voice, not a highlight. Paragraph-size text
+     never sits in it — it fails AA on this ground. Marks, rules, fills only. */
+  --color-accent-2: #B76E79;
+  --color-accent-2-deep: #561020;
+  --color-accent-2-tint: #FBF0EC;
 
   --shadow-nav: 0 -1px 0 var(--color-rule);
-  --shadow-lift: 0 1px 2px oklch(24% 0.021 32 / 0.06),
-                 0 8px 24px oklch(24% 0.021 32 / 0.08);
+  --shadow-lift: 0 1px 2px rgba(42, 18, 24, 0.06),
+                 0 8px 24px rgba(42, 18, 24, 0.08);
 
-  /* ── Type ──────────────────────────────────────────────────────────────── */
-  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
-  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* ── Type ───────────────────────────────────────────────────────────────── */
+  --font-display: var(--font-cormorant), Georgia, "Times New Roman", serif;
+  --font-body: var(--font-manrope), -apple-system, BlinkMacSystemFont, sans-serif;
 
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
@@ -43,13 +54,14 @@
   --text-display-s: 2.25rem;
   --text-display: 2.75rem;
 
-  /* Tracking is size-specific. One value for all sizes is wrong somewhere. */
-  --track-display: -0.022em;
-  --track-heading: -0.012em;
+  /* Cormorant runs light and open, so it takes less negative tracking than a
+     sturdier face would. */
+  --track-display: -0.012em;
+  --track-heading: -0.006em;
   --track-body: 0em;
   --track-label: 0.14em;
 
-  /* ── Space — 4pt scale ─────────────────────────────────────────────────── */
+  /* ── Space — 4pt scale ──────────────────────────────────────────────────── */
   --space-3xs: 0.25rem;
   --space-2xs: 0.5rem;
   --space-xs: 0.75rem;
@@ -59,15 +71,14 @@
   --space-xl: 3rem;
   --space-2xl: 4.5rem;
 
-  /* ── Line ──────────────────────────────────────────────────────────────── */
   --rule-hair: 1px;
 
-  /* ── Radius — varied, not uniform ──────────────────────────────────────── */
-  --radius-inner: 10px;
-  --radius-card: 14px;
+  /* Brand radii: 12 / 20, softer than the editorial pass. */
+  --radius-inner: 12px;
+  --radius-card: 20px;
   --radius-pill: 999px;
 
-  /* ── Motion ────────────────────────────────────────────────────────────── */
+  /* ── Motion ─────────────────────────────────────────────────────────────── */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
@@ -77,36 +88,31 @@
 }
 
 /* ── Dark ─────────────────────────────────────────────────────────────────
-   Only the colour tokens are redefined; type, space, radius and motion are
-   scheme-independent by design.
-
-   Warm dark, not neutral and never pure black. Same reasoning as the light
-   mode: the surface should read as a material, and a warm ground keeps Fraunces
-   from going cold and clinical. #000 on OLED also makes hairlines disappear,
-   which would break the one device this system separates content with.
-
-   The accent inverts direction. Deep madder at 42% lightness has nowhere near
-   enough contrast against a dark ground, so dark mode lifts it to a terracotta
-   and flips accent-ink to near-black. */
+   The brand guide does not specify a dark scheme, so this is derived from it
+   rather than imported: the ink becomes the ground, and the accent inverts to
+   the rose, which is the only brand hue with enough lightness to carry text on
+   a dark plum. Kept because a dark screen is far less conspicuous in a dark
+   room, which is a safety property in this app, not a preference. */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-paper: oklch(19% 0.012 40);
-    --color-paper-2: oklch(23.5% 0.014 40);
-    --color-paper-3: oklch(28% 0.016 42);
+    --color-paper: #1B0F13;
+    --color-paper-2: #24151A;
+    --color-paper-3: #2F1C22;
 
-    --color-ink: oklch(93.5% 0.008 75);
-    --color-ink-2: oklch(73% 0.014 68);
+    --color-ink: #FBEFEC;
+    --color-ink-2: #D6B2AF;
 
-    --color-rule: oklch(33% 0.014 45);
-    --color-rule-strong: oklch(47% 0.018 48);
+    --color-rule: #3E1F28;
+    --color-rule-strong: #6E4A52;
 
-    --color-accent: oklch(74% 0.132 38);
-    --color-accent-deep: oklch(64% 0.125 34);
-    --color-accent-ink: oklch(17% 0.02 35);
-    --color-focus: oklch(78% 0.13 40);
+    --color-accent: #E8B3B7;
+    --color-accent-deep: #C77E92;
+    --color-accent-ink: #2A1218;
+    --color-focus: #E8B3B7;
 
-    /* Shadows barely read on a dark ground, so the nav leans on its rule and
-       the lift shadow deepens rather than spreading. */
-    --shadow-lift: 0 1px 2px oklch(0% 0 0 / 0.4), 0 8px 24px oklch(0% 0 0 / 0.34);
+    --color-accent-2: #CE9A9C;
+    --color-accent-2-tint: #2F1C22;
+
+    --shadow-lift: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.34);
   }
 }

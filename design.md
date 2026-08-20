@@ -20,17 +20,28 @@ served by a page that is pleased with itself.
 
 ## Theme
 
-**Custom (tuned), not catalog.** The 21 catalog palettes ship as names only in
-this install, with no token values — naming one would mean inventing its palette
-and mislabelling it. So this is a palette built for the brief and declared as
-such.
+**The Elle brand.** Superseded the invented palette on 2026-08-20, imported from
+`Elle.dc.html` in the Claude Design project "Mobile app design improvement",
+which derives from the Elle brand guide PDF.
 
-Warm bone paper, warm near-black ink, a single deep madder accent held under 5 %
-of any viewport. Warm rather than pink: the previous blush-on-blush read as
-generic wellness-app, and the accent carries the brand warmth on its own.
+Until then this system used a tuned palette I built, because no brand existed to
+follow. That was a stand-in and it is now retired. A real brand guide outranks a
+good guess, even a measured one.
 
-Values live in `tokens.css` at the project root. Never inline a colour — every
-declaration references a token by name.
+- Ground `#FFF8F5`, surface `#FDF1EE`, ink `#2A1218`, divider `#EFDCD7`
+- Accent `#7A1F3D`, a deep wine. 9.56:1 on the ground either direction.
+- Second voice `#B76E79`, rose. **Never paragraph text** — it measures 3.62:1 on
+  the ground, under AA. Marks, rules, fills and large display only.
+- Secondary text takes `#6E4A52` (neutral-700), not neutral-600, which sits
+  under AA for body copy on this ground.
+- Radii 12 / 20, softer than the editorial pass.
+
+Values live in `tokens.css`. Never inline a colour — every declaration
+references a token by name.
+
+The structural rules below did not change with the brand. Hairlines still
+separate content, cards still do not float, and the accent still stays under
+5 % of a viewport.
 
 ### Dark mode
 
@@ -63,13 +74,20 @@ Rules for the dark palette:
 
 ## Typography
 
-- **Display:** Fraunces, weight 600, `font-style: normal`. Self-hosted via
-  `next/font`, so it works offline and the service worker caches it. SOFT/WONK
-  axes soften the terminals — warm, not institutional. Italic headers are banned.
-- **Body:** the system stack. On iPhone that resolves to SF Pro, a genuinely
-  refined text face that costs zero bytes and keeps the PWA feeling native.
-  This is a deliberate preserve, not an oversight — the app must work offline
-  over roaming data, and a second webfont is real weight for no reading gain.
+Both faces come from the brand guide and replaced Fraunces + the system stack on
+2026-08-20.
+
+- **Display:** Cormorant Garamond, roman. Italic headers stay banned.
+- **Body:** Manrope. This overrides the earlier argument for the system stack,
+  which was correct only while GAL had no brand of its own. Two subset webfaces
+  is real weight on roaming data, so keep the weight list tight — 400/500/600/700
+  and no more.
+- Both self-hosted via `next/font`, so they work offline and the service worker
+  caches them. Note that the Google Fonts fetch has failed transiently at build
+  time and silently fallen back; if headings ever render as Georgia, that is
+  why, and the fix is a rebuild, not a code change.
+- Cormorant runs light and open, so display tracking eased from −0.022em to
+  −0.012em. A sturdier face wanted more negative tracking than this one does.
 - **Display tracking:** −0.02em at display sizes, easing to −0.01em at heading
   sizes, 0 at body. Tracking is size-specific; one value for all sizes is wrong
   somewhere.
