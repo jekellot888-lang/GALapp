@@ -104,7 +104,7 @@ export default function Home() {
           {state.name ?? "you"}
         </h1>
         {ready && state.streak > 0 && (
-          <p className="tnum mt-3xs text-sm text-ink-2">
+          <p className="tnum mt-3xs text-sm text-calm">
             {state.streak} day{state.streak === 1 ? "" : "s"} in a row
           </p>
         )}
@@ -205,7 +205,7 @@ export default function Home() {
           <h2 className="font-display text-lg font-semibold tracking-heading">
             Today&rsquo;s goals
           </h2>
-          <span className="tnum text-sm text-ink-2">
+          <span className={`tnum text-sm ${done.length ? "font-semibold text-calm" : "text-ink-2"}`}>
             {done.length}/{GOALS.length}
           </span>
         </div>
@@ -226,7 +226,7 @@ export default function Home() {
                     data-on={on}
                     className={`tick grid h-5 w-5 shrink-0 place-items-center rounded-full border text-xs ${
                       on
-                        ? "border-accent bg-accent text-accent-ink"
+                        ? "border-calm bg-calm text-on-calm"
                         : "border-rule-strong"
                     }`}
                     aria-hidden

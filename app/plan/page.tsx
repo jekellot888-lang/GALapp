@@ -40,7 +40,7 @@ export default function Plan() {
         </h1>
         <p className="mt-2xs max-w-[38ch] text-md leading-relaxed text-ink-2">
           Kept on this phone only.{" "}
-          <span className="tnum">
+          <span className={`tnum ${done.length ? "font-semibold text-calm" : ""}`}>
             {ready ? `${done.length} of ${STEPS.length} ready.` : ""}
           </span>
         </p>
@@ -59,7 +59,7 @@ export default function Plan() {
                 <span
                   aria-hidden
                   className={`tap mt-3xs grid h-6 w-6 shrink-0 place-items-center rounded-full border text-xs ${
-                    on ? "border-accent bg-accent text-accent-ink" : "border-rule-strong"
+                    on ? "border-calm bg-calm text-on-calm" : "border-rule-strong"
                   }`}
                 >
                   {on ? "✓" : ""}

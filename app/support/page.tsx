@@ -69,7 +69,7 @@ export default function Support() {
               <p className="mt-3xs max-w-[46ch] text-sm leading-relaxed text-ink-2">
                 {r.what}
               </p>
-              <p className="tnum mt-3xs text-xs text-ink-2">
+              <p className="tnum mt-3xs text-xs text-calm">
                 {r.hours} · {r.cost}
               </p>
               {r.address && <p className="mt-3xs text-xs text-ink-2">{r.address}</p>}

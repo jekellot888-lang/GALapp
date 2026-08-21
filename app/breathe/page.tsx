@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Icon from "@/components/Icon";
 
 /**
  * Sixty seconds of breathing.
@@ -155,6 +156,9 @@ export default function Breathe() {
 
       {stage === "done" && (
         <div className="mt-lg">
+          <span aria-hidden className="mb-md grid h-12 w-12 place-items-center rounded-full bg-calm-tint text-calm">
+            <Icon name="breathe" className="h-6 w-6" />
+          </span>
           <h1 className="font-display text-display font-semibold leading-[1.05] tracking-display">
             That&rsquo;s a minute.
           </h1>

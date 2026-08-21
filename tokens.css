@@ -57,6 +57,26 @@
      display sizes; this is 4.61, which passes for normal text. */
   --color-on-rose: #2A1218;
 
+  /* ── The third voice: sage ──────────────────────────────────────────────
+     Wine and rose are both warm, so the app had lightness contrast and no hue
+     contrast — which is why two accents still read as one colour.
+
+     Derived from the sage (#7A8A5E) in the Organic base system this project
+     was built on, pulled cooler and deeper. Note that Elle's brand override
+     replaced that sage with the rose, so this is a considered re-introduction
+     rather than something the brand guide hands you — worth knowing before it
+     spreads further. The raw sage measures 3.56 on bone paper and fails as
+     text, the same trap the rose sets; this step is 5.77.
+
+     It means one thing only: settled. Done, counted, confirmed, on track.
+     Wine is act-now, rose is company and warmth, sage is the quiet yes.
+     Nothing decorative gets it. */
+  --color-calm: #3F6B5B;
+  --color-calm-tint: #EDF2EF;
+  --color-calm-tint-2: #DDE8E2;
+  --color-calm-edge: #C7D6CE;
+  --color-on-calm: #FFF8F5;
+
   /* Two voices, split by what a screen is for. Wine is action and safety;
      rose is the warmer half — company, reflection, the daily line. Nothing
      else gets a hue. */
@@ -150,6 +170,16 @@
     --color-rose-tint-2: #382426;
     --color-rose-edge: #55393C;
     --color-rose-ink: #E4C3BC;
+
+    /* Sage lifts on a dark ground for the same reason the others do — a
+       coloured text step has to be lighter than the paper, not darker.
+       --color-on-calm flips to near-black because the fill is now the light
+       half of the pair. */
+    --color-calm: #9CC2B1;
+    --color-calm-tint: #1B2A25;
+    --color-calm-tint-2: #24382F;
+    --color-calm-edge: #3D5A4D;
+    --color-on-calm: #12211C;
 
     --shadow-lift: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.34);
   }

@@ -30,6 +30,11 @@ const config: Config = {
         "rose-edge": "var(--color-rose-edge)",
         "rose-ink": "var(--color-rose-ink)",
         "on-rose": "var(--color-on-rose)",
+        calm: "var(--color-calm)",
+        "calm-tint": "var(--color-calm-tint)",
+        "calm-tint-2": "var(--color-calm-tint-2)",
+        "calm-edge": "var(--color-calm-edge)",
+        "on-calm": "var(--color-on-calm)",
       },
       fontFamily: {
         display: "var(--font-display)",

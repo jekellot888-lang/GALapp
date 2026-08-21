@@ -105,7 +105,7 @@ function ClinicRow({ c }: { c: ReturnType<typeof liveClinics>[number] }) {
       <h3 className="font-display text-lg font-semibold tracking-heading">{c.name}</h3>
       <p className="mt-3xs max-w-[46ch] text-sm leading-relaxed text-ink-2">{c.what}</p>
       <p className="mt-3xs text-sm text-ink-2">{c.address}</p>
-      <p className="tnum mt-3xs text-xs text-ink-2">
+      <p className="tnum mt-3xs text-xs text-calm">
         {c.hours} · {c.cost}
         {c.walkIn ? " · walk-ins" : ""}
       </p>

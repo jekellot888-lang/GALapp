@@ -38,7 +38,32 @@ good guess, even a measured one.
 - Ground `#FFF8F5`, surface `#FDF1EE`, ink `#2A1218`, divider `#EFDCD7`
 - Accent `#7A1F3D`, a deep wine. 9.56:1 on the ground either direction.
 - Second voice `#B76E79`, rose. **Never paragraph text** — it measures 3.62:1 on
-  the ground, under AA. Marks, rules, fills and large display only.
+  the ground, under AA. Marks, rules, fills and large display only. Text on a
+  rose fill uses `--color-on-rose`, which is dark in *both* schemes because the
+  fill stays light in dark mode.
+- Third voice `#3F6B5B`, sage. Wine and rose are both warm, so the app had
+  lightness contrast and no hue contrast — two accents still read as one colour.
+  This is the cool relief.
+
+### What each colour means
+
+One meaning each. A colour that means two things means nothing.
+
+| Voice | Token | Means | Examples |
+|---|---|---|---|
+| Wine | `--color-accent` | **Act now.** The primary action, and safety. | Call buttons, Quiet Mode, "Talk to someone now" |
+| Rose | `--color-accent-2` | **Company and warmth.** The softer half. | The daily line, mood chips, Support routes, article meta |
+| Sage | `--color-calm` | **Settled.** Done, counted, confirmed, on track. | Completed goals, plan steps ready, streaks, verified hours |
+
+Nothing decorative gets a hue. If a new element does not fit one of those three
+meanings, it is ink and rule.
+
+**Provenance note on the sage.** It derives from `#7A8A5E` in the Organic base
+system this project was built on, pulled cooler and deeper to clear AA (the raw
+sage measures 3.56 on bone paper and fails as text, the same trap the rose
+sets). Elle's brand override *replaced* that sage with the rose, so this is a
+considered re-introduction rather than something the brand guide hands you.
+Worth knowing before it spreads further, and worth confirming with Elle.
 - Secondary text takes `#6E4A52` (neutral-700), not neutral-600, which sits
   under AA for body copy on this ground.
 - Radii 12 / 20, softer than the editorial pass.
