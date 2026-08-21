@@ -118,3 +118,39 @@ p { text-wrap: pretty; }
   transition: transform 180ms var(--ease-out);
 }
 .skip:focus { transform: none; }
+
+/* ── Quiet mode ──────────────────────────────────────────────────────────────
+   The panic surface is dark in BOTH schemes. A lit screen in a dark room is
+   what gets noticed, and this is the screen opened when being noticed is the
+   danger. Its own token set, because it deliberately ignores paper/ink. */
+.quiet {
+  --q-bg: #140A0D;
+  --q-tile: #24151A;
+  --q-rule: #3E1F28;
+  --q-dim: #D6B2AF;
+  --q-accent: #E8B3B7;
+  --q-accent-ink: #2A1218;
+  background: var(--q-bg);
+  color: #FBEFEC;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.quiet ::selection { background: var(--q-accent); color: var(--q-accent-ink); }
+.quiet :focus-visible { outline-color: var(--q-accent); }
+
+/* ── Calculator disguise ─────────────────────────────────────────────────────
+   Deliberately looks like a system calculator and nothing like GAL. No brand
+   colour, no Cormorant, no warmth — the whole point is that it does not read as
+   part of this app. */
+.calc {
+  --c-key: #333333;
+  --c-fn: #A5A5A5;
+  --c-op: #FF9F0A;
+  --c-op-ink: #FFFFFF;
+  --c-ink: #FFFFFF;
+  --c-hint: #6B6B6B;
+  background: #000000;
+  color: #FFFFFF;
+  font-family: var(--font-body);
+}
+.calc button:active { filter: brightness(1.35); }

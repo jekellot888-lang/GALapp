@@ -1,6 +1,7 @@
 "use client";
 
 import { RESOURCES, liveResources, flaggedResources } from "@/content/support";
+import Link from "next/link";
 import QuickExit from "@/components/QuickExit";
 
 /**
@@ -24,6 +25,15 @@ export default function Support() {
           Free and confidential. You do not have to explain yourself to use these.
         </p>
       </header>
+
+      {/* Quiet Mode sits above the reassurance block on purpose: someone who
+          needs it is not reading, she is scanning for the fastest way out. */}
+      <Link
+        href="/quiet"
+        className="tap mb-lg block rounded-inner bg-accent px-md py-sm text-center font-semibold text-accent-ink"
+      >
+        Open Quiet Mode
+      </Link>
 
       {/* The barrier is rarely the number — it is not knowing what happens after
           you dial. Saying so plainly is the point of this block. */}
@@ -81,6 +91,11 @@ export default function Support() {
           each one, then set verified: true.
         </p>
       )}
+
+      <Link href="/contacts" className="tap tap-tint rule-top -mx-5 mt-xl block px-5 py-md active:bg-paper-2">
+        <span className="block font-display text-lg font-semibold tracking-heading">Trusted contacts</span>
+        <span className="mt-3xs block text-sm text-ink-2">Up to three people Quiet Mode can message. Kept on this phone.</span>
+      </Link>
 
       <p className="mt-lg text-xs text-ink-2">
         GAL does not record who you call, and nothing you do here is sent anywhere.

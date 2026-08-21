@@ -14,6 +14,9 @@ const KEY = "gal.v1";
 
 export type Mood = "good" | "okay" | "low" | "tough";
 
+/** Someone she would want reached in an emergency. Never leaves this device. */
+export type Contact = { id: string; name: string; phone: string };
+
 export type AppState = {
   name: string | null;
   moods: Record<string, Mood>; // ISO date -> mood
@@ -21,6 +24,8 @@ export type AppState = {
   lastSeen: string | null;
   streak: number;
   installDismissed: boolean;
+  /** Max 3. Used only by Quiet Mode. Stored here, never sent anywhere. */
+  contacts: Contact[];
 };
 
 const EMPTY: AppState = {
@@ -30,6 +35,7 @@ const EMPTY: AppState = {
   lastSeen: null,
   streak: 0,
   installDismissed: false,
+  contacts: [],
 };
 
 export const today = () => new Date().toISOString().slice(0, 10);
