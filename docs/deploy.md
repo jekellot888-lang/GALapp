@@ -56,7 +56,32 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-public-key
 every RLS policy in `schema.sql`. A `NEXT_PUBLIC_` service key would be readable
 by anyone who opens the site.
 
-## 4. Retention
+## 4. Elle (the AI companion)
+
+One more Vercel environment variable:
+
+```
+ANTHROPIC_API_KEY=sk-ant-...
+```
+
+**No `NEXT_PUBLIC_` prefix, ever.** A `NEXT_PUBLIC_` key is readable by anyone
+who opens the site, and this one spends money. It is used only in
+`app/api/elle/route.ts`, which runs server-side.
+
+Without it, `/elle` says Elle is not switched on and nothing else changes.
+
+Two things to watch once it is live:
+
+- **Cost.** Every message is a paid API call on `claude-opus-5`. There is no
+  per-user rate limit in the app yet — the only guard is a 20-message window per
+  request. Set a spend limit in the Anthropic console before you hand the URL to
+  anyone.
+- **The conversation is not saved anywhere**, by GAL or by this route. That is
+  deliberate, and it means you cannot audit what Elle said. If you later need
+  moderation or review, that is a decision to make openly, because it reverses a
+  promise the screen currently makes to her.
+
+## 5. Retention
 
 Messages are meant to expire. Enable `pg_cron` (Database → Extensions), then run
 the scheduling block at the bottom of `schema.sql`. Until then the table just

@@ -92,7 +92,12 @@ export default function Support() {
         </p>
       )}
 
-      <Link href="/check" className="tap tap-tint rule-top -mx-5 mt-xl block px-5 py-md active:bg-paper-2">
+      <Link href="/elle" className="tap tap-tint rule-top -mx-5 mt-xl block px-5 py-md active:bg-paper-2">
+        <span className="block font-display text-lg font-semibold tracking-heading">Talk to Elle</span>
+        <span className="mt-3xs block text-sm text-ink-2">Someone to think out loud with, any hour. Read the note first.</span>
+      </Link>
+
+      <Link href="/check" className="tap tap-tint rule-top -mx-5 block px-5 py-md active:bg-paper-2">
         <span className="block font-display text-lg font-semibold tracking-heading">Is this abuse?</span>
         <span className="mt-3xs block text-sm text-ink-2">A private check. Nothing is saved.</span>
       </Link>
