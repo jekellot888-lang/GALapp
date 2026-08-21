@@ -35,6 +35,10 @@ Only the rooms need this. Everything else works without it.
    the best of a bad set; there is no East Africa region.
 2. SQL Editor → New query → paste all of `supabase/schema.sql` → Run. That
    creates the tables, turns RLS on, writes every policy, and seeds four rooms.
+   Then run `supabase/migrations/001_moderation.sql`, which adds the moderator
+   role and the queue. If you ran an earlier copy of `schema.sql`, the migration
+   also closes a hole where a muted user could clear their own mute — run it
+   either way, it is safe twice.
 3. Authentication → Providers → Email. Turn **off** "Confirm email" and leave
    the OTP flow on: the app signs in with a six-digit code, not a magic link and
    not a password.
@@ -66,7 +70,21 @@ grows; nothing breaks.
   `flag` — read them.
 - Remove `robots: { index: false }` from `app/layout.tsx` when it should be
   findable. It is deliberately excluded from search right now.
-- Rooms have no moderator queue yet. `reports` rows land in the table and
-  nothing surfaces them; `profiles.muted_until` and `messages.hidden_at` are
-  moderator tools with no UI. Someone has to watch that table, or the rooms
-  should stay closed.
+- **Make yourself a moderator, or keep the rooms closed.** The queue exists at
+  `/moderate`, but it is empty of permission until somebody is in the
+  `moderators` table. Find your user id in Authentication → Users, then run:
+
+  ```sql
+  insert into public.moderators (id, note) values ('YOUR-UUID', 'founder');
+  ```
+
+  `/moderate` is deliberately not linked from anywhere in the app — a moderator
+  types the URL. Access is enforced in the database, not by hiding the page.
+
+- Reporting is one-way by design. A reporter sees "Reported. Thank you." and
+  nothing further: no count, no status, no history. `reports` has no select
+  policy for reporters, so the UI could not show more even if asked. That
+  matters when the person being reported may be reading over her shoulder.
+
+- An empty queue and an unwatched queue look identical from `/moderate`. Decide
+  who checks it and how often before the rooms take real users.

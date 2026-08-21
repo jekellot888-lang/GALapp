@@ -131,6 +131,20 @@ create policy "file own report"
 -- own. Nothing in the UI should reveal that a report exists.
 
 -- ─────────────────────────────────────────────────────────────────────────────
+-- Column privileges.
+--
+-- RLS cannot say "your own row EXCEPT this column", and muted_until lives on the
+-- profile row. Without this, anyone muted could clear their own mute. Column
+-- grants are the mechanism RLS lacks.
+-- ─────────────────────────────────────────────────────────────────────────────
+revoke update on public.profiles from authenticated;
+grant  update (alias) on public.profiles to authenticated;
+
+-- A user deletes her own messages; she never writes hidden_at, which is a
+-- moderator's record of a decision.
+revoke update on public.messages from authenticated;
+
+-- ─────────────────────────────────────────────────────────────────────────────
 -- Realtime
 -- ─────────────────────────────────────────────────────────────────────────────
 alter publication supabase_realtime add table public.messages;

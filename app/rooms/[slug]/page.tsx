@@ -24,6 +24,7 @@ export default function Room() {
   const [draft, setDraft] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
+  const [reported, setReported] = useState<Set<string>>(new Set());
   const endRef = useRef<HTMLDivElement>(null);
 
   const load = useCallback(async () => {
@@ -100,6 +101,18 @@ export default function Room() {
     setMsgs((cur) => cur.filter((m) => m.id !== id));
   };
 
+  /**
+   * Reporting is deliberately one-way. She gets a confirmation and nothing else:
+   * no count, no status, no way to check later. `reports` has no select policy
+   * for reporters, so the UI could not reveal more even if it tried — which
+   * matters when the person reported might be reading over her shoulder.
+   */
+  const report = async (id: string) => {
+    if (!supabase || !me) return;
+    await supabase.from("reports").insert({ message_id: id, reporter_id: me });
+    setReported((cur) => new Set(cur).add(id));
+  };
+
   return (
     <main className="flex min-h-[70dvh] flex-col">
       <QuickExit />
@@ -137,14 +150,27 @@ export default function Room() {
                 {m.author_id === me && " · you"}
               </p>
               <p className="selectable mt-3xs text-md leading-relaxed">{m.body}</p>
-              {m.author_id === me && (
-                <button
-                  onClick={() => remove(m.id)}
-                  className="tap mt-3xs min-h-11 text-xs text-ink-2 underline underline-offset-4"
-                >
-                  Delete
-                </button>
-              )}
+              <div className="mt-3xs flex gap-sm">
+                {m.author_id === me ? (
+                  <button
+                    onClick={() => remove(m.id)}
+                    className="tap min-h-11 text-xs text-ink-2 underline underline-offset-4"
+                  >
+                    Delete
+                  </button>
+                ) : reported.has(m.id) ? (
+                  <span className="flex min-h-11 items-center text-xs text-ink-2">
+                    Reported. Thank you.
+                  </span>
+                ) : (
+                  <button
+                    onClick={() => report(m.id)}
+                    className="tap min-h-11 text-xs text-ink-2 underline underline-offset-4"
+                  >
+                    Report
+                  </button>
+                )}
+              </div>
             </article>
           ))
         )}
