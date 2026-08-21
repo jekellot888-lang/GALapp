@@ -154,3 +154,39 @@ p { text-wrap: pretty; }
   font-family: var(--font-body);
 }
 .calc button:active { filter: brightness(1.35); }
+
+/* ── Route transition ────────────────────────────────────────────────────────
+   Driven by app/template.tsx, which remounts on every navigation. Short and
+   small on purpose: this is seen dozens of times a day, so it belongs in the
+   near-imperceptible tier. */
+@keyframes route-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+.route-enter { animation: route-in 200ms var(--ease-out) both; }
+
+/* ── Nav polish ──────────────────────────────────────────────────────────────
+   The active marker slides its width rather than appearing, and the icon lifts
+   a hair when its tab is selected. Both transform/opacity only. */
+.nav-mark {
+  transition: width var(--dur-short) var(--ease-out),
+              opacity var(--dur-short) var(--ease-out);
+}
+.nav-icon {
+  transition: transform var(--dur-short) var(--ease-out);
+}
+[aria-current="page"] .nav-icon { transform: translateY(-1px) scale(1.06); }
+
+/* ── Segmented control ───────────────────────────────────────────────────────
+   The selected segment fades its fill instead of snapping. */
+.seg-opt {
+  transition: background-color var(--dur-short) var(--ease-out),
+              color var(--dur-short) var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Travel goes, the fade stays — it still signals that the page changed. */
+  .route-enter { animation: none; opacity: 1; }
+  .nav-icon, [aria-current="page"] .nav-icon { transform: none; transition: none; }
+  .nav-mark { transition: opacity var(--dur-short) ease; }
+}

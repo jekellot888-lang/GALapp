@@ -3,6 +3,7 @@
 import { RESOURCES, liveResources, flaggedResources } from "@/content/support";
 import Link from "next/link";
 import QuickExit from "@/components/QuickExit";
+import Icon from "@/components/Icon";
 
 /**
  * Structural restraint here is a safety feature, not a style. Nothing
@@ -30,9 +31,9 @@ export default function Support() {
           needs it is not reading, she is scanning for the fastest way out. */}
       <Link
         href="/quiet"
-        className="tap mb-lg block rounded-inner bg-accent px-md py-sm text-center font-semibold text-accent-ink"
+        className="tap mb-lg flex items-center justify-center gap-2xs rounded-inner bg-accent px-md py-sm font-semibold text-accent-ink"
       >
-        Open Quiet Mode
+        <Icon name="quiet" className="h-[18px] w-[18px]" /> Open Quiet Mode
       </Link>
 
       {/* The barrier is rarely the number — it is not knowing what happens after
@@ -92,24 +93,44 @@ export default function Support() {
         </p>
       )}
 
-      <Link href="/elle" className="tap tap-tint rule-top -mx-5 mt-xl block px-5 py-md active:bg-paper-2">
-        <span className="block font-display text-lg font-semibold tracking-heading">Talk to Elle</span>
-        <span className="mt-3xs block text-sm text-ink-2">Someone to think out loud with, any hour. Read the note first.</span>
+      <Link href="/elle" className="tap tap-tint rule-top -mx-5 flex items-start gap-xs px-5 py-md active:bg-paper-2">
+        <span aria-hidden className="mt-3xs grid h-9 w-9 shrink-0 place-items-center rounded-full bg-rose-tint text-rose-ink">
+          <Icon name="elle" className="h-[18px] w-[18px]" />
+        </span>
+        <span>
+          <span className="block font-display text-lg font-semibold tracking-heading">Talk to Elle</span>
+          <span className="mt-3xs block text-sm text-ink-2">Someone to think out loud with, any hour. Read the note first.</span>
+        </span>
       </Link>
 
-      <Link href="/check" className="tap tap-tint rule-top -mx-5 block px-5 py-md active:bg-paper-2">
-        <span className="block font-display text-lg font-semibold tracking-heading">Is this abuse?</span>
-        <span className="mt-3xs block text-sm text-ink-2">A private check. Nothing is saved.</span>
+      <Link href="/check" className="tap tap-tint rule-top -mx-5 flex items-start gap-xs px-5 py-md active:bg-paper-2">
+        <span aria-hidden className="mt-3xs grid h-9 w-9 shrink-0 place-items-center rounded-full bg-rose-tint text-rose-ink">
+          <Icon name="check" className="h-[18px] w-[18px]" />
+        </span>
+        <span>
+          <span className="block font-display text-lg font-semibold tracking-heading">Is this abuse?</span>
+          <span className="mt-3xs block text-sm text-ink-2">A private check. Nothing is saved.</span>
+        </span>
       </Link>
 
-      <Link href="/plan" className="tap tap-tint rule-top -mx-5 block px-5 py-md active:bg-paper-2">
-        <span className="block font-display text-lg font-semibold tracking-heading">My safety plan</span>
-        <span className="mt-3xs block text-sm text-ink-2">Six things worth having ready. Ticks only, kept on this phone.</span>
+      <Link href="/plan" className="tap tap-tint rule-top -mx-5 flex items-start gap-xs px-5 py-md active:bg-paper-2">
+        <span aria-hidden className="mt-3xs grid h-9 w-9 shrink-0 place-items-center rounded-full bg-rose-tint text-rose-ink">
+          <Icon name="plan" className="h-[18px] w-[18px]" />
+        </span>
+        <span>
+          <span className="block font-display text-lg font-semibold tracking-heading">My safety plan</span>
+          <span className="mt-3xs block text-sm text-ink-2">Six things worth having ready. Ticks only, kept on this phone.</span>
+        </span>
       </Link>
 
-      <Link href="/contacts" className="tap tap-tint rule-top -mx-5 block px-5 py-md active:bg-paper-2">
-        <span className="block font-display text-lg font-semibold tracking-heading">Trusted contacts</span>
-        <span className="mt-3xs block text-sm text-ink-2">Up to three people Quiet Mode can message. Kept on this phone.</span>
+      <Link href="/contacts" className="tap tap-tint rule-top -mx-5 flex items-start gap-xs px-5 py-md active:bg-paper-2">
+        <span aria-hidden className="mt-3xs grid h-9 w-9 shrink-0 place-items-center rounded-full bg-rose-tint text-rose-ink">
+          <Icon name="contacts" className="h-[18px] w-[18px]" />
+        </span>
+        <span>
+          <span className="block font-display text-lg font-semibold tracking-heading">Trusted contacts</span>
+          <span className="mt-3xs block text-sm text-ink-2">Up to three people Quiet Mode can message. Kept on this phone.</span>
+        </span>
       </Link>
 
       <p className="mt-lg text-xs text-ink-2">

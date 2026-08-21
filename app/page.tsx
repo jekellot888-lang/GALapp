@@ -119,7 +119,7 @@ export default function Home() {
           href={FIRST[state.focus].href}
           className="tap tap-tint rule-top rule-bottom -mx-5 mb-lg block px-5 py-md active:bg-paper-2"
         >
-          <span className="block text-xs uppercase tracking-label text-ink-2">
+          <span className="block text-xs uppercase tracking-label text-rose-ink">
             First for you
           </span>
           <span className="mt-3xs block font-display text-lg font-semibold tracking-heading">
@@ -133,7 +133,7 @@ export default function Home() {
 
       {/* The affirmation is the one set-piece this page is allowed. It earns it
           by being type, not a gradient box with a quote in it. */}
-      <section className="rule-top rule-bottom mb-lg py-lg">
+      <section className="-mx-5 mb-lg bg-rose-tint px-5 py-lg">
         <p
           data-swapping={swapping}
           aria-live="polite"
@@ -142,11 +142,11 @@ export default function Home() {
           {affirmation}
         </p>
         <div className="mt-md flex items-center justify-between gap-sm">
-          <span className="text-xs text-ink-2">Today&rsquo;s line</span>
+          <span className="text-xs text-rose-ink">Today&rsquo;s line</span>
           {status === "needs-permission" ? (
             <button
               onClick={enable}
-              className="tap min-h-11 shrink-0 rounded-pill border border-rule px-md text-sm text-ink-2 active:bg-paper-2"
+              className="tap min-h-11 shrink-0 rounded-pill border border-rose-edge px-md text-sm text-rose-ink active:bg-rose-tint-2"
             >
               Turn on shake
             </button>
@@ -180,7 +180,7 @@ export default function Home() {
                 className={`tap min-h-11 rounded-inner border text-sm ${
                   on
                     ? "border-accent bg-accent font-semibold text-accent-ink"
-                    : "border-rule text-ink-2 active:bg-paper-2"
+                    : "border-rose-edge bg-rose-tint text-rose-ink active:bg-rose-tint-2"
                 }`}
               >
                 {m.label}

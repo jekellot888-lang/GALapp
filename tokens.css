@@ -31,10 +31,29 @@
   --color-focus: #7A1F3D;
 
   /* The rose is a genuine second voice, not a highlight. Paragraph-size text
-     never sits in it — it fails AA on this ground. Marks, rules, fills only. */
+     never sits in it — it fails AA on this ground. Marks, rules, fills only.
+     For rose-coloured text use --color-rose-ink, which is the deep ramp step. */
   --color-accent-2: #B76E79;
   --color-accent-2-deep: #561020;
   --color-accent-2-tint: #FBF0EC;
+
+  /* ── The rest of the brand ramps ────────────────────────────────────────
+     These shipped in the brand guide and went unused, which is why the app
+     read as one colour. Tints carry grouping and selected states; the deep
+     steps carry text that needs to be coloured rather than just dark. */
+  --color-wine-tint: #FCEDEF;
+  --color-wine-tint-2: #F7D6D0;
+  --color-wine-edge: #E8B3B7;
+  --color-wine-ink: #7A1F3D;
+
+  --color-rose-tint: #FBF0EC;
+  --color-rose-tint-2: #F3DED9;
+  --color-rose-edge: #E4C3BC;
+  --color-rose-ink: #8A4A55;
+
+  /* Two voices, split by what a screen is for. Wine is action and safety;
+     rose is the warmer half — company, reflection, the daily line. Nothing
+     else gets a hue. */
 
   --shadow-nav: 0 -1px 0 var(--color-rule);
   --shadow-lift: 0 1px 2px rgba(42, 18, 24, 0.06),
@@ -112,6 +131,19 @@
 
     --color-accent-2: #CE9A9C;
     --color-accent-2-tint: #2F1C22;
+
+    /* Tints invert to low-lightness plums; the "ink" steps become light,
+       because on a dark ground a coloured text step has to be lighter than
+       the paper, not darker. */
+    --color-wine-tint: #2B141B;
+    --color-wine-tint-2: #3A1B24;
+    --color-wine-edge: #562A33;
+    --color-wine-ink: #E8B3B7;
+
+    --color-rose-tint: #2A1A1C;
+    --color-rose-tint-2: #382426;
+    --color-rose-edge: #55393C;
+    --color-rose-ink: #E4C3BC;
 
     --shadow-lift: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.34);
   }

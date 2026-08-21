@@ -1,0 +1,111 @@
+/**
+ * A small drawn set, not an icon library.
+ *
+ * Lucide and Feather are the default reach and they look it — every generated
+ * interface of the last two years wears the same 24px 2px-stroke marks. These
+ * are drawn for this app instead: 1.5 stroke, round caps and joins, on a 24 grid,
+ * inheriting `currentColor` so they take whatever colour the row already has.
+ *
+ * Cliché metaphors are avoided deliberately. Support is a handset, because
+ * Support is literally a list of numbers to call — not a shield, not a lifebuoy,
+ * not clasped hands.
+ *
+ * Every icon is decorative: labels sit beside them everywhere they are used, so
+ * they carry aria-hidden and never become the accessible name.
+ */
+type Props = { name: IconName; className?: string };
+
+export type IconName =
+  | "home"
+  | "read"
+  | "rooms"
+  | "support"
+  | "quiet"
+  | "plan"
+  | "contacts"
+  | "elle"
+  | "clinic"
+  | "check";
+
+const PATHS: Record<IconName, React.ReactNode> = {
+  // A doorway rather than a pitched-roof house — this is a place she comes back to.
+  home: (
+    <>
+      <path d="M4 21V9.5L12 3l8 6.5V21" />
+      <path d="M9.5 21v-6a2.5 2.5 0 0 1 5 0v6" />
+    </>
+  ),
+  // An open book, spine centred.
+  read: (
+    <>
+      <path d="M12 6.5v13" />
+      <path d="M12 6.5C10.5 5 8.4 4.5 4 4.5v13c4.4 0 6.5.5 8 2 1.5-1.5 3.6-2 8-2v-13c-4.4 0-6.5.5-8 2Z" />
+    </>
+  ),
+  // Two speech shapes, overlapping. Other women, talking.
+  rooms: (
+    <>
+      <path d="M15.5 13.5H9l-3.5 3v-3H4.5A1.5 1.5 0 0 1 3 12V6a1.5 1.5 0 0 1 1.5-1.5h11A1.5 1.5 0 0 1 17 6v6a1.5 1.5 0 0 1-1.5 1.5Z" />
+      <path d="M17.5 8.5h2A1.5 1.5 0 0 1 21 10v6a1.5 1.5 0 0 1-1.5 1.5H19v3l-3.5-3H11" />
+    </>
+  ),
+  // A handset. Support is a list of numbers; say so.
+  support: (
+    <path d="M6.5 3.5h2l1.8 4-1.7 1.4a12.5 12.5 0 0 0 5.5 5.5l1.4-1.7 4 1.8v2a2.5 2.5 0 0 1-2.7 2.5C9.6 18.4 5.6 14.4 4 6.2A2.5 2.5 0 0 1 6.5 3.5Z" />
+  ),
+  // A crescent — night, and being unlit.
+  quiet: <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" />,
+  // A checklist page.
+  plan: (
+    <>
+      <path d="M6 3.5h12v17H6z" />
+      <path d="M9 9.5l1.5 1.5L13.5 8" />
+      <path d="M9 15.5h6" />
+    </>
+  ),
+  // Three marks, the cap on trusted contacts.
+  contacts: (
+    <>
+      <circle cx="9" cy="8" r="3.2" />
+      <path d="M3.5 20c0-3 2.5-5 5.5-5s5.5 2 5.5 5" />
+      <path d="M17 9.5h3.5M18.75 7.75v3.5" />
+    </>
+  ),
+  // A single speech shape — one companion, not a room.
+  elle: (
+    <path d="M20 12.5c0 4-3.6 7-8 7a9.6 9.6 0 0 1-2.6-.35L4 21l1.4-3.6A6.6 6.6 0 0 1 4 12.5c0-4 3.6-7 8-7s8 3 8 7Z" />
+  ),
+  // A cross in a rounded square. A place, not a caduceus.
+  clinic: (
+    <>
+      <rect x="3.5" y="5.5" width="17" height="14" rx="2.5" />
+      <path d="M12 9.5v6M9 12.5h6" />
+    </>
+  ),
+  // A question mark, because the screen asks one.
+  check: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M9.6 9.7a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .9-1 1.6v.4" />
+      <path d="M12 17.2h.01" />
+    </>
+  ),
+};
+
+export default function Icon({ name, className }: Props) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+      className={className}
+    >
+      {PATHS[name]}
+    </svg>
+  );
+}

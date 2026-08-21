@@ -52,7 +52,7 @@ export default function Read() {
       <div
         role="tablist"
         aria-label="Sections"
-        className="mb-sm flex rounded-pill border border-rule p-3xs"
+        className="mb-sm flex rounded-pill border border-rule bg-paper-2 p-3xs"
       >
         {SECTIONS.map((s) => {
           const on = s.id === section;
@@ -62,7 +62,7 @@ export default function Read() {
               role="tab"
               aria-selected={on}
               onClick={() => pick(s.id)}
-              className={`tap min-h-11 flex-1 rounded-pill text-sm ${
+              className={`tap seg-opt min-h-11 flex-1 rounded-pill text-sm ${
                 on ? "bg-accent font-semibold text-accent-ink" : "text-ink-2"
               }`}
             >
@@ -103,7 +103,7 @@ export default function Read() {
                 <p className="mt-3xs max-w-[46ch] text-sm leading-relaxed text-ink-2">
                   {a.blurb}
                 </p>
-                <p className="tnum mt-2xs text-xs text-ink-2">
+                <p className="tnum mt-2xs text-xs text-rose-ink">
                   {a.minutes} min
                   {a.topic ? ` · ${a.topic}` : ""}
                   {a.level ? ` · ${a.level}` : ""}
@@ -147,7 +147,7 @@ function Pill({
       className={`tap min-h-11 shrink-0 whitespace-nowrap rounded-pill border px-md text-sm ${
         on
           ? "border-accent bg-accent font-semibold text-accent-ink"
-          : "border-rule text-ink-2 active:bg-paper-2"
+          : "border-rose-edge bg-rose-tint text-rose-ink active:bg-rose-tint-2"
       }`}
     >
       {children}
