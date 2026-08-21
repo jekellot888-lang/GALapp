@@ -1,5 +1,12 @@
 # Design — GAL
 
+**GAL — Guide, Assist, Liberate.** Always those three capitals. Never "Gal",
+never "gal" in user-facing copy, never expanded on a guess.
+
+The app icon is Elle's rose-gold monogram, not a G. Elle is the brand behind
+GAL; the mark carries her identity, every name string says GAL. Both are
+correct at once, so do not "fix" either to match the other.
+
 A locked design system for this app. Every page reads this file before emitting
 code. Do not regenerate per page — extend or amend this file when the system
 needs to grow.

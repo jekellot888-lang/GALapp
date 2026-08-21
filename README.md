@@ -3,9 +3,15 @@
 A daily companion — mind, body, money, and knowing where to turn.
 Installable web app. No accounts. Nothing leaves the device.
 
-> **The name is an acronym, not the word "gal".** It is spelled GAL, three
-> letters, and it is not to be "corrected" to GALL or expanded on a guess.
-> The expansion is not recorded here yet — fill it in rather than inferring it.
+> **GAL — Guide, Assist, Liberate.**
+>
+> An acronym, not the word "gal". Three letters, always capitalised, and not to
+> be "corrected" to GALL. This is the name everywhere: the app, the manifest,
+> the installed icon label, the repo.
+>
+> The rose-gold monogram used as the app icon is Elle's mark, not the app's
+> initial. That pairing is deliberate — Elle is the brand behind GAL, so the
+> icon carries her identity while every name string says GAL.
 
 ---
 

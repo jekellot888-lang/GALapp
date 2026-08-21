@@ -17,7 +17,9 @@ type Opt = { id: string; label: string; sub: string };
 
 const STEPS: { kicker: string; title: string; body: string; cta: string; opts: Opt[] }[] = [
   {
-    kicker: "Welcome",
+    /* The one place the acronym is spelled out. She sees it once, on first run,
+       and never has to wonder what the name means again. */
+    kicker: "Guide · Assist · Liberate",
     title: "GAL is yours, and it is quiet.",
     body: "No notifications you did not ask for, and a calculator you can hide behind. Choose how it should open.",
     cta: "Continue",
