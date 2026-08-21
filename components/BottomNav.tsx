@@ -42,9 +42,15 @@ export default function BottomNav() {
     (path === "/" ? "/" : TABS.slice(1).find((t) => path.startsWith(t.href))?.href ?? "/");
 
   return (
+    /* On a phone this is an edge-to-edge bar sitting on the bottom edge, which
+       is where a thumb expects it. On a wide screen an edge-to-edge bar with
+       four tabs huddled in the middle reads as broken, so past 768px it becomes
+       a floating card the width of the content column. */
     <nav
       aria-label="Sections"
-      className="chrome fixed inset-x-0 bottom-0 z-40 rule-top bg-paper pb-[env(safe-area-inset-bottom)]"
+      className="chrome fixed inset-x-0 bottom-0 z-40 rule-top bg-paper pb-[env(safe-area-inset-bottom)] md:overflow-hidden md:border-t-transparent
+                 md:inset-x-auto md:bottom-6 md:left-1/2 md:w-[28rem] md:-translate-x-1/2
+                 md:rounded-pill md:border md:border-rule md:pb-0 md:shadow-lift"
     >
       <ul className="mx-auto flex max-w-md">
         {TABS.map((t) => {
