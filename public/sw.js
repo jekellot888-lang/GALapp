@@ -1,6 +1,6 @@
 /* GAL service worker — hand-written on purpose. ~60 lines you can debug at 3am,
    instead of a plugin you cannot. Bump CACHE on every deploy. */
-const CACHE = "gal-v6";
+const CACHE = "gal-v7";
 const SHELL = ["/", "/finance", "/health", "/learn", "/rooms", "/support", "/offline"];
 
 self.addEventListener("install", (e) => {

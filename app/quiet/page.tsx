@@ -200,6 +200,12 @@ export default function Quiet() {
           Calculator
         </Link>
         <Link
+          href="/plan"
+          className="tap flex min-h-11 flex-1 items-center justify-center rounded-pill border border-[color:var(--q-rule)] text-sm"
+        >
+          Safety plan
+        </Link>
+        <Link
           href="/support"
           className="tap flex min-h-11 flex-1 items-center justify-center rounded-pill border border-[color:var(--q-rule)] text-sm"
         >

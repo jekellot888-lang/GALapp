@@ -26,6 +26,8 @@ export type AppState = {
   installDismissed: boolean;
   /** Max 3. Used only by Quiet Mode. Stored here, never sent anywhere. */
   contacts: Contact[];
+  /** Completed safety-plan step ids. Ticks only — no free text, deliberately. */
+  plan: string[];
 };
 
 const EMPTY: AppState = {
@@ -36,6 +38,7 @@ const EMPTY: AppState = {
   streak: 0,
   installDismissed: false,
   contacts: [],
+  plan: [],
 };
 
 export const today = () => new Date().toISOString().slice(0, 10);
