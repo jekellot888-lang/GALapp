@@ -25,7 +25,8 @@ export type IconName =
   | "contacts"
   | "elle"
   | "clinic"
-  | "check";
+  | "check"
+  | "breathe";
 
 const PATHS: Record<IconName, React.ReactNode> = {
   // A doorway rather than a pitched-roof house — this is a place she comes back to.
@@ -80,6 +81,14 @@ const PATHS: Record<IconName, React.ReactNode> = {
     <>
       <rect x="3.5" y="5.5" width="17" height="14" rx="2.5" />
       <path d="M12 9.5v6M9 12.5h6" />
+    </>
+  ),
+  // Concentric arcs — the shape the breathing screen draws, at icon size.
+  breathe: (
+    <>
+      <circle cx="12" cy="12" r="3" />
+      <path d="M12 5.5a6.5 6.5 0 0 1 0 13" />
+      <path d="M12 2a10 10 0 0 1 0 20" />
     </>
   ),
   // A question mark, because the screen asks one.

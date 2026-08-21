@@ -29,6 +29,7 @@ const config: Config = {
         "rose-tint-2": "var(--color-rose-tint-2)",
         "rose-edge": "var(--color-rose-edge)",
         "rose-ink": "var(--color-rose-ink)",
+        "on-rose": "var(--color-on-rose)",
       },
       fontFamily: {
         display: "var(--font-display)",

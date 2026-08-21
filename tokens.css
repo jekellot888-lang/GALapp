@@ -51,6 +51,12 @@
   --color-rose-edge: #E4C3BC;
   --color-rose-ink: #8A4A55;
 
+  /* Text sitting ON a rose fill. Dark in BOTH schemes, unlike --color-accent-ink
+     which inverts: the rose fill stays light in dark mode, so its text has to
+     stay dark too. Near-white on rose measures 3.62 and only scrapes AA at
+     display sizes; this is 4.61, which passes for normal text. */
+  --color-on-rose: #2A1218;
+
   /* Two voices, split by what a screen is for. Wine is action and safety;
      rose is the warmer half — company, reflection, the daily line. Nothing
      else gets a hue. */

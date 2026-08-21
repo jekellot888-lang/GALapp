@@ -8,6 +8,7 @@ import { useShake } from "@/lib/useShake";
 import { feedback } from "@/lib/haptics";
 import { affirmationForDay, randomAffirmation } from "@/lib/affirmations";
 import InstallSheet from "@/components/InstallSheet";
+import Icon from "@/components/Icon";
 
 /** Words, not faces. Emoji as a UI control is the loudest AI tell there is. */
 const MOODS: { id: Mood; label: string }[] = [
@@ -97,7 +98,7 @@ export default function Home() {
 
   return (
     <main>
-      <header className="mb-lg">
+      <header className="stack mb-lg" style={{ ["--i" as string]: 0 }}>
         <p className="text-sm text-ink-2">{greeting()},</p>
         <h1 className="font-display text-display font-semibold leading-[1.05] tracking-display">
           {state.name ?? "you"}
@@ -133,7 +134,7 @@ export default function Home() {
 
       {/* The affirmation is the one set-piece this page is allowed. It earns it
           by being type, not a gradient box with a quote in it. */}
-      <section className="-mx-5 mb-lg bg-rose-tint px-5 py-lg">
+      <section className="stack -mx-5 mb-lg bg-rose-tint px-5 py-lg" style={{ ["--i" as string]: 1 }}>
         <p
           data-swapping={swapping}
           aria-live="polite"
@@ -162,7 +163,7 @@ export default function Home() {
       </section>
 
       {/* Mood */}
-      <section className="mb-lg">
+      <section className="stack mb-lg" style={{ ["--i" as string]: 2 }}>
         <h2 className="font-display text-lg font-semibold tracking-heading">
           How are you today?
         </h2>
@@ -191,7 +192,7 @@ export default function Home() {
         {mood === "tough" && (
           <Link
             href="/support"
-            className="tap rise mt-sm block rounded-inner bg-accent px-md py-xs text-center text-sm font-semibold text-accent-ink"
+            className="tap tap-firm rise mt-sm block rounded-inner bg-accent px-md py-xs text-center text-sm font-semibold text-accent-ink"
           >
             Talk to someone now
           </Link>
@@ -199,7 +200,7 @@ export default function Home() {
       </section>
 
       {/* Goals */}
-      <section className="mb-lg">
+      <section className="stack mb-lg" style={{ ["--i" as string]: 3 }}>
         <div className="flex items-baseline justify-between">
           <h2 className="font-display text-lg font-semibold tracking-heading">
             Today&rsquo;s goals
@@ -222,14 +223,15 @@ export default function Home() {
                   className="tap tap-tint -mx-5 flex w-[calc(100%+2.5rem)] items-center gap-xs px-5 py-xs text-left active:bg-paper-2"
                 >
                   <span
-                    className={`tap grid h-5 w-5 shrink-0 place-items-center rounded-full border text-xs ${
+                    data-on={on}
+                    className={`tick grid h-5 w-5 shrink-0 place-items-center rounded-full border text-xs ${
                       on
                         ? "border-accent bg-accent text-accent-ink"
                         : "border-rule-strong"
                     }`}
                     aria-hidden
                   >
-                    {on ? "✓" : ""}
+                    {on ? <span className="tick-mark">✓</span> : ""}
                   </span>
                   <span className={on ? "text-ink-2 line-through" : ""}>{g.label}</span>
                 </button>
@@ -239,9 +241,34 @@ export default function Home() {
         </ul>
       </section>
 
+      {/* One thing she can do right now, rather than another thing to read.
+          Sits directly under the goals because that is where "I should do
+          something" lands. */}
+      <Link
+        href="/breathe"
+        className="stack tap tap-tint rule-top -mx-5 flex items-center gap-xs px-5 py-md active:bg-paper-2"
+        style={{ ["--i" as string]: 4 }}
+      >
+        <span
+          aria-hidden
+          className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-rose-tint text-rose-ink"
+        >
+          <Icon name="breathe" className="h-5 w-5" />
+        </span>
+        <span>
+          <span className="block font-display text-lg font-semibold tracking-heading">
+            Three slow breaths
+          </span>
+          <span className="mt-3xs block text-sm text-ink-2">
+            Sixty seconds. Four in, six out.
+          </span>
+        </span>
+      </Link>
+
       <Link
         href="/support"
-        className="tap tap-tint rule-top -mx-5 block px-5 py-md active:bg-paper-2"
+        className="stack tap tap-tint rule-top -mx-5 block px-5 py-md active:bg-paper-2"
+        style={{ ["--i" as string]: 5 }}
       >
         <span className="block font-display text-lg font-semibold tracking-heading">
           Need someone to talk to?

@@ -190,3 +190,92 @@ p { text-wrap: pretty; }
   .nav-icon, [aria-current="page"] .nav-icon { transform: none; transition: none; }
   .nav-mark { transition: opacity var(--dur-short) ease; }
 }
+
+/* ── Breathing ───────────────────────────────────────────────────────────────
+   The one animation in GAL that is the feature rather than decoration.
+
+   4s in, 6s out, 10s a cycle — the ratio from GAL's own guide, not a number
+   picked to look good. Sine easing in both directions because breath
+   accelerates and decelerates; a linear scale reads mechanical and is
+   genuinely harder to follow.
+
+   Never scales from 0: the core rests at 0.58, so the shape exists before it
+   grows. The halo lags the core by 120ms so the two rings breathe together
+   rather than in lockstep, which is what stops it reading as a pulse. */
+@keyframes breath {
+  0%   { transform: scale(0.58); }
+  40%  { transform: scale(1); }    /* 4s of 10s — the inhale */
+  100% { transform: scale(0.58); } /* the remaining 6s — the exhale */
+}
+
+.breath-core,
+.breath-halo {
+  animation: breath 10s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  will-change: transform;
+}
+.breath-halo {
+  animation-delay: -0.12s;
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* The travel shrinks but does not stop. Killing it outright would remove the
+     instrument she is breathing against and leave a static circle with a label,
+     so this keeps a gentle version instead of none. */
+  @keyframes breath {
+    0%   { transform: scale(0.86); }
+    40%  { transform: scale(1); }
+    100% { transform: scale(0.86); }
+  }
+  .breath-halo { animation: none; opacity: 0.5; transform: scale(0.92); }
+}
+
+/* ── Stagger ─────────────────────────────────────────────────────────────────
+   Home's blocks arrive in sequence rather than all at once. 45ms apart, which
+   is inside the 30–80ms band — long enough to read as a cascade, short enough
+   that the last block is in before a thumb reaches it.
+
+   Purely decorative and never blocking: the animation is `both`, so content is
+   interactive from the first frame regardless of where its delay sits. */
+.stack {
+  animation: route-in 260ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 45ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* No cascade, no travel — but nothing hidden either. */
+  .stack { animation: none; }
+}
+
+/* ── Press, by surface size ──────────────────────────────────────────────────
+   The 0.95–0.98 press everyone quotes is written for buttons. This app is
+   mostly full-width rows, and scaling a 340px row by 3% moves its edges ~5px —
+   which reads as the page wobbling, not as a press. So `.tap` stays subtle for
+   surfaces, and the firm press is opt-in on the things that are actually
+   buttons. */
+.tap-firm:active { transform: scale(0.97); }
+
+/* ── Ticking something off ───────────────────────────────────────────────────
+   Completing a goal is the one moment in the app worth a small reward. The mark
+   overshoots very slightly on the way in and never on the way out — pressing is
+   the deliberate half, releasing is the system responding. */
+.tick {
+  transition: transform 180ms var(--ease-out),
+              background-color 180ms var(--ease-out),
+              border-color 180ms var(--ease-out);
+}
+.tick[data-on="true"] { transform: scale(1.08); }
+.tick[data-on="true"] .tick-mark { animation: tick-in 220ms var(--ease-out) both; }
+
+@keyframes tick-in {
+  /* Starts at 0.4 rather than 0 — nothing in the world appears from nothing. */
+  from { transform: scale(0.4); opacity: 0; }
+  60%  { transform: scale(1.12); opacity: 1; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tap-firm:active { transform: none; background-color: var(--color-paper-2); }
+  .tick[data-on="true"] { transform: none; }
+  .tick[data-on="true"] .tick-mark { animation: none; }
+}
