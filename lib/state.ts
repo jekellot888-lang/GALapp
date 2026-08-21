@@ -17,6 +17,9 @@ export type Mood = "good" | "okay" | "low" | "tough";
 /** Someone she would want reached in an emergency. Never leaves this device. */
 export type Contact = { id: string; name: string; phone: string };
 
+/** What she said matters most. Decides what sits at the top of Home. */
+export type Focus = "money" | "calm" | "safety";
+
 export type AppState = {
   name: string | null;
   moods: Record<string, Mood>; // ISO date -> mood
@@ -28,6 +31,11 @@ export type AppState = {
   contacts: Contact[];
   /** Completed safety-plan step ids. Ticks only — no free text, deliberately. */
   plan: string[];
+  /** First run is done. Until then Home sends her to /welcome. */
+  onboarded: boolean;
+  /** Cold-start opens the calculator instead of Home. */
+  disguise: boolean;
+  focus: Focus | null;
 };
 
 const EMPTY: AppState = {
@@ -39,6 +47,9 @@ const EMPTY: AppState = {
   installDismissed: false,
   contacts: [],
   plan: [],
+  onboarded: false,
+  disguise: false,
+  focus: null,
 };
 
 export const today = () => new Date().toISOString().slice(0, 10);

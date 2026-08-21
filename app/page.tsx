@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAppState, today, type Mood } from "@/lib/state";
 import { useShake } from "@/lib/useShake";
@@ -23,6 +24,13 @@ const GOALS = [
   { id: "move", label: "Move your body 5 min" },
 ];
 
+/** Where the onboarding answer points. Keyed to lib/state Focus. */
+const FIRST = {
+  money: { href: "/finance", title: "Money of your own", sub: "Earning it, keeping it, and what is yours by right." },
+  calm: { href: "/health", title: "Feeling steadier", sub: "Rest, mood, and getting your breath back." },
+  safety: { href: "/support", title: "Staying safe", sub: "A plan, your rights, and someone to call." },
+} as const;
+
 function greeting(d = new Date()) {
   const h = d.getHours();
   if (h < 12) return "Good morning";
@@ -31,8 +39,29 @@ function greeting(d = new Date()) {
 }
 
 export default function Home() {
+  const router = useRouter();
   const { state, ready, setMood, toggleGoal } = useAppState();
   const t = today();
+
+  /**
+   * First run, and the disguise.
+   *
+   * The calculator redirect fires once per browsing session rather than once
+   * per navigation — otherwise tapping Home in the nav would bounce her back
+   * out of the app she just unlocked. sessionStorage is the right scope for
+   * "since she opened it".
+   */
+  useEffect(() => {
+    if (!ready) return;
+    if (!state.onboarded) {
+      router.replace("/welcome");
+      return;
+    }
+    if (state.disguise && !sessionStorage.getItem("gal.opened")) {
+      sessionStorage.setItem("gal.opened", "1");
+      router.replace("/calculator");
+    }
+  }, [ready, state.onboarded, state.disguise, router]);
 
   const daily = useMemo(() => affirmationForDay(t), [t]);
   const [affirmation, setAffirmation] = useState(daily);
@@ -81,6 +110,26 @@ export default function Home() {
       </header>
 
       <InstallSheet />
+
+      {/* Onboarding asked what she wanted first and this is where that answer
+          goes. A setup question whose answer changes nothing is worse than not
+          asking it. */}
+      {ready && state.focus && (
+        <Link
+          href={FIRST[state.focus].href}
+          className="tap tap-tint rule-top rule-bottom -mx-5 mb-lg block px-5 py-md active:bg-paper-2"
+        >
+          <span className="block text-xs uppercase tracking-label text-ink-2">
+            First for you
+          </span>
+          <span className="mt-3xs block font-display text-lg font-semibold tracking-heading">
+            {FIRST[state.focus].title}
+          </span>
+          <span className="mt-3xs block text-sm text-ink-2">
+            {FIRST[state.focus].sub}
+          </span>
+        </Link>
+      )}
 
       {/* The affirmation is the one set-piece this page is allowed. It earns it
           by being type, not a gradient box with a quote in it. */}
