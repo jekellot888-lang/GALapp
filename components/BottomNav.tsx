@@ -16,7 +16,7 @@ import Icon, { type IconName } from "@/components/Icon";
 const TABS: { href: string; label: string; icon: IconName }[] = [
   { href: "/", label: "Home", icon: "home" },
   { href: "/read", label: "Read", icon: "read" },
-  { href: "/rooms", label: "Rooms", icon: "rooms" },
+  { href: "/ask", label: "Ask", icon: "rooms" },
   { href: "/support", label: "Support", icon: "support" },
 ];
 

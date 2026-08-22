@@ -18,7 +18,7 @@ GAL. Both are correct at once — do not "fix" either to match the other.
 | `tokens.css` | Every colour, size, space, easing. **Nothing in this app inlines a value.** |
 | `content/support.ts` | Read the header. The verification gate is the most important rule in the codebase. |
 | `content/clinics.ts` | Ships empty on purpose. The header says why. |
-| `docs/deploy.md` | Vercel + Supabase setup and env vars. |
+| `docs/deploy.md` | Vercel deploy. No database — the only env var is Elle's key. |
 | `docs/verification.md` | How helplines get verified. This is the work that unblocks the app. |
 
 ## The threat model, which drives most decisions
@@ -61,14 +61,17 @@ those is ink and rule. No fourth hue without a reason.
 ## Running it
 
 Never `npm run dev` from Bash in this workspace — use the preview tool with the
-`gal` entry (port 3240) from `D:\Workspace\.claude\launch.json`. Outside this
-workspace, plain `npm run dev` is fine.
+`gal` entry (port 3240). There are two launch configs and the right one depends
+on where the session is rooted: `.claude/launch.json` in this folder when the
+session is inside the project, and `D:\Workspace\.claude\launch.json` when it is
+rooted at the workspace. Outside this workspace, plain `npm run dev` is fine.
 
 Running `next build` while the dev server is live corrupts `.next`. Stop the
 server, `rm -rf .next`, rebuild, and clear `.next` again before restarting dev.
 
-The app runs fully with **no environment variables** — Rooms says "not switched
-on", Elle returns 503, everything else works. That is also how it first deploys.
+The app runs fully with **no environment variables** — Elle returns 503 and
+everything else works, `/ask` included. That is also how it deploys. There is no
+database and no backend to stand up.
 
 ## Two traps that will waste your time
 
@@ -84,17 +87,42 @@ stale. Log a unique marker, reload, and only trust what appears after it.
 
 ## Decisions already made, so they are not re-litigated
 
-- **Group rooms, not DMs.** Nobody can single her out in private.
-- **Accounts are opt-in and unlock chat only.** Everything else stays
-  device-local. Sign-in is a six-digit email code, never a password.
-- **Moderation is built but not enabled.** `supabase/migrations/001_moderation.sql`
-  is deliberately not run. Reports still write rows; read them in Supabase's
-  table editor. Run the migration to turn the in-app queue on.
-- **Third-party AI is approved** for Elle, with consent stated before she types.
-- **Messages expire at 30 days.** A chat history is a record of who she talks to.
+- **No accounts, no database, no chat between users.** Removed on 2026-08-22.
+  GAL had group rooms behind an emailed sign-in link and a Supabase backend.
+  All of it is gone — pages, schema, migrations, and the `@supabase/*`
+  dependencies. Recoverable from `fe24ce5` if peer chat is ever wanted back.
+
+  It was cut because the sign-in was blocking everything and buying little.
+  Supabase locks auth email templates behind custom SMTP, the built-in mailer
+  sends two messages an hour to project members only, and free projects pause
+  after a week idle. That is a lot of fragility in front of a room that had
+  nobody in it yet.
+
+  What it bought instead: no signup, no moderation duty, no third party holding
+  a list of users, and nothing to sign into on a phone somebody else may pick
+  up. That last one was always in tension with the threat model.
+
+- **`/ask` is a lookup, not a model.** It scores what she types against
+  `content/referrals.ts` and can only ever return rows from that file. It cannot
+  invent a phone number — structurally, not probabilistically — which is what
+  makes it safe to point at banks, hospitals and police.
+
+  It runs in the browser with no network, so it answers at zero bars and on no
+  airtime. Do not "improve" it into an API call. Offline is most of the point,
+  and an API-backed version would answer with a plausible wrong number exactly
+  when she is least able to check it.
+
+- **Elle is the only thing that calls an API**, and she stays optional. She is
+  for the questions a list cannot answer. Third-party AI is approved for her,
+  with consent stated before she types. Without `ANTHROPIC_API_KEY` she returns
+  503 and the rest of the app is unaffected.
 
 ## What is deliberately unfinished
 
+- **`content/referrals.ts` is empty**, so `/ask` says it has nothing to give.
+  Research candidates with `docs/scrape-prompt.md`, then phone each number
+  before setting `verified: true`. Reading a number on a website is not
+  verification — it just turns "find the numbers" into "call down a list".
 - **Twelve helplines, none verified.** This is why Support and Quiet Mode show
   nothing to dial. It is phone calls, not code — `docs/verification.md`.
 - **Clinics empty.** Needs a real source.
