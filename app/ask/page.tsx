@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import QuickExit from "@/components/QuickExit";
-import Icon from "@/components/Icon";
+import Icon, { type IconName } from "@/components/Icon";
 import { REFERRALS, type ReferralCategory } from "@/content/referrals";
 import { match, byCategory, hasAnyReferrals, type Match } from "@/lib/referrals/match";
 
@@ -19,13 +19,23 @@ import { match, byCategory, hasAnyReferrals, type Match } from "@/lib/referrals/
  * When it has no answer it says so, rather than producing something plausible.
  */
 
-const CATEGORIES: { id: ReferralCategory; label: string }[] = [
-  { id: "bank", label: "Money" },
-  { id: "hospital", label: "Health" },
-  { id: "police", label: "Police" },
-  { id: "legal", label: "Legal" },
-  { id: "mental-health", label: "Someone to talk to" },
-  { id: "shelter", label: "Somewhere to stay" },
+/**
+ * The menu beside the box. Icons earn their place here rather than decorating:
+ * this row is what she uses when she is scanning rather than reading, and a
+ * drawn mark is faster to find than a word. Labels stay put — the icons are
+ * aria-hidden and never the accessible name.
+ *
+ * Health reuses `clinic` and "someone to talk to" reuses `support`, the
+ * handset, for the reason the icon file gives: those referrals are a list of
+ * numbers to ring, so say that rather than inventing a second mark for it.
+ */
+const CATEGORIES: { id: ReferralCategory; label: string; icon: IconName }[] = [
+  { id: "bank", label: "Money", icon: "money" },
+  { id: "hospital", label: "Health", icon: "clinic" },
+  { id: "police", label: "Police", icon: "police" },
+  { id: "legal", label: "Legal", icon: "legal" },
+  { id: "mental-health", label: "Someone to talk to", icon: "support" },
+  { id: "shelter", label: "Somewhere to stay", icon: "shelter" },
 ];
 
 export default function Ask() {
@@ -97,8 +107,9 @@ export default function Ask() {
               <li key={c.id}>
                 <button
                   onClick={() => { setQuery(""); setResults(byCategory(c.id)); }}
-                  className="tap min-h-11 rounded-pill border border-rule px-sm text-sm text-ink-2 active:bg-paper-2"
+                  className="tap flex min-h-11 items-center gap-2xs rounded-pill border border-rule px-sm text-sm text-ink-2 active:bg-paper-2"
                 >
+                  <Icon name={c.icon} className="h-4 w-4 shrink-0" />
                   {c.label}
                 </button>
               </li>

@@ -18,7 +18,7 @@ type Props = { name: IconName; className?: string };
 export type IconName =
   | "home"
   | "read"
-  | "rooms"
+  | "ask"
   | "support"
   | "quiet"
   | "plan"
@@ -26,7 +26,11 @@ export type IconName =
   | "elle"
   | "clinic"
   | "check"
-  | "breathe";
+  | "breathe"
+  | "money"
+  | "police"
+  | "legal"
+  | "shelter";
 
 const PATHS: Record<IconName, React.ReactNode> = {
   // A doorway rather than a pitched-roof house — this is a place she comes back to.
@@ -43,8 +47,8 @@ const PATHS: Record<IconName, React.ReactNode> = {
       <path d="M12 6.5C10.5 5 8.4 4.5 4 4.5v13c4.4 0 6.5.5 8 2 1.5-1.5 3.6-2 8-2v-13c-4.4 0-6.5.5-8 2Z" />
     </>
   ),
-  // Two speech shapes, overlapping. Other women, talking.
-  rooms: (
+  // Two speech shapes, overlapping. A question and an answer.
+  ask: (
     <>
       <path d="M15.5 13.5H9l-3.5 3v-3H4.5A1.5 1.5 0 0 1 3 12V6a1.5 1.5 0 0 1 1.5-1.5h11A1.5 1.5 0 0 1 17 6v6a1.5 1.5 0 0 1-1.5 1.5Z" />
       <path d="M17.5 8.5h2A1.5 1.5 0 0 1 21 10v6a1.5 1.5 0 0 1-1.5 1.5H19v3l-3.5-3H11" />
@@ -97,6 +101,45 @@ const PATHS: Record<IconName, React.ReactNode> = {
       <circle cx="12" cy="12" r="8.5" />
       <path d="M9.6 9.7a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .9-1 1.6v.4" />
       <path d="M12 17.2h.01" />
+    </>
+  ),
+  // A banknote, not a currency glyph. She banks in shillings, and a $ would be
+  // both wrong and the first thing any icon set reaches for.
+  money: (
+    <>
+      <rect x="2.5" y="6.5" width="19" height="11" rx="2" />
+      <circle cx="12" cy="12" r="2.5" />
+      <path d="M6 10.5v3M18 10.5v3" />
+    </>
+  ),
+  // A beacon. Not a badge and not a shield — one is American television and the
+  // other is what every safety app in the store already uses.
+  police: (
+    <>
+      <path d="M7.5 14.5a4.5 4.5 0 0 1 9 0" />
+      <rect x="5.5" y="14.5" width="13" height="3.5" rx="1.25" />
+      <path d="M12 5.5V7" />
+      <path d="m6.6 7.9 1.1 1.1" />
+      <path d="m17.4 7.9-1.1 1.1" />
+    </>
+  ),
+  // A stamped document. Scales of justice would be the obvious mark and would
+  // also promise a courtroom, when most of this is paperwork and advice.
+  legal: (
+    <>
+      <path d="M6 3.5h7l5 5v12H6Z" />
+      <path d="M13 3.5v5h5" />
+      <circle cx="12" cy="14.5" r="2.5" />
+    </>
+  ),
+  // A bed. "Somewhere to stay" means somewhere to sleep tonight, and a little
+  // house would collide with home, which is already a doorway.
+  shelter: (
+    <>
+      <circle cx="7.5" cy="11" r="2" />
+      <path d="M3.5 19v-8" />
+      <path d="M3.5 14h12.5a4.5 4.5 0 0 1 4.5 4.5V19" />
+      <path d="M3.5 17.5h17" />
     </>
   ),
 };
