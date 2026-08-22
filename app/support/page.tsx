@@ -43,21 +43,36 @@ export default function Support() {
           What happens when you call
         </h2>
         <p className="mt-2xs max-w-[46ch] text-sm leading-relaxed text-ink-2">
-          The line is free, confidential and judgement-free. You will not be forced to
-          report anything, or to do anything you do not want to do. You can just talk —
-          and decide your next step when you are ready.
+          Whichever line you ring, you will not be forced to report anything, or
+          to do anything you do not want to do. You can just talk, and decide
+          your next step when you are ready.
         </p>
       </section>
 
       {live.length === 0 ? (
         <section>
           <h2 className="font-display text-lg font-semibold tracking-heading">
-            Numbers are being confirmed
+            Where the numbers are
           </h2>
           <p className="mt-2xs max-w-[46ch] text-sm leading-relaxed text-ink-2">
-            We only list a line once we have called it ourselves and someone answered. If
-            you need help right now, go to the nearest health facility or police station.
+            GAL does not print a helpline it cannot stand behind. The ones
+            gathered for this page came secondhand and disagree with each other,
+            so they are not here.
           </p>
+          <p className="mt-2xs max-w-[46ch] text-sm leading-relaxed text-ink-2">
+            Ask holds the numbers each place publishes itself — hospitals, banks,
+            and the police emergency line.
+          </p>
+          <p className="mt-2xs max-w-[46ch] text-sm leading-relaxed text-ink-2">
+            And if you need somebody now, you do not need a number first. The
+            nearest health facility or police post will see you without one.
+          </p>
+          <Link
+            href="/ask"
+            className="tap mt-sm block rounded-inner bg-accent px-md py-xs text-center font-semibold text-accent-ink"
+          >
+            Open Ask
+          </Link>
         </section>
       ) : (
         <ul className="index rule-top">

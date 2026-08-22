@@ -69,12 +69,11 @@ export default function Ask() {
            useless — better to say what is missing and point at what works. */
         <section className="rule-top rule-bottom py-md">
           <h2 className="font-display text-lg font-semibold tracking-heading">
-            Nothing to give you yet
+            Nothing to give you here
           </h2>
           <p className="mt-2xs max-w-[46ch] text-sm leading-relaxed text-ink-2">
-            The places and numbers for this are still being confirmed. We only
-            list a line once someone has called it and got an answer, so this
-            page stays empty rather than sending you somewhere dead.
+            This list is empty. Rather than send you somewhere that might not
+            exist, GAL would rather say so — Support has what there is.
           </p>
           <Link
             href="/support"
@@ -146,12 +145,20 @@ export default function Ask() {
                   )}
                   {r.address && <p className="mt-3xs text-xs text-ink-2">{r.address}</p>}
 
-                  {/* Wine is act-now. A confirmed line earns it; a website does
-                      not, so the link stays quiet and bordered. */}
-                  {r.verified && r.phone && (
+                  {/* Wine is act-now, and it stays reserved for a line somebody
+                      has actually dialled. A number read off the organisation's
+                      own page is still worth having, so it is callable — but it
+                      takes the secondary treatment, because the design system
+                      already has a way to say "less certain" and inventing a
+                      fourth colour to say it would be worse. */}
+                  {r.phone && (
                     <a
                       href={`tel:${r.phone.replace(/\s/g, "")}`}
-                      className="tap mt-sm block rounded-inner bg-accent px-md py-xs text-center font-semibold text-accent-ink"
+                      className={
+                        r.verified
+                          ? "tap mt-sm block rounded-inner bg-accent px-md py-xs text-center font-semibold text-accent-ink"
+                          : "tap mt-sm block min-h-11 rounded-inner border border-rule px-md py-xs text-center font-semibold text-ink active:bg-paper-2"
+                      }
                     >
                       Call {r.phone}
                     </a>
@@ -166,10 +173,10 @@ export default function Ask() {
                       Open their website
                     </a>
                   )}
-                  {!r.verified && (
-                    <p className="mt-2xs text-xs text-ink-2">
-                      We have not phoned this line ourselves yet, so the number
-                      is not shown here. Their website has it.
+                  {!r.verified && r.phone && (
+                    <p className="mt-2xs text-xs leading-relaxed text-ink-2">
+                      This is the number they publish themselves. Nobody at GAL
+                      has rung it to check.
                     </p>
                   )}
                 </li>

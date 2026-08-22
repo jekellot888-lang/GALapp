@@ -17,10 +17,17 @@
  * proves the bank published it, not that it answers today. Scraping turned
  * "find the numbers" into "call down a list" — it did not remove the calling.
  *
- * ── Why this ships empty ────────────────────────────────────────────────────
- * Because none of it has been called yet. The bot says so plainly rather than
- * showing a number that might be dead. A visible gap beats a plausible
- * fabrication, and on this surface the gap is the honest answer.
+ * ── Two grades of provenance ────────────────────────────────────────────────
+ * Every entry here carries `source` and `checkedOn`, meaning the number was read
+ * on that organisation own published page on that date. That is enough to show
+ * it: the card says plainly that GAL has not rung it, and it takes the quiet
+ * bordered button rather than the wine one.
+ *
+ * `verified: true` is a stronger claim and means a person dialled it and got an
+ * answer. Nothing here has that yet, so nothing wears the wine button.
+ *
+ * Do not blur the two. Setting `verified` without phoning does not improve the
+ * app, it destroys the only distinction that makes showing a number defensible.
  *
  * Entries with `verified: false` are invisible to `liveReferrals()`. They are
  * still worth committing: they carry their source and their flags, so the next

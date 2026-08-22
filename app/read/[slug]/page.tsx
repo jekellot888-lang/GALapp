@@ -43,11 +43,13 @@ export default function Read({ params }: { params: { slug: string } }) {
           /* Deliberately honest — no filler. See the header of content/articles.ts. */
           <div className="rule-top mt-md pt-md">
             <p className="font-display text-lg font-semibold tracking-heading">
-              Still being written
+              This one is not here
             </p>
             <p className="mt-2xs max-w-[46ch] text-sm leading-relaxed text-ink-2">
-              We would rather leave this blank than fill it with something we have not
-              checked. It will be here once it has been written and read through.
+              The few pages still missing are the medical and legal ones, where
+              being roughly right is the same as being wrong. GAL would rather
+              show you nothing than something nobody checked against a proper
+              source.
             </p>
             <Link
               href={`/${a.section}`}

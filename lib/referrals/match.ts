@@ -75,8 +75,9 @@ export type Match = { referral: Referral; score: number };
 /**
  * Score every referral against the query and return the ones that scored.
  *
- * Entries with neither a verified phone nor a URL are skipped: an entry that
- * can give her nothing to act on is noise, however well it matches.
+ * An entry is worth showing if it gives her something to act on — a number or a
+ * page. `verified` no longer decides whether it appears, only how it is
+ * presented: see the note on provenance in `content/referrals.ts`.
  */
 export function match(query: string, limit = 4): Match[] {
   const tokens = tokenize(query);
@@ -89,7 +90,7 @@ export function match(query: string, limit = 4): Match[] {
   const scored: Match[] = [];
 
   for (const referral of REFERRALS) {
-    const actionable = (referral.verified && referral.phone) || referral.url;
+    const actionable = referral.phone || referral.url;
     if (!actionable) continue;
 
     const keywords = new Set(referral.keywords.map(stem));
@@ -113,7 +114,7 @@ export function match(query: string, limit = 4): Match[] {
 /** The category menu beside the box. Always works, never depends on phrasing. */
 export function byCategory(category: ReferralCategory, limit = 6): Match[] {
   return REFERRALS.filter(
-    (r) => r.category === category && ((r.verified && r.phone) || r.url)
+    (r) => r.category === category && (r.phone || r.url)
   )
     .slice(0, limit)
     .map((referral) => ({ referral, score: 0 }));
@@ -126,4 +127,4 @@ export function byCategory(category: ReferralCategory, limit = 6): Match[] {
  * with nothing behind it. See the header of `content/referrals.ts`.
  */
 export const hasAnyReferrals = () =>
-  REFERRALS.some((r) => (r.verified && r.phone) || r.url);
+  REFERRALS.some((r) => r.phone || r.url);

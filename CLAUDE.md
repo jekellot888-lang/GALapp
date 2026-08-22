@@ -32,11 +32,26 @@ When a design choice and this threat model conflict, the threat model wins.
 
 ## Rules that are not style preferences
 
-1. **No phone number renders until `verified: true`.** The gate is
-   `liveResources()` / `liveClinics()` filtering on `verified && phone`. Support,
-   Quiet Mode and the self-check all read it. Do not bypass it, do not hardcode a
-   number in copy, and do not flip a flag without phoning the line. A dead number
-   is worse than no number.
+1. **A number renders only with provenance, and provenance has two grades.**
+   Changed on 2026-08-22, replacing an absolute "nothing renders until
+   `verified: true`". That rule assumed somebody would do the phoning. Nobody
+   is, and an app that shows no number to anybody, ever, fails her worse than
+   one that is honest about where a number came from.
+
+   - **`verified: true`** means a person rang the line and somebody answered.
+     Only these get the wine call button. Nothing is currently verified.
+   - **Published** means the number was read on that organisation's own page,
+     and the entry carries `source` and `checkedOn` proving it. These are
+     callable, take the secondary bordered treatment, and say on the card that
+     GAL has not rung them.
+   - **Neither** never renders. `content/support.ts` is the whole of this
+     category: those twelve came off screenshots of another app and contradict
+     each other. Secondhand is not provenance.
+
+   Still true, and not negotiable: do not hardcode a number in copy, and do not
+   set `verified: true` without phoning the line. Falsifying `verifiedBy` is
+   worse than showing an unchecked number, because it destroys the distinction
+   the whole scheme rests on.
 2. **Do not invent facts.** No clinics, no practitioners, no fees, no wellness
    percentages, no streak statistics. A visible gap beats a plausible
    fabrication. Everything currently in `content/` came from a real source and is
