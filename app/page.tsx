@@ -8,6 +8,7 @@ import { useShake } from "@/lib/useShake";
 import { feedback } from "@/lib/haptics";
 import { affirmationForDay, randomAffirmation } from "@/lib/affirmations";
 import InstallSheet from "@/components/InstallSheet";
+import Splash from "@/components/Splash";
 import Icon from "@/components/Icon";
 
 /** Words, not faces. Emoji as a UI control is the loudest AI tell there is. */
@@ -64,6 +65,23 @@ export default function Home() {
     }
   }, [ready, state.onboarded, state.disguise, router]);
 
+  /**
+   * The splash, and the one condition it must never lose.
+   *
+   * `state.disguise` gates it. A phone set to open as a calculator opens as a
+   * calculator, with nothing branded in front of it — see components/Splash.tsx.
+   * The check also waits on `ready`, so the flag is known before anything can
+   * paint; deciding this from the default would flash the mark at exactly the
+   * person it is hidden from.
+   */
+  const [splash, setSplash] = useState(false);
+  useEffect(() => {
+    if (!ready || !state.onboarded || state.disguise) return;
+    if (sessionStorage.getItem("gal.splash")) return;
+    sessionStorage.setItem("gal.splash", "1");
+    setSplash(true);
+  }, [ready, state.onboarded, state.disguise]);
+
   const daily = useMemo(() => affirmationForDay(t), [t]);
   const [affirmation, setAffirmation] = useState(daily);
   const [swapping, setSwapping] = useState(false);
@@ -98,6 +116,8 @@ export default function Home() {
 
   return (
     <main>
+      {splash && <Splash onDone={() => setSplash(false)} />}
+
       <header className="stack mb-lg" style={{ ["--i" as string]: 0 }}>
         <p className="text-sm text-ink-2">{greeting()},</p>
         <h1 className="font-display text-display font-semibold leading-[1.05] tracking-display">

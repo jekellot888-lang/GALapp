@@ -72,6 +72,20 @@ p { text-wrap: pretty; }
 }
 .rise { animation: gal-rise var(--dur-enter) var(--ease-out) both; }
 
+/* ── Splash ──────────────────────────────────────────────────────────────────
+   One orchestrated entrance, per design.md: the mark settles, the line follows.
+   It leaves on opacity alone, because a screen on its way out should not draw
+   attention to itself doing it. */
+.splash { transition: opacity var(--dur-enter) var(--ease-out); }
+.splash[data-leaving] { opacity: 0; pointer-events: none; }
+.splash-mark { animation: gal-splash-mark 420ms var(--ease-out) both; }
+.splash-line { animation: gal-rise var(--dur-enter) var(--ease-out) both; animation-delay: 120ms; }
+
+@keyframes gal-splash-mark {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: none; }
+}
+
 /* ── Accessibility ───────────────────────────────────────────────────────────
    Reduced motion is gentler, not zero. Opacity carries meaning and stays. */
 @media (prefers-reduced-motion: reduce) {
@@ -81,6 +95,9 @@ p { text-wrap: pretty; }
   .aff { transition: opacity 150ms ease; }
   .aff[data-swapping="true"] { transform: none; }
   .rise { animation: none; }
+  /* Travel goes, opacity survives. */
+  .splash-mark { animation: none; }
+  .splash-line { animation: none; }
 }
 
 /* High contrast has to be written per scheme. Darkening ink-2 helps on bone
