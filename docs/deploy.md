@@ -45,15 +45,37 @@ Only the rooms need this. Everything else works without it.
 3. Authentication → Providers → Email. Turn **off** "Confirm email" and leave
    the OTP flow on: the app signs in with a six-digit code, not a magic link and
    not a password.
-4. Project Settings → API. Copy the URL and the **anon public** key.
-5. Vercel → Settings → Environment Variables:
+4. Authentication → Emails. Replace the body of **both** "Magic Link" and
+   "Confirm signup" with the files in `supabase/email-templates/`. Read the
+   comment at the top of each before pasting.
+
+   This step is easy to skip and breaks sign-in completely when you do. The
+   stock templates send `{{ .ConfirmationURL }}`, a link. Tapping a link opens
+   Safari, and an installed PWA has different storage than the Safari tab, so
+   she ends up signed in on a page she wasn't using while the app she installed
+   still asks her to sign in. `{{ .Token }}` is the six-digit code the app
+   actually asks for.
+
+   Set both templates. Which one GoTrue sends to a brand-new address is a
+   branch in its signup path, and guessing wrong costs you a debugging session
+   for no gain.
+
+   **Check the sender before testing.** Supabase's built-in email service is
+   rate-limited to a handful of messages an hour and, on current projects, only
+   delivers to addresses on the project team. If the end-to-end test gets no
+   email, that is the first thing to check, not the template. Real users need
+   custom SMTP under Project Settings → Authentication → SMTP.
+5. Project Settings → API. Copy the URL and the **anon public** key.
+6. Vercel → Settings → Environment Variables:
 
 ```
 NEXT_PUBLIC_SUPABASE_URL=https://YOUR-PROJECT.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-public-key
 ```
 
-6. Redeploy.
+7. Redeploy. Env vars are baked in at build time, so an existing deployment
+   will not pick them up until it rebuilds. Rooms keep saying "not switched on"
+   until then, and that looks like a broken Supabase rather than a stale build.
 
 **Never add the `service_role` key.** The app does not use it and it bypasses
 every RLS policy in `schema.sql`. A `NEXT_PUBLIC_` service key would be readable
