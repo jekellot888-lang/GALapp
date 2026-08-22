@@ -112,15 +112,18 @@ const PATHS: Record<IconName, React.ReactNode> = {
       <path d="M6 10.5v3M18 10.5v3" />
     </>
   ),
-  // A beacon. Not a badge and not a shield — one is American television and the
-  // other is what every safety app in the store already uses.
+  // A siren lamp on a roof bar. Not a badge and not a shield — one is American
+  // television and the other is what every safety app in the store wears.
+  //
+  // The first attempt was a dome with radiating ticks, and rendered at 110px it
+  // was plainly a sunrise: the rays read as sunlight, not as a light bar. The
+  // lens division does the work the rays were failing at, and survives 16px.
   police: (
     <>
-      <path d="M7.5 14.5a4.5 4.5 0 0 1 9 0" />
+      <path d="M8 14.5v-1.5a4 4 0 0 1 8 0v1.5" />
       <rect x="5.5" y="14.5" width="13" height="3.5" rx="1.25" />
-      <path d="M12 5.5V7" />
-      <path d="m6.6 7.9 1.1 1.1" />
-      <path d="m17.4 7.9-1.1 1.1" />
+      <path d="m3.8 9.4 1.7 1.1" />
+      <path d="m20.2 9.4-1.7 1.1" />
     </>
   ),
   // A stamped document. Scales of justice would be the obvious mark and would
