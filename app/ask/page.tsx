@@ -155,9 +155,10 @@ export default function Ask() {
                       Open their website
                     </a>
                   )}
-                  {!r.verified && !r.phone && (
+                  {!r.verified && (
                     <p className="mt-2xs text-xs text-ink-2">
-                      No confirmed phone line for this one yet.
+                      We have not phoned this line ourselves yet, so the number
+                      is not shown here. Their website has it.
                     </p>
                   )}
                 </li>
