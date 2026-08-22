@@ -126,5 +126,11 @@ stale. Log a unique marker, reload, and only trust what appears after it.
 - **Twelve helplines, none verified.** This is why Support and Quiet Mode show
   nothing to dial. It is phone calls, not code — `docs/verification.md`.
 - **Clinics empty.** Needs a real source.
-- **28 of 34 article bodies empty.** The reader says so honestly rather than
-  showing filler.
+- **8 of 34 article bodies empty**, and they are the ones that need a source:
+  five clinical (depression, common illnesses, wounds, infections, nutrition)
+  and three on Ugandan legal and medical procedure after violence. The reader
+  says so honestly rather than showing filler. The header of
+  `content/articles.ts` lists them and why each was left.
+- **No article is `verified: true`.** That flag means a person has read the
+  finished body for accuracy and tone. Twenty of them were written by Claude on
+  2026-08-22 and nobody has read them since.
