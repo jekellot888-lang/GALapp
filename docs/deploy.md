@@ -33,12 +33,15 @@ Only the rooms need this. Everything else works without it.
 
 1. New project. Pick the region closest to Uganda — `eu-central-1` is usually
    the best of a bad set; there is no East Africa region.
-2. SQL Editor → New query → paste all of `supabase/schema.sql` → Run. That
-   creates the tables, turns RLS on, writes every policy, and seeds four rooms.
-   Then run `supabase/migrations/001_moderation.sql`, which adds the moderator
-   role and the queue. If you ran an earlier copy of `schema.sql`, the migration
-   also closes a hole where a muted user could clear their own mute — run it
-   either way, it is safe twice.
+2. SQL Editor → New query → paste all of `supabase/schema.sql` → Run. **That is
+   the only file you need.** It creates the tables, turns RLS on, writes every
+   policy, seeds four rooms, and includes the column-privilege fix that stops a
+   muted account clearing its own mute.
+
+   `supabase/migrations/001_moderation.sql` is **optional and currently not
+   run**. It adds a moderator role and the in-app queue at `/moderate`. Without
+   it that page just says the account cannot see the queue, and nothing else in
+   the app changes. Run it later if you ever want in-app moderation.
 3. Authentication → Providers → Email. Turn **off** "Confirm email" and leave
    the OTP flow on: the app signs in with a six-digit code, not a magic link and
    not a password.
@@ -95,21 +98,22 @@ grows; nothing breaks.
   `flag` — read them.
 - Remove `robots: { index: false }` from `app/layout.tsx` when it should be
   findable. It is deliberately excluded from search right now.
-- **Make yourself a moderator, or keep the rooms closed.** The queue exists at
-  `/moderate`, but it is empty of permission until somebody is in the
-  `moderators` table. Find your user id in Authentication → Users, then run:
+- **Reports land in a table, not an inbox.** Running without the moderation
+  migration is a deliberate choice, and this is its one consequence: the Report
+  button in a room still works and still writes a row, but nothing surfaces it
+  in the app. To read them, open Supabase → Table Editor → `reports`, and join
+  by `message_id` to see what was reported.
 
-  ```sql
-  insert into public.moderators (id, note) values ('YOUR-UUID', 'founder');
-  ```
+  Put a recurring reminder somewhere. A report nobody reads is the same as no
+  report button, and she has been told "Reported. Thank you."
 
-  `/moderate` is deliberately not linked from anywhere in the app — a moderator
-  types the URL. Access is enforced in the database, not by hiding the page.
+  Report rows are deleted along with their message at the 30-day expiry, so the
+  table stays small on its own.
 
 - Reporting is one-way by design. A reporter sees "Reported. Thank you." and
   nothing further: no count, no status, no history. `reports` has no select
   policy for reporters, so the UI could not show more even if asked. That
   matters when the person being reported may be reading over her shoulder.
 
-- An empty queue and an unwatched queue look identical from `/moderate`. Decide
-  who checks it and how often before the rooms take real users.
+- **Anyone can delete their own messages** at any time, and nobody can edit
+  anyone else's. That is the only in-app recourse without a moderator.
