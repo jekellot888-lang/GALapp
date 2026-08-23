@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { TOPICS, bySection, type Section } from "@/content/articles";
+import QuickExit from "@/components/QuickExit";
 
 /**
  * An index, not a deck of cards. Entries are divided by hairlines and sit
@@ -28,6 +29,12 @@ export default function ArticleList({
 
   return (
     <main>
+      {/* These pages name what she is reading about — "He Beat You", "Going to
+          the Police" — several titles at once. The article itself carried a
+          quick exit and the list that advertises it did not, which was the
+          wrong way round. */}
+      <QuickExit />
+
       <header className="mb-lg">
         <h1 className="font-display text-display font-semibold leading-[1.05] tracking-display">
           {title}

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { TOPICS, bySection, type Section } from "@/content/articles";
+import QuickExit from "@/components/QuickExit";
 
 /**
  * One reading tab.
@@ -38,6 +39,12 @@ export default function Read() {
 
   return (
     <main>
+      {/* These pages name what she is reading about — "He Beat You", "Going to
+          the Police" — several titles at once. The article itself carried a
+          quick exit and the list that advertises it did not, which was the
+          wrong way round. */}
+      <QuickExit />
+
       <header className="mb-md">
         <h1 className="font-display text-display font-semibold leading-[1.05] tracking-display">
           Read

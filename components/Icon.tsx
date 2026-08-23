@@ -127,13 +127,15 @@ const PATHS: Record<IconName, React.ReactNode> = {
       <path d="m20.2 9.4-1.7 1.1" />
     </>
   ),
-  // A stamped document. Scales of justice would be the obvious mark and would
-  // also promise a courtroom, when most of this is paperwork and advice.
+  // A written-on document. Scales of justice would be the obvious mark and
+  // would promise a courtroom, when most of this is paperwork and advice. The
+  // first version put a seal circle low on the page and it read as a keyhole,
+  // so the seal became two lines of writing.
   legal: (
     <>
       <path d="M6 3.5h7l5 5v12H6Z" />
       <path d="M13 3.5v5h5" />
-      <circle cx="12" cy="14.5" r="2.5" />
+      <path d="M9 13.5h6M9 16.5h3.5" />
     </>
   ),
   // Two women, one a little behind the other. The room is people, not a place,

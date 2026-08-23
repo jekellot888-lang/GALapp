@@ -34,8 +34,8 @@ const CATEGORIES: { id: ReferralCategory; label: string; icon: IconName }[] = [
   { id: "hospital", label: "Health", icon: "clinic" },
   { id: "police", label: "Police", icon: "police" },
   { id: "legal", label: "Legal", icon: "legal" },
-  { id: "mental-health", label: "Someone to talk to", icon: "support" },
-  { id: "shelter", label: "Somewhere to stay", icon: "shelter" },
+  { id: "mental-health", label: "Someone", icon: "support" },
+  { id: "shelter", label: "A bed", icon: "shelter" },
 ];
 
 export default function Ask() {
