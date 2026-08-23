@@ -52,6 +52,31 @@ Two things to watch once it is live:
   moderation or review, that is a decision to make openly, because it reverses a
   promise the screen currently makes to her.
 
+## 4. The room (optional)
+
+`vercel integration add upstash`, which sets `KV_REST_API_URL` and
+`KV_REST_API_TOKEN` for you. Without them `/room` says it is not switched on and
+nothing else in the app changes.
+
+Two more, both optional, for report alerts:
+
+```
+RESEND_API_KEY=re_...
+MODERATION_EMAIL=someone@example.com
+```
+
+Without these a report still removes the message immediately — it only loses the
+notification, which is logged to the Function instead. Note that an unverified
+Resend account only delivers to the account holder's own address. That made it
+useless for user email and makes it exactly right here, where the alert never
+goes anywhere else.
+
+**Closing the room.** Set `gal:room:closed` to `1` in the Upstash data browser
+and the room shuts for everybody within one poll. Set it to `0` to reopen. It
+works from a phone, needs no deploy, and it is the only lever there is — with no
+accounts there is nobody to ban, only a session that can be replaced in seconds.
+Whoever is on call should be shown this before they need it.
+
 ## The service worker
 
 `public/sw.js` precaches a fixed `SHELL` list. **Every route named there must

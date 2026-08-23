@@ -30,7 +30,8 @@ export type IconName =
   | "money"
   | "police"
   | "legal"
-  | "shelter";
+  | "shelter"
+  | "room";
 
 const PATHS: Record<IconName, React.ReactNode> = {
   // A doorway rather than a pitched-roof house — this is a place she comes back to.
@@ -133,6 +134,17 @@ const PATHS: Record<IconName, React.ReactNode> = {
       <path d="M6 3.5h7l5 5v12H6Z" />
       <path d="M13 3.5v5h5" />
       <circle cx="12" cy="14.5" r="2.5" />
+    </>
+  ),
+  // Two women, one a little behind the other. The room is people, not a place,
+  // so this is not a door and not a building. Three shapes is the ceiling for
+  // something that has to survive 16px in a nav bar.
+  room: (
+    <>
+      <circle cx="9.5" cy="8.5" r="3" />
+      <circle cx="16.8" cy="10" r="2.2" />
+      <path d="M4 19.5a5.5 5.5 0 0 1 11 0" />
+      <path d="M16.4 14.9a4.5 4.5 0 0 1 3.6 4.6" />
     </>
   ),
   // A bed. "Somewhere to stay" means somewhere to sleep tonight, and a little

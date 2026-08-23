@@ -102,7 +102,29 @@ stale. Log a unique marker, reload, and only trust what appears after it.
 
 ## Decisions already made, so they are not re-litigated
 
-- **No accounts, no database, no chat between users.** Removed on 2026-08-22.
+- **The room is back, without accounts.** Rebuilt on 2026-08-23 at `/room`.
+  One room, an alias held on her device, polling rather than sockets, Upstash
+  Redis as a cache, and nothing kept past a day.
+
+  Read `lib/room/store.ts` before changing any of it. The load-bearing choices:
+  `hasRedis()` decides the storage path while `roomConfigured()` decides whether
+  the room is offered at all — memory is fine in dev and wrong in production,
+  where two Function instances would be two rooms. Polling is deliberate: the
+  Vercel WebSocket upgrade is still experimental, and a socket that keeps
+  dropping on a Ugandan mobile network is worse than a request that either
+  lands or does not. Revisit past roughly 30 concurrent.
+
+  **Nobody watches the room live.** That was decided knowingly, and the
+  safeguarding literature is clear that an unmoderated peer room is the risky
+  configuration, more so in domestic violence because perpetrators seek these
+  spaces out. What stands in for a moderator: links are stripped server-side,
+  reporting removes the message for everyone immediately rather than filing it,
+  and `gal:room:closed` set to `1` in Upstash shuts the room instantly from a
+  phone. There is no ban — no accounts means no person to ban, only a session.
+  The kill switch is the answer to a bad actor, and whoever is on call should
+  know it exists before they need it.
+
+- **No accounts, no database for anything else.** Decided on 2026-08-22.
   GAL had group rooms behind an emailed sign-in link and a Supabase backend.
   All of it is gone — pages, schema, migrations, and the `@supabase/*`
   dependencies. Recoverable from `fe24ce5` if peer chat is ever wanted back.
