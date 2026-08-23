@@ -136,12 +136,19 @@ export default function Elle() {
     <main className="flex min-h-[72dvh] flex-col">
       <QuickExit />
 
-      <Link
-        href="/support"
-        className="tap -ml-1 inline-flex min-h-11 items-center gap-2xs pl-1 pr-2xs text-sm text-ink-2"
-      >
-        <span aria-hidden>←</span> Support
-      </Link>
+      <div className="flex items-baseline justify-between">
+        <h1 className="font-display text-display-s font-semibold leading-[1.1] tracking-display">
+          Elle
+        </h1>
+        {msgs.length > 0 && (
+          <button
+            onClick={() => { abort.current?.abort(); setMsgs([]); setDraft(""); }}
+            className="tap min-h-11 text-sm text-ink-2 underline underline-offset-4"
+          >
+            Start over
+          </button>
+        )}
+      </div>
 
       <div className="index mt-sm flex-1 rule-top">
         {msgs.length === 0 ? (
@@ -150,11 +157,22 @@ export default function Elle() {
           </p>
         ) : (
           msgs.map((m, i) => (
-            <article key={i} className="py-sm">
+            <article
+              key={i}
+              className={
+                m.role === "user"
+                  ? "border-l border-rule-strong py-sm pl-sm"
+                  : "py-sm"
+              }
+            >
               <p className="text-xs text-ink-2">{m.role === "user" ? "You" : "Elle"}</p>
               <p className="selectable mt-3xs whitespace-pre-wrap text-md leading-relaxed">
                 {m.content ||
-                  (busy && i === msgs.length - 1 ? "…" : "")}
+                  (busy && i === msgs.length - 1 ? (
+                    <span className="text-ink-2">Thinking…</span>
+                  ) : (
+                    ""
+                  ))}
               </p>
             </article>
           ))

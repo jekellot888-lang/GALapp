@@ -17,7 +17,7 @@ const TABS: { href: string; label: string; icon: IconName }[] = [
   { href: "/", label: "Home", icon: "home" },
   { href: "/read", label: "Read", icon: "read" },
   { href: "/ask", label: "Ask", icon: "ask" },
-  { href: "/room", label: "Room", icon: "room" },
+  { href: "/elle", label: "Elle", icon: "elle" },
   { href: "/support", label: "Support", icon: "support" },
 ];
 
@@ -30,8 +30,6 @@ const ALIASES: Record<string, string> = {
   "/plan": "/support",
   "/contacts": "/support",
   "/check": "/support",
-  "/elle": "/support",
-  "/room/enter": "/room",
 };
 
 export default function BottomNav() {

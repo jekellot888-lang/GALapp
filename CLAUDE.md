@@ -102,27 +102,25 @@ stale. Log a unique marker, reload, and only trust what appears after it.
 
 ## Decisions already made, so they are not re-litigated
 
-- **The room is back, without accounts.** Rebuilt on 2026-08-23 at `/room`.
-  One room, an alias held on her device, polling rather than sockets, Upstash
-  Redis as a cache, and nothing kept past a day.
+- **Chat means Elle, not other users.** Settled on 2026-08-23. A peer room was
+  built that day at `/room` — one room, no accounts, polling, Upstash, links
+  stripped, reports removing a message for everyone, a kill switch — and then
+  removed the same day. It worked. It was cut anyway.
 
-  Read `lib/room/store.ts` before changing any of it. The load-bearing choices:
-  `hasRedis()` decides the storage path while `roomConfigured()` decides whether
-  the room is offered at all — memory is fine in dev and wrong in production,
-  where two Function instances would be two rooms. Polling is deliberate: the
-  Vercel WebSocket upgrade is still experimental, and a socket that keeps
-  dropping on a Ugandan mobile network is worse than a request that either
-  lands or does not. Revisit past roughly 30 concurrent.
+  The reason it went is the one the build could not solve: nobody was going to
+  watch it. An always-open peer room with no live facilitator is the exact
+  configuration the safeguarding literature warns about, and more so in domestic
+  violence, because perpetrators seek these spaces out and are practised at
+  working them. Every rail added reduced that risk without removing it, and the
+  honest read is that mitigations were standing in for a person who did not
+  exist. It also wanted Upstash, which is one more thing to provision and pay
+  for and keep alive.
 
-  **Nobody watches the room live.** That was decided knowingly, and the
-  safeguarding literature is clear that an unmoderated peer room is the risky
-  configuration, more so in domestic violence because perpetrators seek these
-  spaces out. What stands in for a moderator: links are stripped server-side,
-  reporting removes the message for everyone immediately rather than filing it,
-  and `gal:room:closed` set to `1` in Upstash shuts the room instantly from a
-  phone. There is no ban — no accounts means no person to ban, only a session.
-  The kill switch is the answer to a bad actor, and whoever is on call should
-  know it exists before they need it.
+  Elle carries the chat instead. She cannot be groomed, cannot be impersonated,
+  and needs no moderation, because there is nobody else in the room. What is
+  lost is real and worth naming: women hearing from each other rather than from
+  software. If it comes back, the whole implementation is at `ed32ac2`, and the
+  question to answer first is still who is watching, not how to build it.
 
 - **No accounts, no database for anything else.** Decided on 2026-08-22.
   GAL had group rooms behind an emailed sign-in link and a Supabase backend.
