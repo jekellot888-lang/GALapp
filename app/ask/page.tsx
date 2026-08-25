@@ -15,8 +15,9 @@ import { match, byCategory, hasAnyReferrals, type Match } from "@/lib/referrals/
  * data are compiled into the bundle the service worker already caches.
  *
  * It cannot invent a number. It can only surface rows from
- * `content/referrals.ts`, and those stay hidden until somebody has phoned them.
- * When it has no answer it says so, rather than producing something plausible.
+ * `content/referrals.ts`, and those need either a verified phone line or a
+ * published page she can inspect herself. When it has no answer it says so,
+ * rather than producing something plausible.
  */
 
 /**
@@ -84,36 +85,43 @@ export default function Ask() {
         </section>
       ) : (
         <>
-          <div className="flex gap-2xs">
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && ask()}
-              placeholder="Open a bank account"
-              className="min-h-11 flex-1 rounded-inner border border-rule bg-paper-2 px-xs text-base text-ink"
-            />
-            <button
-              onClick={ask}
-              className="tap min-h-11 shrink-0 rounded-inner bg-accent px-md font-semibold text-accent-ink"
-            >
-              Ask
-            </button>
-          </div>
+          <section className="app-panel p-sm">
+            <div className="flex gap-2xs">
+              <input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && ask()}
+                placeholder="Open a bank account"
+                className="min-h-11 flex-1 rounded-inner border border-rule bg-paper-2 px-xs text-base text-ink"
+              />
+              <button
+                onClick={ask}
+                className="tap min-h-11 shrink-0 rounded-inner bg-accent px-md font-semibold text-accent-ink"
+              >
+                Ask
+              </button>
+            </div>
 
-          {/* Always reachable, never depends on getting the wording right. */}
-          <ul className="mt-sm flex flex-wrap gap-2xs">
-            {CATEGORIES.map((c) => (
-              <li key={c.id}>
-                <button
-                  onClick={() => { setQuery(""); setResults(byCategory(c.id)); }}
-                  className="tap flex min-h-11 items-center gap-2xs rounded-pill border border-rule px-sm text-sm text-ink-2 active:bg-paper-2"
-                >
-                  <Icon name={c.icon} className="h-4 w-4 shrink-0" />
-                  {c.label}
-                </button>
-              </li>
-            ))}
-          </ul>
+            {/* Always reachable, never depends on getting the wording right. */}
+            <ul className="mt-sm grid grid-cols-2 gap-2xs">
+              {CATEGORIES.map((c) => (
+                <li key={c.id}>
+                  <button
+                    onClick={() => {
+                      setQuery("");
+                      setResults(byCategory(c.id));
+                    }}
+                    className="tap app-tile flex min-h-[64px] w-full items-center gap-xs p-xs text-left text-sm text-ink-2 active:bg-paper-2"
+                  >
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-rose-tint text-rose-ink">
+                      <Icon name={c.icon} className="h-4 w-4" />
+                    </span>
+                    {c.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
 
           {results !== null && results.length === 0 && (
             <section className="rule-top mt-lg pt-md">

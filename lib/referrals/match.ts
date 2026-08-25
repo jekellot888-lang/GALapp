@@ -72,12 +72,15 @@ const WEIGHT = { keyword: 3, name: 2, what: 1, category: 2 };
 
 export type Match = { referral: Referral; score: number };
 
+const canShowReferral = (referral: Referral) =>
+  Boolean((referral.verified && referral.phone) || referral.url);
+
 /**
  * Score every referral against the query and return the ones that scored.
  *
- * An entry is worth showing if it gives her something to act on — a number or a
- * page. `verified` no longer decides whether it appears, only how it is
- * presented: see the note on provenance in `content/referrals.ts`.
+ * An entry is worth showing if it gives her something defensible to act on: a
+ * verified number, or a published page that she can open and inspect herself.
+ * Phone-only research candidates stay hidden until somebody has phoned them.
  */
 export function match(query: string, limit = 4): Match[] {
   const tokens = tokenize(query);
@@ -90,8 +93,7 @@ export function match(query: string, limit = 4): Match[] {
   const scored: Match[] = [];
 
   for (const referral of REFERRALS) {
-    const actionable = referral.phone || referral.url;
-    if (!actionable) continue;
+    if (!canShowReferral(referral)) continue;
 
     const keywords = new Set(referral.keywords.map(stem));
     const nameTokens = new Set(tokenize(referral.name));
@@ -114,7 +116,7 @@ export function match(query: string, limit = 4): Match[] {
 /** The category menu beside the box. Always works, never depends on phrasing. */
 export function byCategory(category: ReferralCategory, limit = 6): Match[] {
   return REFERRALS.filter(
-    (r) => r.category === category && (r.phone || r.url)
+    (r) => r.category === category && canShowReferral(r)
   )
     .slice(0, limit)
     .map((referral) => ({ referral, score: 0 }));
@@ -127,4 +129,4 @@ export function byCategory(category: ReferralCategory, limit = 6): Match[] {
  * with nothing behind it. See the header of `content/referrals.ts`.
  */
 export const hasAnyReferrals = () =>
-  REFERRALS.some((r) => r.phone || r.url);
+  REFERRALS.some(canShowReferral);

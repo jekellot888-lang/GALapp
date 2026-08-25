@@ -24,6 +24,8 @@
 
   --color-rule: #EFDCD7;
   --color-rule-strong: #D6B2AF;
+  --color-chrome: rgba(255, 248, 245, 0.86);
+  --color-panel: rgba(253, 241, 238, 0.84);
 
   --color-accent: #7A1F3D;
   --color-accent-deep: #561020;
@@ -84,6 +86,8 @@
   --shadow-nav: 0 -1px 0 var(--color-rule);
   --shadow-lift: 0 1px 2px rgba(42, 18, 24, 0.06),
                  0 8px 24px rgba(42, 18, 24, 0.08);
+  --shadow-panel: 0 1px 0 rgba(255, 255, 255, 0.76) inset,
+                  0 12px 32px rgba(86, 16, 32, 0.08);
 
   /* ── Type ───────────────────────────────────────────────────────────────── */
   --font-display: var(--font-cormorant), Georgia, "Times New Roman", serif;
@@ -149,6 +153,8 @@
 
     --color-rule: #3E1F28;
     --color-rule-strong: #6E4A52;
+    --color-chrome: rgba(27, 15, 19, 0.86);
+    --color-panel: rgba(36, 21, 26, 0.82);
 
     --color-accent: #E8B3B7;
     --color-accent-deep: #C77E92;
@@ -182,5 +188,7 @@
     --color-on-calm: #12211C;
 
     --shadow-lift: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.34);
+    --shadow-panel: 0 1px 0 rgba(255, 255, 255, 0.04) inset,
+                    0 16px 36px rgba(0, 0, 0, 0.28);
   }
 }

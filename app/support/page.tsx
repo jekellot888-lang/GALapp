@@ -31,14 +31,14 @@ export default function Support() {
           needs it is not reading, she is scanning for the fastest way out. */}
       <Link
         href="/quiet"
-        className="tap mb-lg flex items-center justify-center gap-2xs rounded-inner bg-accent px-md py-sm font-semibold text-accent-ink"
+        className="tap mb-lg flex min-h-[56px] items-center justify-center gap-2xs rounded-inner bg-accent px-md py-sm font-semibold text-accent-ink shadow-lift"
       >
         <Icon name="quiet" className="h-[18px] w-[18px]" /> Open Quiet Mode
       </Link>
 
       {/* The barrier is rarely the number — it is not knowing what happens after
           you dial. Saying so plainly is the point of this block. */}
-      <section className="rule-top rule-bottom mb-lg py-md">
+      <section className="app-panel mb-lg p-md">
         <h2 className="font-display text-lg font-semibold tracking-heading">
           What happens when you call
         </h2>
@@ -50,7 +50,7 @@ export default function Support() {
       </section>
 
       {live.length === 0 ? (
-        <section>
+        <section className="app-panel p-md">
           <h2 className="font-display text-lg font-semibold tracking-heading">
             Where the numbers are
           </h2>
@@ -108,49 +108,43 @@ export default function Support() {
         </p>
       )}
 
-      <Link href="/elle" className="tap tap-tint rule-top -mx-5 flex items-start gap-xs px-5 py-md active:bg-paper-2">
-        <span aria-hidden className="mt-3xs grid h-9 w-9 shrink-0 place-items-center rounded-full bg-rose-tint text-rose-ink">
-          <Icon name="elle" className="h-[18px] w-[18px]" />
-        </span>
-        <span>
-          <span className="block font-display text-lg font-semibold tracking-heading">Talk to Elle</span>
-          <span className="mt-3xs block text-sm text-ink-2">Someone to think out loud with, any hour. Read the note first.</span>
-        </span>
-      </Link>
-
-      <Link href="/check" className="tap tap-tint rule-top -mx-5 flex items-start gap-xs px-5 py-md active:bg-paper-2">
-        <span aria-hidden className="mt-3xs grid h-9 w-9 shrink-0 place-items-center rounded-full bg-rose-tint text-rose-ink">
-          <Icon name="check" className="h-[18px] w-[18px]" />
-        </span>
-        <span>
-          <span className="block font-display text-lg font-semibold tracking-heading">Is this abuse?</span>
-          <span className="mt-3xs block text-sm text-ink-2">A private check. Nothing is saved.</span>
-        </span>
-      </Link>
-
-      <Link href="/plan" className="tap tap-tint rule-top -mx-5 flex items-start gap-xs px-5 py-md active:bg-paper-2">
-        <span aria-hidden className="mt-3xs grid h-9 w-9 shrink-0 place-items-center rounded-full bg-rose-tint text-rose-ink">
-          <Icon name="plan" className="h-[18px] w-[18px]" />
-        </span>
-        <span>
-          <span className="block font-display text-lg font-semibold tracking-heading">My safety plan</span>
-          <span className="mt-3xs block text-sm text-ink-2">Six things worth having ready. Ticks only, kept on this phone.</span>
-        </span>
-      </Link>
-
-      <Link href="/contacts" className="tap tap-tint rule-top -mx-5 flex items-start gap-xs px-5 py-md active:bg-paper-2">
-        <span aria-hidden className="mt-3xs grid h-9 w-9 shrink-0 place-items-center rounded-full bg-rose-tint text-rose-ink">
-          <Icon name="contacts" className="h-[18px] w-[18px]" />
-        </span>
-        <span>
-          <span className="block font-display text-lg font-semibold tracking-heading">Trusted contacts</span>
-          <span className="mt-3xs block text-sm text-ink-2">Up to three people Quiet Mode can message. Kept on this phone.</span>
-        </span>
-      </Link>
+      <section className="mt-lg">
+        <h2 className="font-display text-lg font-semibold tracking-heading">Help tools</h2>
+        <div className="mt-sm grid grid-cols-2 gap-2xs">
+          <Tool href="/elle" icon="elle" title="Elle" sub="Think it through" />
+          <Tool href="/check" icon="check" title="Check" sub="Nothing saved" />
+          <Tool href="/plan" icon="plan" title="Plan" sub="Ticks only" />
+          <Tool href="/contacts" icon="contacts" title="Contacts" sub="Up to three" />
+        </div>
+      </section>
 
       <p className="mt-lg text-xs text-ink-2">
         GAL does not record who you call, and nothing you do here is sent anywhere.
       </p>
     </main>
+  );
+}
+
+function Tool({
+  href,
+  icon,
+  title,
+  sub,
+}: {
+  href: string;
+  icon: "elle" | "check" | "plan" | "contacts";
+  title: string;
+  sub: string;
+}) {
+  return (
+    <Link href={href} className="tap app-tile flex min-h-[96px] flex-col justify-between p-sm active:scale-[0.99]">
+      <span aria-hidden className="grid h-9 w-9 place-items-center rounded-full bg-rose-tint text-rose-ink">
+        <Icon name={icon} className="h-[18px] w-[18px]" />
+      </span>
+      <span>
+        <span className="block font-semibold">{title}</span>
+        <span className="mt-3xs block text-xs text-ink-2">{sub}</span>
+      </span>
+    </Link>
   );
 }

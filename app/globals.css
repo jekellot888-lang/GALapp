@@ -16,6 +16,8 @@ body {
   -webkit-touch-callout: none;
   -webkit-tap-highlight-color: transparent;
   text-rendering: optimizeLegibility;
+  background:
+    linear-gradient(180deg, var(--color-paper) 0%, var(--color-paper-2) 42%, var(--color-paper) 100%);
 }
 
 /* Content is still selectable where it should be. */
@@ -34,6 +36,32 @@ p { text-wrap: pretty; }
 
 /* An index: entries divided by hairlines, nothing boxed. */
 .index > * + * { border-top: var(--rule-hair) solid var(--color-rule); }
+
+/* App surfaces. Claude's editorial pass banned panels because the old app was
+   all floating boxes; this pass uses panels sparingly for actual app tasks:
+   status, quick actions, and forms. */
+.app-panel {
+  background: var(--color-panel);
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-panel);
+}
+
+.app-tile {
+  background: var(--color-paper);
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-inner);
+}
+
+.glass {
+  background: var(--color-chrome);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  backdrop-filter: blur(18px) saturate(150%);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass { background: var(--color-paper); backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
 
 /* ── Press feedback ──────────────────────────────────────────────────────────
    iOS Safari has no navigator.vibrate, so a tap that doesn't visibly respond

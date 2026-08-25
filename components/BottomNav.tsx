@@ -17,7 +17,7 @@ const TABS: { href: string; label: string; icon: IconName }[] = [
   { href: "/", label: "Home", icon: "home" },
   { href: "/read", label: "Read", icon: "read" },
   { href: "/ask", label: "Ask", icon: "ask" },
-  { href: "/elle", label: "Elle", icon: "elle" },
+  { href: "/room", label: "Room", icon: "room" },
   { href: "/support", label: "Support", icon: "support" },
 ];
 
@@ -43,17 +43,14 @@ export default function BottomNav() {
     (path === "/" ? "/" : TABS.slice(1).find((t) => path.startsWith(t.href))?.href ?? "/");
 
   return (
-    /* On a phone this is an edge-to-edge bar sitting on the bottom edge, which
-       is where a thumb expects it. On a wide screen an edge-to-edge bar with
-       four tabs huddled in the middle reads as broken, so past 768px it becomes
-       a floating card the width of the content column. */
+    /* Functional chrome: translucent, stable, and thumb-first. */
     <nav
       aria-label="Sections"
-      className="chrome fixed inset-x-0 bottom-0 z-40 rule-top bg-paper pb-[env(safe-area-inset-bottom)] md:overflow-hidden md:border-t-transparent
-                 md:inset-x-auto md:bottom-6 md:left-1/2 md:w-[28rem] md:-translate-x-1/2
-                 md:rounded-card md:border md:border-rule md:pb-0 md:shadow-lift"
+      className="glass fixed inset-x-0 bottom-0 z-40 border-t border-rule pb-[env(safe-area-inset-bottom)] shadow-nav
+                 md:inset-x-auto md:bottom-5 md:left-1/2 md:w-[27rem] md:-translate-x-1/2
+                 md:overflow-hidden md:rounded-card md:border md:border-rule md:pb-0 md:shadow-lift"
     >
-      <ul className="mx-auto flex max-w-md">
+      <ul className="mx-auto flex max-w-md px-1 py-1 md:px-1.5 md:py-1.5">
         {TABS.map((t) => {
           const on = t.href === active;
           return (
@@ -61,15 +58,15 @@ export default function BottomNav() {
               <Link
                 href={t.href}
                 aria-current={on ? "page" : undefined}
-                className={`tap relative flex min-h-[60px] flex-col items-center justify-center gap-[3px] text-xs ${
-                  on ? "font-semibold text-accent" : "text-ink-2"
+                className={`tap relative flex min-h-[58px] flex-col items-center justify-center gap-[3px] rounded-inner text-xs ${
+                  on ? "bg-wine-tint font-semibold text-accent" : "text-ink-2 active:bg-paper-2"
                 }`}
               >
                 {/* A drawn rule above the label, not a floating dot. */}
                 <span
                   aria-hidden
-                  className={`nav-mark absolute inset-x-0 top-0 mx-auto h-[2px] bg-accent ${
-                    on ? "w-8 opacity-100" : "w-0 opacity-0"
+                  className={`nav-mark absolute inset-x-0 top-1 mx-auto h-[2px] rounded-pill bg-accent ${
+                    on ? "w-7 opacity-100" : "w-0 opacity-0"
                   }`}
                 />
                 <Icon name={t.icon} className="nav-icon h-[22px] w-[22px]" />

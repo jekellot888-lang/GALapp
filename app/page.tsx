@@ -9,7 +9,7 @@ import { feedback } from "@/lib/haptics";
 import { affirmationForDay, randomAffirmation } from "@/lib/affirmations";
 import InstallSheet from "@/components/InstallSheet";
 import Splash from "@/components/Splash";
-import Icon from "@/components/Icon";
+import Icon, { type IconName } from "@/components/Icon";
 
 /** Words, not faces. Emoji as a UI control is the loudest AI tell there is. */
 const MOODS: { id: Mood; label: string }[] = [
@@ -32,6 +32,13 @@ const FIRST = {
   calm: { href: "/health", title: "Feeling steadier", sub: "Rest, mood, and getting your breath back." },
   safety: { href: "/support", title: "Staying safe", sub: "A plan, your rights, and someone to call." },
 } as const;
+
+const QUICK_ACTIONS: { href: string; title: string; sub: string; icon: IconName; tone: "wine" | "rose" | "calm" }[] = [
+  { href: "/quiet", title: "Quiet", sub: "No sound", icon: "quiet", tone: "wine" },
+  { href: "/room", title: "Room", sub: "Talk together", icon: "room", tone: "rose" },
+  { href: "/ask", title: "Ask", sub: "Places to go", icon: "ask", tone: "rose" },
+  { href: "/breathe", title: "Breathe", sub: "60 seconds", icon: "breathe", tone: "calm" },
+];
 
 function greeting(d = new Date()) {
   const h = d.getHours();
@@ -118,52 +125,49 @@ export default function Home() {
     <main>
       {splash && <Splash onDone={() => setSplash(false)} />}
 
-      <header className="stack mb-lg" style={{ ["--i" as string]: 0 }}>
-        <p className="text-sm text-ink-2">{greeting()},</p>
-        <h1 className="font-display text-display font-semibold leading-[1.05] tracking-display">
-          {state.name ?? "you"}
-        </h1>
-        {ready && state.streak > 0 && (
-          <p className="tnum mt-3xs text-sm text-calm">
-            {state.streak} day{state.streak === 1 ? "" : "s"} in a row
-          </p>
-        )}
+      <header className="stack mb-md flex items-center justify-between" style={{ ["--i" as string]: 0 }}>
+        <div>
+          <p className="text-xs uppercase tracking-label text-ink-2">GAL</p>
+          <h1 className="font-display text-display-s font-semibold leading-[1.05] tracking-display">
+            {greeting()}
+          </h1>
+        </div>
+        <Link
+          href="/quiet"
+          className="tap grid min-h-11 min-w-11 place-items-center rounded-full bg-accent text-accent-ink shadow-lift"
+          aria-label="Open Quiet Mode"
+        >
+          <Icon name="quiet" className="h-5 w-5" />
+        </Link>
       </header>
 
       <InstallSheet />
 
-      {/* Onboarding asked what she wanted first and this is where that answer
-          goes. A setup question whose answer changes nothing is worse than not
-          asking it. */}
-      {ready && state.focus && (
-        <Link
-          href={FIRST[state.focus].href}
-          className="tap tap-tint rule-top rule-bottom -mx-5 mb-lg block px-5 py-md active:bg-paper-2"
-        >
-          <span className="block text-xs uppercase tracking-label text-rose-ink">
-            First for you
+      <section className="stack app-panel mb-lg p-md" style={{ ["--i" as string]: 1 }}>
+        <div className="flex items-start justify-between gap-sm">
+          <div>
+            <p className="text-sm text-ink-2">For {state.name ?? "you"}</p>
+            {ready && state.streak > 0 && (
+              <p className="tnum mt-3xs text-sm font-semibold text-calm">
+                {state.streak} day{state.streak === 1 ? "" : "s"} in a row
+              </p>
+            )}
+          </div>
+          <span className="rounded-pill bg-calm-tint px-sm py-3xs text-xs font-semibold text-calm">
+            Today
           </span>
-          <span className="mt-3xs block font-display text-lg font-semibold tracking-heading">
-            {FIRST[state.focus].title}
-          </span>
-          <span className="mt-3xs block text-sm text-ink-2">
-            {FIRST[state.focus].sub}
-          </span>
-        </Link>
-      )}
+        </div>
 
-      {/* The affirmation is the one set-piece this page is allowed. It earns it
-          by being type, not a gradient box with a quote in it. */}
-      <section className="stack -mx-5 mb-lg bg-rose-tint px-5 py-lg" style={{ ["--i" as string]: 1 }}>
         <p
           data-swapping={swapping}
           aria-live="polite"
-          className="aff font-display text-2xl font-semibold leading-[1.25] tracking-heading"
+          className="aff mt-md font-display text-2xl font-semibold leading-[1.22] tracking-heading"
         >
           {affirmation}
         </p>
+
         <div className="mt-md flex items-center justify-between gap-sm">
-          <span className="text-xs text-rose-ink">Today&rsquo;s line</span>
+          <span className="text-xs text-rose-ink">Daily line</span>
           {status === "needs-permission" ? (
             <button
               onClick={enable}
@@ -182,8 +186,55 @@ export default function Home() {
         </div>
       </section>
 
+      {ready && state.focus && (
+        <Link
+          href={FIRST[state.focus].href}
+          className="stack tap app-panel mb-lg block p-md active:scale-[0.99]"
+          style={{ ["--i" as string]: 2 }}
+        >
+          <span className="block text-xs uppercase tracking-label text-rose-ink">
+            First for you
+          </span>
+          <span className="mt-3xs block font-display text-lg font-semibold tracking-heading">
+            {FIRST[state.focus].title}
+          </span>
+          <span className="mt-3xs block text-sm text-ink-2">
+            {FIRST[state.focus].sub}
+          </span>
+        </Link>
+      )}
+
+      <section className="stack mb-lg" style={{ ["--i" as string]: 3 }}>
+        <div className="grid grid-cols-2 gap-2xs">
+          {QUICK_ACTIONS.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="tap app-tile flex min-h-[88px] items-center gap-xs p-sm active:scale-[0.99]"
+            >
+              <span
+                aria-hidden
+                className={`grid h-10 w-10 shrink-0 place-items-center rounded-full ${
+                  item.tone === "wine"
+                    ? "bg-wine-tint text-wine-ink"
+                    : item.tone === "calm"
+                    ? "bg-calm-tint text-calm"
+                    : "bg-rose-tint text-rose-ink"
+                }`}
+              >
+                <Icon name={item.icon} className="h-5 w-5" />
+              </span>
+              <span>
+                <span className="block font-semibold">{item.title}</span>
+                <span className="mt-3xs block text-xs text-ink-2">{item.sub}</span>
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       {/* Mood */}
-      <section className="stack mb-lg" style={{ ["--i" as string]: 2 }}>
+      <section className="stack app-panel mb-lg p-md" style={{ ["--i" as string]: 4 }}>
         <h2 className="font-display text-lg font-semibold tracking-heading">
           How are you today?
         </h2>
@@ -220,7 +271,7 @@ export default function Home() {
       </section>
 
       {/* Goals */}
-      <section className="stack mb-lg" style={{ ["--i" as string]: 3 }}>
+      <section className="stack app-panel mb-lg p-md" style={{ ["--i" as string]: 5 }}>
         <div className="flex items-baseline justify-between">
           <h2 className="font-display text-lg font-semibold tracking-heading">
             Today&rsquo;s goals
@@ -240,7 +291,7 @@ export default function Home() {
                     feedback(10);
                   }}
                   aria-pressed={on}
-                  className="tap tap-tint -mx-5 flex w-[calc(100%+2.5rem)] items-center gap-xs px-5 py-xs text-left active:bg-paper-2"
+                  className="tap tap-tint -mx-md flex w-[calc(100%+3rem)] items-center gap-xs px-md py-xs text-left active:bg-paper-2"
                 >
                   <span
                     data-on={on}
@@ -261,40 +312,16 @@ export default function Home() {
         </ul>
       </section>
 
-      {/* One thing she can do right now, rather than another thing to read.
-          Sits directly under the goals because that is where "I should do
-          something" lands. */}
       <Link
-        href="/breathe"
-        className="stack tap tap-tint rule-top -mx-5 flex items-center gap-xs px-5 py-md active:bg-paper-2"
-        style={{ ["--i" as string]: 4 }}
-      >
-        <span
-          aria-hidden
-          className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-rose-tint text-rose-ink"
-        >
-          <Icon name="breathe" className="h-5 w-5" />
-        </span>
-        <span>
-          <span className="block font-display text-lg font-semibold tracking-heading">
-            Three slow breaths
-          </span>
-          <span className="mt-3xs block text-sm text-ink-2">
-            Sixty seconds. Four in, six out.
-          </span>
-        </span>
-      </Link>
-
-      <Link
-        href="/support"
+        href="/read"
         className="stack tap tap-tint rule-top -mx-5 block px-5 py-md active:bg-paper-2"
-        style={{ ["--i" as string]: 5 }}
+        style={{ ["--i" as string]: 6 }}
       >
         <span className="block font-display text-lg font-semibold tracking-heading">
-          Need someone to talk to?
+          Read something short
         </span>
         <span className="mt-3xs block text-sm text-ink-2">
-          Confidential support, any time.
+          Money, health, safety, and what to do next.
         </span>
       </Link>
     </main>
