@@ -130,8 +130,8 @@ export default function Ask() {
               </h2>
               <p className="mt-2xs max-w-[46ch] text-sm leading-relaxed text-ink-2">
                 Try one of the buttons above, or a plainer word — &ldquo;bank&rdquo;,
-                &ldquo;hospital&rdquo;, &ldquo;police&rdquo;. If it is urgent, Support has the
-                confirmed lines.
+                &ldquo;hospital&rdquo;, &ldquo;police&rdquo;. If it is urgent, go to the nearest health
+                facility or police post rather than waiting on this list.
               </p>
             </section>
           )}

@@ -81,11 +81,10 @@ Both schemes ship. Dark is not a courtesy here: a dark screen is far less
 conspicuous in a dark room, and this app gets read at night by someone who may
 not want the light noticed.
 
-**Driven by `prefers-color-scheme` only.** There is no in-app toggle and no
-stored preference. GAL keeps no accounts and writes as little to the device as it
-can; a theme setting is one more thing on a phone somebody else might pick up.
-If a toggle is ever added it belongs in a settings surface that does not exist
-yet, and it must not become a sun/moon switch in the header.
+Dark follows `prefers-color-scheme` until she chooses otherwise. The manual
+choice is local-only, stored as `gal.theme`, and it is deliberately limited to
+ordinary app surfaces such as Home and Room. It must not appear on the calculator
+disguise, Quiet Mode, or anywhere it competes with Quick Exit.
 
 Rules for the dark palette:
 
@@ -180,6 +179,9 @@ Pill shapes survive only on filters and the quick exit. No gradient on a pill.
 - **Home:** the one page allowed a compositional set-piece (the affirmation).
 - **Support:** structural restraint is a safety feature. Nothing decorative
   competes with the numbers.
+- **Elle shortcut:** allowed as a floating icon above the bottom nav on ordinary
+  reading/support/ask/home surfaces. It must not render on Elle itself, Room,
+  Quiet Mode, calculator, onboarding, or offline.
 - **404 / offline:** typography only.
 
 ## What pages MUST share

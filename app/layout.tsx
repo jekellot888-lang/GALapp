@@ -4,6 +4,7 @@ import "./globals.css";
 import BottomNav from "@/components/BottomNav";
 import SWRegister from "@/components/SWRegister";
 import HapticSwitch from "@/components/HapticSwitch";
+import FloatingElleButton from "@/components/FloatingElleButton";
 
 /**
  * Brand faces from the Elle guide: Cormorant Garamond for display, Manrope for
@@ -63,7 +64,7 @@ export const viewport: Viewport = {
   /* The status bar follows the paper, not the accent — the installed app should
      read as one continuous surface rather than a coloured bar above a page. */
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#FFF8F5" },
+    { media: "(prefers-color-scheme: light)", color: "#FFFCFA" },
     { media: "(prefers-color-scheme: dark)", color: "#1B0F13" },
   ],
   width: "device-width",
@@ -76,13 +77,25 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${display.variable} ${body.variable}`}
+    >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(() => { try { const t = localStorage.getItem("gal.theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (_) {} })();`,
+          }}
+        />
+      </head>
       <body className="bg-paper text-ink font-sans antialiased">
         <a href="#main" className="skip">
           Skip to content
         </a>
         <SWRegister />
         <HapticSwitch />
+        <FloatingElleButton />
         <div
           id="main"
           className="mx-auto min-h-dvh w-full max-w-md px-5 pb-28 pt-[max(1.25rem,env(safe-area-inset-top))]"

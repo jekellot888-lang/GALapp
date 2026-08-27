@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import QuickExit from "@/components/QuickExit";
+import ThemeToggle from "@/components/ThemeToggle";
 import Icon from "@/components/Icon";
 import { getSupabase, supabaseConfigured } from "@/lib/supabase";
 
@@ -62,6 +63,7 @@ export default function RoomPage() {
   const [error, setError] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const [lastSentAt, setLastSentAt] = useState(0);
+  const [sending, setSending] = useState(false);
   const listRef = useRef<HTMLUListElement | null>(null);
 
   useEffect(() => {
@@ -178,7 +180,7 @@ export default function RoomPage() {
   };
 
   const send = async () => {
-    if (!supabase || !room || !userId) return;
+    if (!supabase || !room || !userId || sending) return;
     setError(null);
 
     const body = cleanBody(draft);
@@ -204,6 +206,7 @@ export default function RoomPage() {
 
     setDraft("");
     setLastSentAt(Date.now());
+    setSending(true);
     setMessages((current) => [...current, optimistic]);
 
     const { data, error: sendError } = await supabase
@@ -220,12 +223,14 @@ export default function RoomPage() {
     if (sendError) {
       setMessages((current) => current.filter((m) => m.id !== tempId));
       setError(friendlyError(sendError.message));
+      setSending(false);
       return;
     }
 
     setMessages((current) =>
       current.map((m) => (m.id === tempId ? (data as ChatMessage) : m))
     );
+    setSending(false);
   };
 
   const report = async (message: ChatMessage) => {
@@ -241,13 +246,16 @@ export default function RoomPage() {
     <main>
       <QuickExit />
 
-      <header className="mb-lg">
-        <h1 className="font-display text-display font-semibold leading-[1.05] tracking-display">
-          Room
-        </h1>
-        <p className="mt-2xs max-w-[38ch] text-md leading-relaxed text-ink-2">
-          A small room for talking with other women. No email, no password.
-        </p>
+      <header className="mb-lg flex items-start justify-between gap-sm">
+        <div>
+          <h1 className="font-display text-display font-semibold leading-[1.05] tracking-display">
+            Room
+          </h1>
+          <p className="mt-2xs max-w-[38ch] text-md leading-relaxed text-ink-2">
+            A small room for talking with other women. No email, no password.
+          </p>
+        </div>
+        <ThemeToggle />
       </header>
 
       {!room ? (
@@ -296,8 +304,8 @@ export default function RoomPage() {
           </button>
 
           <p className="mt-sm text-xs leading-relaxed text-ink-2">
-            Messages expire from view after 72 hours. Links are blocked. Reports
-            hide the message for you immediately.
+            Use a nickname, not your real name. Messages expire from view after
+            72 hours. Links are blocked.
           </p>
 
           {status && <p className="mt-sm text-sm text-ink-2">{status}</p>}
@@ -309,13 +317,20 @@ export default function RoomPage() {
         </section>
       ) : (
         <>
-          <section className="app-panel flex min-h-[58dvh] flex-col overflow-hidden">
-            <div className="flex items-center justify-between border-b border-rule px-md py-sm">
+          <section className="app-panel flex min-h-[62dvh] flex-col overflow-hidden">
+            <div className="flex items-center justify-between gap-sm border-b border-rule px-md py-sm">
               <div>
                 <h2 className="font-display text-lg font-semibold tracking-heading">
                   {room.name}
                 </h2>
-                <p className="tnum mt-3xs text-xs text-ink-2">Code {room.code}</p>
+                <div className="mt-3xs flex flex-wrap items-center gap-2xs text-xs text-ink-2">
+                  <span className="tnum">Code {room.code}</span>
+                  <span aria-hidden className="h-1 w-1 rounded-full bg-rule-strong" />
+                  <span className="inline-flex items-center gap-[0.35rem] text-calm">
+                    <span aria-hidden className="h-2 w-2 rounded-full bg-calm" />
+                    Live as {nickname}
+                  </span>
+                </div>
               </div>
               <button
                 onClick={() => {
@@ -337,7 +352,10 @@ export default function RoomPage() {
                 messages.map((message) => {
                   const mine = message.user_id === userId;
                   return (
-                    <li key={message.id} className={`flex ${mine ? "justify-end" : "justify-start"}`}>
+                    <li
+                      key={message.id}
+                      className={`flex ${mine ? "justify-end" : "justify-start"}`}
+                    >
                       <div
                         className={`max-w-[82%] rounded-inner px-sm py-xs ${
                           mine
@@ -395,9 +413,10 @@ export default function RoomPage() {
               />
               <button
                 onClick={send}
-                className="tap min-h-11 shrink-0 rounded-inner bg-accent px-md font-semibold text-accent-ink"
+                disabled={sending || !cleanBody(draft)}
+                className="tap min-h-11 shrink-0 rounded-inner bg-accent px-md font-semibold text-accent-ink disabled:cursor-not-allowed disabled:opacity-55"
               >
-                Send
+                {sending ? "Sending" : "Send"}
               </button>
             </div>
             {error && (

@@ -9,6 +9,7 @@ import { feedback } from "@/lib/haptics";
 import { affirmationForDay, randomAffirmation } from "@/lib/affirmations";
 import InstallSheet from "@/components/InstallSheet";
 import Splash from "@/components/Splash";
+import ThemeToggle from "@/components/ThemeToggle";
 import Icon, { type IconName } from "@/components/Icon";
 
 /** Words, not faces. Emoji as a UI control is the loudest AI tell there is. */
@@ -132,13 +133,16 @@ export default function Home() {
             {greeting()}
           </h1>
         </div>
-        <Link
-          href="/quiet"
-          className="tap grid min-h-11 min-w-11 place-items-center rounded-full bg-accent text-accent-ink shadow-lift"
-          aria-label="Open Quiet Mode"
-        >
-          <Icon name="quiet" className="h-5 w-5" />
-        </Link>
+        <div className="flex items-center gap-2xs">
+          <ThemeToggle />
+          <Link
+            href="/quiet"
+            className="tap grid min-h-11 min-w-11 place-items-center rounded-full bg-accent text-accent-ink shadow-lift"
+            aria-label="Open Quiet Mode"
+          >
+            <Icon name="quiet" className="h-5 w-5" />
+          </Link>
+        </div>
       </header>
 
       <InstallSheet />

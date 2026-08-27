@@ -1,7 +1,8 @@
 # GAL
 
 A daily companion — mind, body, money, and knowing where to turn.
-Installable web app. No accounts. Nothing leaves the device.
+Installable web app. Most features run on the device; Room uses Supabase
+anonymous auth and Elle calls an AI service when enabled.
 
 > **GAL — Guide, Assist, Liberate.**
 >
@@ -31,8 +32,9 @@ git remote add origin git@github.com:YOUR_ORG/gal.git
 git push -u origin main
 ```
 
-Then on Vercel: **New Project → import the repo → Deploy.** No env vars needed for v1.
-Framework detection handles the rest.
+Then on Vercel: **New Project → import the repo → Deploy.** Room needs the two
+public Supabase variables documented in `docs/deploy.md`; Elle needs
+`ANTHROPIC_API_KEY` only if it is switched on.
 
 **Deploy on commit #1.** Get the live HTTPS URL working before you build anything
 else. The classic all-nighter failure is six hours of features and then a broken
@@ -78,16 +80,16 @@ straight away everywhere else.
 - Home: greeting, streak, mood check-in, goals, shake-to-reroll affirmation
 - Five-tab nav, article list + reader, static-generated
 - Support page, quick exit, sensitive-content handling
+- Supabase-powered Room with anonymous sign-in
 - Device-local state with a rollover streak
 
 ## What is not
 
-- **Article bodies.** `content/articles.ts` has the real titles and blurbs ported
-  from the old build. Bodies are empty and the reader says so honestly rather
-  than showing filler. This is the long pole — it needs a person, not a compiler.
-- **Support numbers.** `content/support.ts` ships deliberately empty. Read the
-  header of that file before touching it.
-- Talk to Elle, Telegram affirmations, Money content.
+- **Eight article bodies.** `content/articles.ts` says which ones are empty and
+  why. The medical and legal pages need sourced writing, not filler.
+- **Verified support numbers and clinics.** Candidate numbers exist, but they do
+  not become trusted until someone calls them and records the result.
+- Telegram affirmations.
 
 ---
 

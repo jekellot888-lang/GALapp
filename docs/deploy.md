@@ -2,10 +2,9 @@
 
 GitHub, then Vercel. That is the whole deployment.
 
-The app has **no database and no accounts**. Everything except Elle runs on the
-phone with no backend at all, so there is nothing to provision, nothing to keep
-running, and nothing that can pause under you. The one optional environment
-variable is Elle's API key, and the app works without it.
+Most of the app still runs on the phone. The exception is Room, which uses
+Supabase anonymous auth, Postgres, and Realtime. Elle is the other optional
+networked surface.
 
 ## 1. GitHub
 
@@ -26,7 +25,24 @@ You now have an HTTPS URL. Test on the actual iPhone before going further:
 - **Shake** needs a secure context, so it works on the Vercel URL and not over
   `http://192.168.x.x`.
 
-## 3. Elle (optional)
+## 3. Room
+
+Room needs the Supabase schema in `supabase/chat-schema.sql`, anonymous sign-ins
+enabled in Supabase Auth, and these Vercel variables:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+```
+
+In Vercel these two are **Config**, not Secret. They are intentionally public:
+the anon key is protected by Supabase RLS policies, not by hiding it from the
+browser.
+
+After changing either value, redeploy the current production deployment so the
+Next.js build sees the new environment.
+
+## 4. Elle (optional)
 
 One Vercel environment variable:
 
@@ -62,9 +78,8 @@ Bump `CACHE` on every deploy, or returning users keep the old bundle.
 
 ## Before real users
 
-- `content/referrals.ts` is **empty**, so `/ask` says it has nothing to give.
-  Research candidates with `docs/scrape-prompt.md`, paste them in, then phone
-  each number and set `verified: true`. Research is not verification.
+- `content/referrals.ts` has researched candidates, but zero confirmed phone
+  lines. Research is not verification.
 - `content/support.ts` still has **twelve unverified helplines and zero live
   ones**. The support page shows "numbers are being confirmed" and lists none.
   Call each one, then set `verified: true`. Three entries carry an unresolved

@@ -16,8 +16,22 @@ body {
   -webkit-touch-callout: none;
   -webkit-tap-highlight-color: transparent;
   text-rendering: optimizeLegibility;
+  background-color: var(--color-paper);
   background:
     linear-gradient(180deg, var(--color-paper) 0%, var(--color-paper-2) 42%, var(--color-paper) 100%);
+  transition: background-color var(--dur-enter) var(--ease-out),
+              color var(--dur-enter) var(--ease-out);
+}
+
+input,
+textarea,
+button,
+.app-panel,
+.app-tile,
+.glass {
+  transition-property: background-color, border-color, color, box-shadow, transform, opacity;
+  transition-duration: var(--dur-short);
+  transition-timing-function: var(--ease-out);
 }
 
 /* Content is still selectable where it should be. */

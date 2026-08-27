@@ -31,7 +31,9 @@ export type IconName =
   | "money"
   | "police"
   | "legal"
-  | "shelter";
+  | "shelter"
+  | "sun"
+  | "moon";
 
 const PATHS: Record<IconName, React.ReactNode> = {
   // A doorway rather than a pitched-roof house — this is a place she comes back to.
@@ -155,6 +157,13 @@ const PATHS: Record<IconName, React.ReactNode> = {
       <path d="M3.5 17.5h17" />
     </>
   ),
+  sun: (
+    <>
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2.75v2M12 19.25v2M4.42 4.42l1.42 1.42M18.16 18.16l1.42 1.42M2.75 12h2M19.25 12h2M4.42 19.58l1.42-1.42M18.16 5.84l1.42-1.42" />
+    </>
+  ),
+  moon: <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" />,
 };
 
 export default function Icon({ name, className }: Props) {

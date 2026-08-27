@@ -8,28 +8,28 @@
  * values and the two faces moved.
  *
  * Display: Cormorant Garamond (roman). Body: Manrope.
- * Ground #FFF8F5 · ink #2A1218 · accent #7A1F3D wine · second voice #B76E79 rose.
+ * Ground #FFFCFA · ink #2A1218 · accent #7A1F3D wine · second voice #B76E79 rose.
  */
 
 :root {
   /* ── Colour ─────────────────────────────────────────────────────────────── */
-  --color-paper: #FFF8F5;
-  --color-paper-2: #FDF1EE;
-  --color-paper-3: #F7EAE6;
+  --color-paper: #FFFCFA;
+  --color-paper-2: #FFF5F1;
+  --color-paper-3: #F9EAE5;
 
   --color-ink: #2A1218;
   /* neutral-700. neutral-600 (#8A6A6E) sits under AA on this ground for body
      copy, so secondary text takes the deeper step. */
   --color-ink-2: #6E4A52;
 
-  --color-rule: #EFDCD7;
+  --color-rule: #EEDBD5;
   --color-rule-strong: #D6B2AF;
-  --color-chrome: rgba(255, 248, 245, 0.86);
-  --color-panel: rgba(253, 241, 238, 0.84);
+  --color-chrome: rgba(255, 252, 250, 0.88);
+  --color-panel: rgba(255, 245, 241, 0.86);
 
   --color-accent: #7A1F3D;
   --color-accent-deep: #561020;
-  --color-accent-ink: #FFF8F5;
+  --color-accent-ink: #FFFCFA;
   --color-focus: #7A1F3D;
 
   /* The rose is a genuine second voice, not a highlight. Paragraph-size text
@@ -77,7 +77,7 @@
   --color-calm-tint: #EDF2EF;
   --color-calm-tint-2: #DDE8E2;
   --color-calm-edge: #C7D6CE;
-  --color-on-calm: #FFF8F5;
+  --color-on-calm: #FFFCFA;
 
   /* Two voices, split by what a screen is for. Wine is action and safety;
      rose is the warmer half — company, reflection, the daily line. Nothing
@@ -191,4 +191,94 @@
     --shadow-panel: 0 1px 0 rgba(255, 255, 255, 0.04) inset,
                     0 16px 36px rgba(0, 0, 0, 0.28);
   }
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+  --color-paper: #FFFCFA;
+  --color-paper-2: #FFF5F1;
+  --color-paper-3: #F9EAE5;
+
+  --color-ink: #2A1218;
+  --color-ink-2: #6E4A52;
+
+  --color-rule: #EEDBD5;
+  --color-rule-strong: #D6B2AF;
+  --color-chrome: rgba(255, 252, 250, 0.88);
+  --color-panel: rgba(255, 245, 241, 0.86);
+
+  --color-accent: #7A1F3D;
+  --color-accent-deep: #561020;
+  --color-accent-ink: #FFFCFA;
+  --color-focus: #7A1F3D;
+
+  --color-accent-2: #B76E79;
+  --color-accent-2-deep: #561020;
+  --color-accent-2-tint: #FBF0EC;
+
+  --color-wine-tint: #FCEDEF;
+  --color-wine-tint-2: #F7D6D0;
+  --color-wine-edge: #E8B3B7;
+  --color-wine-ink: #7A1F3D;
+
+  --color-rose-tint: #FBF0EC;
+  --color-rose-tint-2: #F3DED9;
+  --color-rose-edge: #E4C3BC;
+  --color-rose-ink: #8A4A55;
+  --color-on-rose: #2A1218;
+
+  --color-calm: #3F6B5B;
+  --color-calm-tint: #EDF2EF;
+  --color-calm-tint-2: #DDE8E2;
+  --color-calm-edge: #C7D6CE;
+  --color-on-calm: #FFFCFA;
+
+  --shadow-lift: 0 1px 2px rgba(42, 18, 24, 0.06),
+                 0 8px 24px rgba(42, 18, 24, 0.08);
+  --shadow-panel: 0 1px 0 rgba(255, 255, 255, 0.76) inset,
+                  0 12px 32px rgba(86, 16, 32, 0.08);
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --color-paper: #1B0F13;
+  --color-paper-2: #24151A;
+  --color-paper-3: #2F1C22;
+
+  --color-ink: #FBEFEC;
+  --color-ink-2: #D6B2AF;
+
+  --color-rule: #3E1F28;
+  --color-rule-strong: #6E4A52;
+  --color-chrome: rgba(27, 15, 19, 0.86);
+  --color-panel: rgba(36, 21, 26, 0.82);
+
+  --color-accent: #E8B3B7;
+  --color-accent-deep: #C77E92;
+  --color-accent-ink: #2A1218;
+  --color-focus: #E8B3B7;
+
+  --color-accent-2: #CE9A9C;
+  --color-accent-2-tint: #2F1C22;
+
+  --color-wine-tint: #2B141B;
+  --color-wine-tint-2: #3A1B24;
+  --color-wine-edge: #562A33;
+  --color-wine-ink: #E8B3B7;
+
+  --color-rose-tint: #2A1A1C;
+  --color-rose-tint-2: #382426;
+  --color-rose-edge: #55393C;
+  --color-rose-ink: #E4C3BC;
+  --color-on-rose: #2A1218;
+
+  --color-calm: #9CC2B1;
+  --color-calm-tint: #1B2A25;
+  --color-calm-tint-2: #24382F;
+  --color-calm-edge: #3D5A4D;
+  --color-on-calm: #12211C;
+
+  --shadow-lift: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.34);
+  --shadow-panel: 0 1px 0 rgba(255, 255, 255, 0.04) inset,
+                  0 16px 36px rgba(0, 0, 0, 0.28);
 }
